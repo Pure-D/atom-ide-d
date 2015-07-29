@@ -1,0 +1,64 @@
+".source.d":
+	"if":
+		"prefix": "if"
+		"body": "if($1) {$2}"
+	"elseif":
+		"prefix": "elif"
+		"body": "else if($1) {$2}"
+	"else":
+		"prefix": "el"
+		"body": "else {$1}"
+	"switch":
+		"prefix": "sw"
+		"body": """
+switch($1) {$2
+	default:
+		break;
+}"""
+	"case":
+		"prefix": "case"
+		"body": """case $1:
+	${2:break;}"""
+	"Exception template":
+		"prefix": "ex"
+		"body": """
+class ${1:MyException} : ${4:Exception} {
+	public this(${2:string msg}) {
+		${3:super(msg);}
+	}
+}"""
+	"void main":
+		"prefix": "main"
+		"body": "${2:void} main(${3:string[] args}) {$1}"
+	"template":
+		"prefix": "tmpl"
+		"body": "template ${1:MyTemplate}($2) {$3}"
+	"mixin template":
+		"prefix": "mixt"
+		"body": "mixin template ${1:MyMixin}($2) {$3}"
+	"interface":
+		"prefix": "interface"
+		"body": "interface ${1:MyInterface}$3 {$2}"
+	"class":
+		"prefix": "cl"
+		"body": "class ${1:MyClass}$3 {$2}"
+	"property get/set":
+		"prefix": "prop"
+		"body": """
+@property void ${1:value}(${2:auto} value) { ${3:_value} = value; }
+@property $2 $1() { return $3; }"""
+	"property get":
+		"prefix": "get"
+		"body": "@property ${3:auto} ${1:value}() { return ${2:_value}; }"
+	"property set":
+		"prefix": "set"
+		"body": "@property void ${1:value}(${2:auto} value) { ${3:_value} = value; }"
+	"ref property":
+		"prefix": "refp"
+		"body": "@property ref ${3:auto} ${1:value}() { return ${2:_value}; }"
+	"constructor":
+		"prefix": "ctor"
+		"body": "this($2) {$1}"
+	"destructor":
+		"prefix": "dtor"
+		"body": "~this($2) {$1}"
