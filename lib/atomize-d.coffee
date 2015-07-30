@@ -12,6 +12,11 @@ module.exports = AtomizeD =
     dcdServerPath:
       type: "string"
       default: "dcd-server"
+    dImportPaths:
+      type: "array"
+      default: ["/usr/include/dmd/druntime/import", "/usr/include/dmd/phobos"]
+      items:
+        type: "string"
 
   activate: (state) ->
     @dcd = new AtomizeDDCD

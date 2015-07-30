@@ -50,7 +50,6 @@ class AtomizeDDCD
             suggestions.push
               text: splits[0]
               leftLabel: splits[1]
-          console.log suggestions
           resolve(suggestions)
   		)
 
@@ -85,8 +84,23 @@ class AtomizeDDCD
 
     console.log("DCD: ready")
 
+    atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
+      importPaths = atom.config.get("atomize-d.dImportPaths")
+      args = []
+      args.push "-I" + importPath for importPath in importPaths
+
+      dcdClient = ChildProcess.spawn(parent.dcdClientPath, args,
+        cwd: atom.project.getPaths()[0],
+        env: process.env
+      )
+    )
+
   startServer: ->
-    @dcdServer = ChildProcess.spawn(@dcdServerPath, [],
+    importPaths = atom.config.get("atomize-d.dImportPaths")
+    args = []
+    args.push "-I" + importPath for importPath in importPaths
+
+    @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
       cwd: atom.project.getPaths()[0],
       env: process.env
     )
