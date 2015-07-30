@@ -36,10 +36,11 @@ class AtomizeDDCD
   		)
 
       dcdClient.on('exit', (code) ->
-        return if data.trim().length == 0
+        return resolve([]) if data.trim().length == 0
         lines = data.trim().split("\n")
         if lines[0].trim() != "identifiers"
           atom.notifications.addError("Invalid data:\n"+data);
+          resolve([])
         else
           suggestions = []
           for i in [1 .. lines.length]
