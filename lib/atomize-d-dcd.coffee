@@ -6,16 +6,24 @@ module.exports =
 class AtomizeDDCD
   dcdClient: null
   dcdServer: null
-  dcdClientPath: "/bin/dcd-client"
-  dcdServerPath: "/bin/dcd-server"
+  dcdClientPath: null
+  dcdServerPath: null
 
   constructor: ->
+    @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
+    @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
     checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
       cwd: atom.project.getPaths()[0],
       env: process.env
     )
 
     parent = this
+
+    atom.config.onDidChange "atomize-d.dcdClientPath", ({newValue, oldValue}) ->
+      parent.dcdClientPath = newValue
+
+    atom.config.onDidChange "atomize-d.dcdServerPath", ({newValue, oldValue}) ->
+      parent.dcdServerPath = newValue
 
     checkDCD.stdout.on('data', (data) ->
       parent.startServer() if data != "Server is running\n"

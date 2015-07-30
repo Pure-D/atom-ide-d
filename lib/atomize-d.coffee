@@ -5,6 +5,14 @@ module.exports = AtomizeD =
   subscriptions: null
   dcd: null
 
+  config:
+    dcdClientPath:
+      type: "string"
+      default: "dcd-client"
+    dcdServerPath:
+      type: "string"
+      default: "dcd-server"
+
   activate: (state) ->
     @dcd = new AtomizeDDCD
 
