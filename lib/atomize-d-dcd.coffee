@@ -118,4 +118,4 @@ class AtomizeDDCD
 		)
 
   destroy: ->
-    ChildProcess.spawn(@dcdClientPath, "--shutdown")
+    ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
