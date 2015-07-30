@@ -4,18 +4,58 @@ String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
 
 module.exports =
 class AtomizeDDCD
-  dcdClient: null
   dcdServer: null
   dcdClientPath: null
   dcdServerPath: null
 
+  selector: ".source.d, .source.di"
+  disableForSelector: ".source.d .comment, .source.d .string"
+
+  inclusionPriority: 1
+  excludeLowerPriority: true
+
+  getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
+    self = this
+
+    new Promise (resolve) ->
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-c", editor.getBuffer().characterIndexForPosition(bufferPosition).toString()],
+        cwd: atom.project.getPaths()[0],
+        env: process.env
+      )
+      dcdClient.stdin.write(editor.getBuffer().getText())
+      dcdClient.stdin.end()
+
+      data = ""
+
+      dcdClient.stdout.on('data', (out) ->
+        data += "" + out
+      )
+
+      dcdClient.stderr.on('data', (data) ->
+        atom.notifications.addError("DCD: " + data);
+  		)
+
+      dcdClient.on('exit', (code) ->
+        return if data.trim().length == 0
+        lines = data.trim().split("\n")
+        if lines[0].trim() != "identifiers"
+          atom.notifications.addError("Invalid data:\n"+data);
+        else
+          suggestions = []
+          for i in [1 .. lines.length]
+            if !lines[i] || lines[i].trim().length == 0
+              continue
+            splits = lines[i].trim().split(/\s+/)
+            suggestions.push
+              text: splits[0]
+              leftLabel: splits[1]
+          console.log suggestions
+          resolve(suggestions)
+  		)
+
   constructor: ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
     @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
-    checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
-      cwd: atom.project.getPaths()[0],
-      env: process.env
-    )
 
     parent = this
 
@@ -27,12 +67,22 @@ class AtomizeDDCD
       parent.dcdServerPath = newValue
     )
 
+  start: ->
+    checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
+      cwd: atom.project.getPaths()[0],
+      env: process.env
+    )
+
+    parent = this
+
     checkDCD.stdout.on('data', (data) ->
-      parent.startServer() if data != "Server is running\n"
+      parent.startServer() unless data == "Server is running\n"
     )
 
     checkDCD.stderr.on('data', (data) -> return)
     checkDCD.on('exit', (code) -> return)
+
+    console.log("DCD: ready")
 
   startServer: ->
     @dcdServer = ChildProcess.spawn(@dcdServerPath, [],
@@ -54,34 +104,3 @@ class AtomizeDDCD
 
   destroy: ->
     ChildProcess.spawn(@dcdClientPath, "--shutdown")
-  test: ->
-    editor = atom.workspace.getActiveTextEditor()
-    grammar = editor.getGrammar()
-    return if grammar.name != "D"
-
-    buffer = editor.getBuffer()
-    pos = editor.getCursorBufferPosition()
-
-    data = buffer.getText()
-    cursorPos = buffer.characterIndexForPosition(pos)
-
-    atom.notifications.addSuccess("Starting dcd");
-
-    @dcdClient = ChildProcess.spawn(@dcdClientPath, ["-c", "" + cursorPos],
-      cwd: atom.project.getPaths()[0],
-      env: process.env
-    )
-    @dcdClient.stdin.write(data)
-    @dcdClient.stdin.end()
-
-    @dcdClient.stdout.on('data', (data) ->
-      atom.notifications.addSuccess(""+data);
-    )
-
-    @dcdClient.stderr.on('data', (data) ->
-      atom.notifications.addError(""+data);
-		)
-
-    @dcdClient.on('exit', (code) ->
-      atom.notifications.addSuccess("End of DCD: " + code);
-		)

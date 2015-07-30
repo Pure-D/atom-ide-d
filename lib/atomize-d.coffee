@@ -15,19 +15,14 @@ module.exports = AtomizeD =
 
   activate: (state) ->
     @dcd = new AtomizeDDCD
+    @dcd.start()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
-    # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'atomize-d:toggle': => @toggle()
+  getProvider: ->
+    @dcd
 
   deactivate: ->
     @subscriptions.dispose()
     @dcd = null
-
-  serialize: ->
-
-
-  toggle: ->
-    @dcd.test()
