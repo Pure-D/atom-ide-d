@@ -19,15 +19,18 @@ class AtomizeDDCD
 
     parent = this
 
-    atom.config.onDidChange "atomize-d.dcdClientPath", ({newValue, oldValue}) ->
+    atom.config.onDidChange("atomize-d.dcdClientPath", ({newValue, oldValue}) ->
       parent.dcdClientPath = newValue
+    )
 
-    atom.config.onDidChange "atomize-d.dcdServerPath", ({newValue, oldValue}) ->
+    atom.config.onDidChange("atomize-d.dcdServerPath", ({newValue, oldValue}) ->
       parent.dcdServerPath = newValue
+    )
 
     checkDCD.stdout.on('data', (data) ->
       parent.startServer() if data != "Server is running\n"
     )
+
     checkDCD.stderr.on('data', (data) -> return)
     checkDCD.on('exit', (code) -> return)
 
