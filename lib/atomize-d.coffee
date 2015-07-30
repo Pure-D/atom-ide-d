@@ -1,14 +1,12 @@
-AtomizeDView = require './atomize-d-view'
 {CompositeDisposable} = require 'atom'
+AtomizeDDCD = require './atomize-d-dcd'
 
 module.exports = AtomizeD =
-  atomizeDView: null
-  modalPanel: null
   subscriptions: null
+  dcd: null
 
   activate: (state) ->
-    @atomizeDView = new AtomizeDView(state.atomizeDViewState)
-    @modalPanel = atom.workspace.addModalPanel(item: @atomizeDView.getElement(), visible: false)
+    @dcd = new AtomizeDDCD
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -17,17 +15,11 @@ module.exports = AtomizeD =
     @subscriptions.add atom.commands.add 'atom-workspace', 'atomize-d:toggle': => @toggle()
 
   deactivate: ->
-    @modalPanel.destroy()
     @subscriptions.dispose()
-    @atomizeDView.destroy()
+    @dcd = null
 
   serialize: ->
-    atomizeDViewState: @atomizeDView.serialize()
+
 
   toggle: ->
-    console.log 'AtomizeD was toggled!'
-
-    if @modalPanel.isVisible()
-      @modalPanel.hide()
-    else
-      @modalPanel.show()
+    @dcd.test()
