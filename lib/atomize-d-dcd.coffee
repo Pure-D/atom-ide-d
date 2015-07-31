@@ -1,6 +1,6 @@
-ChildProcess = require 'child_process'
+ChildProcess = require "child_process"
 
-String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
+String::endsWith   ?= (s) -> s is "" or @[-s.length..] is s
 
 module.exports =
 class AtomizeDDCD
@@ -27,15 +27,15 @@ class AtomizeDDCD
 
       data = ""
 
-      dcdClient.stdout.on('data', (out) ->
+      dcdClient.stdout.on("data", (out) ->
         data += "" + out
       )
 
-      dcdClient.stderr.on('data', (data) ->
+      dcdClient.stderr.on("data", (data) ->
         atom.notifications.addError("DCD: " + data);
   		)
 
-      dcdClient.on('exit', (code) ->
+      dcdClient.on("exit", (code) ->
         return resolve([]) if data.trim().length == 0
         lines = data.trim().split("\n")
         if lines[0].trim() != "identifiers"
@@ -75,12 +75,12 @@ class AtomizeDDCD
 
     parent = this
 
-    checkDCD.stdout.on('data', (data) ->
+    checkDCD.stdout.on("data", (data) ->
       parent.startServer() unless data == "Server is running\n"
     )
 
-    checkDCD.stderr.on('data', (data) -> return)
-    checkDCD.on('exit', (code) -> return)
+    checkDCD.stderr.on("data", (data) -> return)
+    checkDCD.on("exit", (code) -> return)
 
     console.log("DCD: ready")
 
@@ -105,15 +105,15 @@ class AtomizeDDCD
       env: process.env
     )
 
-    @dcdServer.stdout.on('data', (data) ->
+    @dcdServer.stdout.on("data", (data) ->
       console.log("[dcdServer][ ] " + data);
     )
 
-    @dcdServer.stderr.on('data', (data) ->
+    @dcdServer.stderr.on("data", (data) ->
       console.log("[dcdServer][!] " + data);
 		)
 
-    @dcdServer.on('exit', (code) ->
+    @dcdServer.on("exit", (code) ->
       console.log("[dcdServer] Stopped with code: " + code);
 		)
 
