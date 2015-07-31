@@ -32,7 +32,7 @@ class DubConfig extends EventEmitter
 	getImports: (config) ->
 		imports = atom.config.get("atomize-d.dImportPaths")
 
-		imports.push.apply @config?.importPaths or "source/"
-		imports.push.apply @config.configurations[config].importPaths if @config?.configurations?[config]?.importPaths
+		imports.push.apply imports, @config?.importPaths or "source/"
+		imports.push.apply imports, @config.configurations[config].importPaths if @config?.configurations?[config]?.importPaths
 
 		return imports
