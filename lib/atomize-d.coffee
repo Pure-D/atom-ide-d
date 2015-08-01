@@ -22,7 +22,6 @@ module.exports = AtomizeD =
     @dcd = new AtomizeDDCD
     @dcd.start()
 
-    # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
   getProvider: ->
@@ -30,4 +29,4 @@ module.exports = AtomizeD =
 
   deactivate: ->
     @subscriptions.dispose()
-    @dcd = null
+    @dcd.stop()

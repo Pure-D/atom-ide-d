@@ -1,6 +1,7 @@
 ChildProcess = require 'child_process'
 
 String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
+String::capitalize = -> @replace /^./, (match) -> match.toUpperCase()
 
 module.exports =
 class AtomizeDDCD
@@ -18,11 +19,12 @@ class AtomizeDDCD
     self = this
 
     new Promise (resolve) ->
-      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-c", editor.getBuffer().characterIndexForPosition(bufferPosition).toString()],
+      buffer = editor.getBuffer();
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-c", buffer.characterIndexForPosition(bufferPosition)],
         cwd: atom.project.getPaths()[0],
         env: process.env
       )
-      dcdClient.stdin.write(editor.getBuffer().getText())
+      dcdClient.stdin.write(buffer.getText())
       dcdClient.stdin.end()
 
       data = ""
@@ -38,20 +40,46 @@ class AtomizeDDCD
       dcdClient.on('exit', (code) ->
         return resolve([]) if data.trim().length == 0
         lines = data.trim().split("\n")
-        if lines[0].trim() != "identifiers"
-          atom.notifications.addError("Invalid data:\n"+data);
-          resolve([])
-        else
+        if lines[0].trim() == "identifiers"
           suggestions = []
           for i in [1 .. lines.length]
             if !lines[i] || lines[i].trim().length == 0
               continue
             splits = lines[i].trim().split(/\s+/)
+            console.log("Lines: " + lines);
+            console.log("Splits: " + splits);
             suggestions.push
               text: splits[0]
-              leftLabel: splits[1]
+              type: self.getType(splits[1])
+              rightLabel: self.getType(splits[1]).capitalize()
           resolve(suggestions)
+        else if lines[0].trim() == "calltips"
+          #Need another autocompleting thingy, that doesn't auto insert when
+          #there is only one symbol and the thingy can show the current args
+          resolve([])
+        else
+          atom.notifications.addError("Invalid data:\n"+data);
+          resolve([])
   		)
+
+  getType: (c) ->
+    return "class" if c == "c"
+    return "interface" if c == "i"
+    return "struct" if c == "s"
+    return "union" if c == "u"
+    return "variable" if c == "v"
+    return "member variable" if c == "m"
+    return "keyword" if c == "k"
+    return "function" if c == "f"
+    return "enum" if c == "g"
+    return "enum member" if c == "e"
+    return "package" if c == "P"
+    return "module" if c == "M"
+    return "array" if c == "a"
+    return "associative array" if c == "A"
+    return "alias" if c == "l"
+    return "template" if c == "t"
+    return "mixin template" if c == "T"
 
   constructor: ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
@@ -75,24 +103,25 @@ class AtomizeDDCD
 
     parent = this
 
-    checkDCD.stdout.on('data', (data) ->
-      parent.startServer() unless data == "Server is running\n"
-    )
+    checkDCD.stdout.on('data', (data) -> return)
 
     checkDCD.stderr.on('data', (data) -> return)
-    checkDCD.on('exit', (code) -> return)
-
-    console.log("DCD: ready")
+    checkDCD.on('exit', (code) ->
+      parent.startServer() if code == 1
+    )
 
     atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
       importPaths = atom.config.get("atomize-d.dImportPaths")
       args = []
       args.push "-I" + importPath for importPath in importPaths
 
-      dcdClient = ChildProcess.spawn(parent.dcdClientPath, args,
+      dcdAddImports = ChildProcess.spawn(parent.dcdClientPath, args,
         cwd: atom.project.getPaths()[0],
         env: process.env
       )
+      dcdAddImports.stdout.on('data', (data) -> return)
+      dcdAddImports.stderr.on('data', (data) -> return)
+      dcdAddImports.on('exit', (code) -> return)
     )
 
   startServer: ->
@@ -105,17 +134,15 @@ class AtomizeDDCD
       env: process.env
     )
 
-    @dcdServer.stdout.on('data', (data) ->
-      console.log("[dcdServer][ ] " + data);
-    )
+    @dcdServer.stdout.on('data', (data) -> return)
 
     @dcdServer.stderr.on('data', (data) ->
-      console.log("[dcdServer][!] " + data);
-		)
+      atom.notifications.addError("DCD-Server error: " + data);
+    )
 
-    @dcdServer.on('exit', (code) ->
-      console.log("[dcdServer] Stopped with code: " + code);
-		)
+    @dcdServer.on('exit', (code) -> return)
+    @dcdServerRunning = true
 
-  destroy: ->
-    ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
+  stop: ->
+    #Will stop in the future, when we have one dcd-server for each project
+    #ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
