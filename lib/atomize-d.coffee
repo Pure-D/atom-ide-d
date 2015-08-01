@@ -21,15 +21,16 @@ module.exports = AtomizeD =
         type: "string"
 
   activate: (state) ->
-    @dcd = new AtomizeDDCD
-
     @config = new DubConfig
-    @config.parse()
+
+    @dcd = new AtomizeDDCD(@config)
 
     self = this
 
     @config.on "done", () ->
       self.dcd.start self.config
+
+    @config.parse()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable

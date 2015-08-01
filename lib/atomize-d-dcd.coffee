@@ -7,6 +7,7 @@ class AtomizeDDCD
   dcdServer: null
   dcdClientPath: null
   dcdServerPath: null
+  dub: null
 
   selector: ".source.d, .source.di"
   disableForSelector: ".source.d .comment, .source.d .string"
@@ -53,9 +54,12 @@ class AtomizeDDCD
           resolve(suggestions)
   		)
 
-  constructor: ->
+  constructor: (dub) ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
     @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
+    @dub = dub
+    console.log("STARTING")
+    console.log dub
 
     parent = this
 
@@ -75,9 +79,9 @@ class AtomizeDDCD
 
     parent = this
 
-    checkDCD.stdout.on("data", (data) ->
-      parent.startServer() unless data == "Server is running\n"
-    )
+    checkDCD.stdout.on("data", ((data) ->
+      this.startServer() unless data == "Server is running\n"
+    ).bind(this))
 
     checkDCD.stderr.on("data", (data) -> return)
     checkDCD.on("exit", (code) -> return)
@@ -85,7 +89,7 @@ class AtomizeDDCD
     console.log("DCD: ready")
 
     atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
-      importPaths = atom.config.get("atomize-d.dImportPaths")
+      importPaths = @dub.getImports()
       args = []
       args.push "-I" + importPath for importPath in importPaths
 
@@ -96,7 +100,8 @@ class AtomizeDDCD
     )
 
   startServer: ->
-    importPaths = atom.config.get("atomize-d.dImportPaths")
+    console.log this
+    importPaths = @dub.getImports()
     args = []
     args.push "-I" + importPath for importPath in importPaths
 
