@@ -63,23 +63,26 @@ class AtomizeDDCD
   		)
 
   getType: (c) ->
-    return "class" if c == "c"
-    return "interface" if c == "i"
-    return "struct" if c == "s"
-    return "union" if c == "u"
-    return "variable" if c == "v"
-    return "member variable" if c == "m"
-    return "keyword" if c == "k"
-    return "function" if c == "f"
-    return "enum" if c == "g"
-    return "enum member" if c == "e"
-    return "package" if c == "P"
-    return "module" if c == "M"
-    return "array" if c == "a"
-    return "associative array" if c == "A"
-    return "alias" if c == "l"
-    return "template" if c == "t"
-    return "mixin template" if c == "T"
+    types[c]
+
+  types =
+    c: "class"
+    i: "interface"
+    s: "struct"
+    u: "union"
+    v: "variable"
+    m: "member variable"
+    k: "keyword"
+    f: "function"
+    g: "enum"
+    e: "enum member"
+    P: "package"
+    M: "module"
+    a: "array"
+    A: "associative array"
+    l: "alias"
+    t: "template"
+    T: "mixin template"
 
   constructor: ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
