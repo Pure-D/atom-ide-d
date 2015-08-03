@@ -1,9 +1,11 @@
-{CompositeDisposable} = require 'atom'
-AtomizeDDCD = require './atomize-d-dcd'
+{CompositeDisposable} = require "atom"
+AtomizeDDCD = require "./atomize-d-dcd"
+DubConfig = require "./dub-config"
 
 module.exports = AtomizeD =
   subscriptions: null
   dcd: null
+  config: null
 
   config:
     dcdClientPath:
@@ -19,8 +21,15 @@ module.exports = AtomizeD =
         type: "string"
 
   activate: (state) ->
-    @dcd = new AtomizeDDCD
-    @dcd.start()
+    @config = new DubConfig
+
+    @dcd = new AtomizeDDCD(@config)
+
+    self = this
+
+    @config.parse(() ->
+      self.dcd.start self.config
+    )
 
     @subscriptions = new CompositeDisposable
 
