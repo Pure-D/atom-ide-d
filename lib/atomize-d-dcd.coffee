@@ -85,12 +85,10 @@ class AtomizeDDCD
     t: "template"
     T: "mixin template"
 
-  constructor: ->
+  constructor: (dub) ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
     @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
     @dub = dub
-    console.log("STARTING")
-    console.log dub
 
     parent = this
 
@@ -103,6 +101,8 @@ class AtomizeDDCD
     )
 
   start: ->
+    console.log("STARTING")
+
     checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
       cwd: atom.project.getPaths()[0],
       env: process.env
@@ -142,17 +142,17 @@ class AtomizeDDCD
         env: process.env
       )
 
-    @dcdServer.stdout.on('data', (data) ->
-      console.log("[dcdServer][ ] " + data);
-    )
+      @dcdServer.stdout.on('data', (data) ->
+        console.log("[dcdServer][ ] " + data);
+      )
 
       @dcdServer.stderr.on("data", (data) ->
-      console.log("[dcdServer][!] " + data);
-    )
+        console.log("[dcdServer][!] " + data);
+      )
 
-    @dcdServer.on('exit', (code) ->
-      console.log("[dcdServer] Stopped with code: " + code);
-    )
+      @dcdServer.on('exit', (code) ->
+        console.log("[dcdServer] Stopped with code: " + code);
+      )
 
       console.log "Done"
     ).bind(this))
