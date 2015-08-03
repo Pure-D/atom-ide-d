@@ -6,19 +6,20 @@
 	"keywords": ["d", "ide", "autocomplete"],
 	"repository": "https://github.com/atom/atomize-d",
 	"license": "MIT",
-	"engines":
-	{
+	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
-	"providedServices":
-	{
-		"autocomplete.provider":
-		{
-			"versions":
-			{
+	"providedServices": {
+		"autocomplete.provider": {
+			"versions": {
 				"2.0.0": "getProvider"
 			}
-		}
+		},
+  	"linter": {
+    	"versions": {
+      	"1.0.0": "provideLinter"
+    	}
+  	}
 	},
 	"dependencies":
 	{}

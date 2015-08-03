@@ -13,8 +13,8 @@
       'label': 'atomize-d'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'atomize-d:toggle'
+          'label': 'Generate project specify linter config'
+          'command': 'atomize-d:generateConfig'
         }
       ]
     ]
