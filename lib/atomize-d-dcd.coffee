@@ -1,6 +1,6 @@
-ChildProcess = require 'child_process'
+ChildProcess = require "child_process"
 
-String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
+String::endsWith   ?= (s) -> s is "" or @[-s.length..] is s
 String::capitalize = -> @replace /^./, (match) -> match.toUpperCase()
 
 module.exports =
@@ -8,6 +8,7 @@ class AtomizeDDCD
   dcdServer: null
   dcdClientPath: null
   dcdServerPath: null
+  dub: null
 
   selector: ".source.d, .source.di"
   disableForSelector: ".source.d .comment, .source.d .string"
@@ -29,15 +30,15 @@ class AtomizeDDCD
 
       data = ""
 
-      dcdClient.stdout.on('data', (out) ->
+      dcdClient.stdout.on("data", (out) ->
         data += "" + out
       )
 
-      dcdClient.stderr.on('data', (data) ->
+      dcdClient.stderr.on("data", (data) ->
         atom.notifications.addError("DCD: " + data);
-  		)
+      )
 
-      dcdClient.on('exit', (code) ->
+      dcdClient.on("exit", (code) ->
         return resolve([]) if data.trim().length == 0
         lines = data.trim().split("\n")
         if lines[0].trim() == "identifiers"
@@ -60,7 +61,7 @@ class AtomizeDDCD
         else
           atom.notifications.addError("Invalid data:\n"+data);
           resolve([])
-  		)
+      )
 
   getType: (c) ->
     types[c]
@@ -84,9 +85,10 @@ class AtomizeDDCD
     t: "template"
     T: "mixin template"
 
-  constructor: ->
+  constructor: (dub) ->
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
     @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
+    @dub = dub
 
     parent = this
 
@@ -99,6 +101,8 @@ class AtomizeDDCD
     )
 
   start: ->
+    console.log("STARTING")
+
     checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
       cwd: atom.project.getPaths()[0],
       env: process.env
@@ -107,14 +111,12 @@ class AtomizeDDCD
     parent = this
 
     checkDCD.stdout.on('data', (data) -> return)
-
-    checkDCD.stderr.on('data', (data) -> return)
     checkDCD.on('exit', (code) ->
       parent.startServer() if code == 1
     )
 
     atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
-      importPaths = atom.config.get("atomize-d.dImportPaths")
+      importPaths = @dub.getImports()
       args = []
       args.push "-I" + importPath for importPath in importPaths
 
@@ -128,23 +130,32 @@ class AtomizeDDCD
     )
 
   startServer: ->
-    importPaths = atom.config.get("atomize-d.dImportPaths")
-    args = []
-    args.push "-I" + importPath for importPath in importPaths
 
-    @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
-      cwd: atom.project.getPaths()[0],
-      env: process.env
-    )
+    @dub.getImports(undefined, ((importPaths) ->
+      args = []
+      args.push "-I#{importPath}" for importPath in importPaths
 
-    @dcdServer.stdout.on('data', (data) -> return)
+      console.log args
 
-    @dcdServer.stderr.on('data', (data) ->
-      atom.notifications.addError("DCD-Server error: " + data);
-    )
+      @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
+        cwd: atom.project.getPaths()[0],
+        env: process.env
+      )
 
-    @dcdServer.on('exit', (code) -> return)
-    @dcdServerRunning = true
+      @dcdServer.stdout.on('data', (data) ->
+        console.log("[dcdServer][ ] " + data);
+      )
+
+      @dcdServer.stderr.on("data", (data) ->
+        console.log("[dcdServer][!] " + data);
+      )
+
+      @dcdServer.on('exit', (code) ->
+        console.log("[dcdServer] Stopped with code: " + code);
+      )
+
+      console.log "Done"
+    ).bind(this))
 
   stop: ->
     #Will stop in the future, when we have one dcd-server for each project

@@ -1,11 +1,13 @@
 {CompositeDisposable} = require "atom"
 AtomizeDDCD = require "./atomize-d-dcd"
 AtomizeDLinter = require "./atomize-d-linter"
+DubConfig = require "./dub-config"
 
 module.exports = AtomizeD =
   subscriptions: null
   dcd: null
   linter: null
+  config: null
 
   config:
     dcdClientPath:
@@ -24,8 +26,15 @@ module.exports = AtomizeD =
       default: "dscanner"
 
   activate: (state) ->
-    @dcd = new AtomizeDDCD
-    @dcd.start()
+    @config = new DubConfig
+
+    @dcd = new AtomizeDDCD(@config)
+
+    self = this
+
+    @config.parse(() ->
+      self.dcd.start self.config
+    )
 
     @linter = new AtomizeDLinter
 
