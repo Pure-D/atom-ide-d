@@ -100,27 +100,32 @@ class AtomizeDDCD
     )
 
   startServer: ->
-    console.log this
-    importPaths = @dub.getImports()
-    args = []
-    args.push "-I" + importPath for importPath in importPaths
 
-    @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
-      cwd: atom.project.getPaths()[0],
-      env: process.env
-    )
+    @dub.getImports(undefined, ((importPaths) ->
+      args = []
+      args.push "-I#{importPath}" for importPath in importPaths
 
-    @dcdServer.stdout.on("data", (data) ->
-      console.log("[dcdServer][ ] " + data);
-    )
+      console.log args
 
-    @dcdServer.stderr.on("data", (data) ->
-      console.log("[dcdServer][!] " + data);
-		)
+      @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
+        cwd: atom.project.getPaths()[0],
+        env: process.env
+      )
 
-    @dcdServer.on("exit", (code) ->
-      console.log("[dcdServer] Stopped with code: " + code);
-		)
+      @dcdServer.stdout.on("data", (data) ->
+        console.log("[dcdServer][ ] " + data);
+      )
+
+      @dcdServer.stderr.on("data", (data) ->
+        console.log("[dcdServer][!] " + data);
+  		)
+
+      @dcdServer.on("exit", (code) ->
+        console.log("[dcdServer] Stopped with code: " + code);
+  		)
+
+      console.log "Done"
+    ).bind(this))
 
   destroy: ->
     ChildProcess.spawn(@dcdClientPath, ["--shutdown"])

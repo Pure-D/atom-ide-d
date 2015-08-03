@@ -27,10 +27,9 @@ module.exports = AtomizeD =
 
     self = this
 
-    @config.on "done", () ->
+    @config.parse(() ->
       self.dcd.start self.config
-
-    @config.parse()
+    )
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
