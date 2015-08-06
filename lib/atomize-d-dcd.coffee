@@ -52,7 +52,7 @@ class AtomizeDDCD
             suggestions.push
               text: splits[0]
               type: self.getType(splits[1])
-              rightLabel: self.getType(splits[1]).capitalize()
+              rightLabel: self.getType(splits[1])?.capitalize()
           resolve(suggestions)
         else if lines[0].trim() == "calltips"
           #Need another autocompleting thingy, that doesn't auto insert when
