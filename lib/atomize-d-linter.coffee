@@ -109,7 +109,7 @@ module.exports =
     ###
     levels =
       "dscanner.bugs.backwards_slices": "error"
-      "dscanner.bugs.if_else_same": "error"
+      "dscanner.bugs.if_else_same": "warn"
       "dscanner.bugs.logic_operator_operands": "error"
       "dscanner.bugs.logic_operator_operands": "error"
       "dscanner.bugs.self_assignment": "error"
