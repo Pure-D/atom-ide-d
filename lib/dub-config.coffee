@@ -15,7 +15,7 @@ class DubConfig
 			@userPath = path.join(process.env.APPDATA, "dub")
 		else
 			@systemPath = "/var/lib/dub"
-			@userPath = path.join(process.env.HOME, "dub")
+			@userPath = path.join(process.env.HOME, ".dub")
 			if !path.isAbsolute(@userPath)
 				@userPath = process.cwd() + @userPath
 
