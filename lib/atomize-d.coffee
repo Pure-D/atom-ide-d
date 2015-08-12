@@ -47,7 +47,7 @@ module.exports = AtomizeD =
     @linter.generateConfig()
     console.log("2")
 
-  getProvider: ->
+  provideAutocomplete: ->
     @dcd
 
   provideLinter: ->

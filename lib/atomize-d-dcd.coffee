@@ -47,8 +47,6 @@ class AtomizeDDCD
             if !lines[i] || lines[i].trim().length == 0
               continue
             splits = lines[i].trim().split(/\s+/)
-            console.log("Lines: " + lines);
-            console.log("Splits: " + splits);
             suggestions.push
               text: splits[0]
               type: self.getType(splits[1])

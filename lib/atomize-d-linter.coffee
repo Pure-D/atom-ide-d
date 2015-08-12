@@ -63,8 +63,8 @@ module.exports =
     lint: (textEditor) =>
       self = this
       return new Promise (resolve, reject) =>
-        filePath = textEditor.getPath()
-        json = []
+        filePath = textEditor.getPath().replace(/\\/g, "\\\\") # Fix for windows and filenames on linux containing \ (invalid JSON when path is C:\something because of escaped character)
+        json = ""
         args = ["--report", filePath]
 
         if atom.project.contains(@dscannerConfig)
@@ -75,21 +75,22 @@ module.exports =
           command: @dscannerPath
           args: args
           stdout: (data) ->
-            json.push data
+            json += data
           exit: (code) ->
             return resolve [] unless code is 0
-            info = try JSON.parse json.join("\n")
+            info = try JSON.parse json
             return resolve [] unless info?
             return resolve [] if info.passed
-            resolve info.issues.map (issue) ->
+            obj = info.issues.map (issue) ->
               type: self.getLevel(issue.key),
               text: issue.message,
               filePath: issue.fileName or filePath,
               range: [
                 # Atom expects ranges to be 0-based
                 [issue.line, issue.column],
-                [issue.line, issue.column]
+                [issue.line, issue.column + 1]
               ]
+            resolve obj
 
         process.onWillThrowError ({error,handle}) ->
           atom.notifications.addError "Failed to run #{@executablePath}",
