@@ -50,7 +50,7 @@ module.exports =
                 obj.push
                   type: match[4],
                   text: match[5],
-                  filePath: match[1],
+                  filePath: path.join(atom.project.getPaths()[0], match[1]),
                   range: [
                     [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
                     [parseInt(match[2]) - 1, parseInt(match[3]) - 1] # Whole line
