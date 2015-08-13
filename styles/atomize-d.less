@@ -5,4 +5,43 @@
 @import "ui-variables";
 
 .atomize-d {
+  overflow: auto;
+  &.tests {
+    .title {
+      display: block;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    button.btn {
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      &:before {
+        margin-right: 8px;
+      }
+      &.untested:before {
+        color: #808080;
+      }
+      &.fail:before {
+        color: #F44336;
+      }
+      &.success:before {
+        color: #4CAF50;
+      }
+    }
+    .configs-container {
+      float: left;
+      width: 15%;
+    }
+    .output-container {
+      float: right;
+      box-sizing: border-box;
+      display: block;
+      width: 85%;
+    }
+  }
 }

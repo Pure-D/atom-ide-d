@@ -3,6 +3,7 @@ AtomizeDDCD = require "./atomize-d-dcd"
 AtomizeDLinter = require "./atomize-d-linter"
 DubConfig = require "./dub-config"
 DubLinter = require "./dub-linter"
+DubTestView = require "./dub-test-view"
 BuildSelectorView = require "./build-selector-view"
 
 module.exports = AtomizeD =
@@ -11,6 +12,8 @@ module.exports = AtomizeD =
   linter: null
   dubLinter: null
   config: null
+  testView: null
+  testViewTab: null
 
   config:
     dcdClientPath:
@@ -35,10 +38,13 @@ module.exports = AtomizeD =
     @config = new DubConfig
     config = @config
 
+    @testView = new DubTestView()
+
     @dcd = new AtomizeDDCD(@config)
 
     @config.parse () =>
       @dcd.start @config
+      @testView.update @config
 
     @linter = new AtomizeDLinter
     @dubLinter = new DubLinter
@@ -50,6 +56,19 @@ module.exports = AtomizeD =
       'atomize-d:regenerate-atom-build-file': => @generateBuildFile()
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:select-build-target': => new BuildSelectorView(config)
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atomize-d:toggle-test-view': => @toggleTestView()
+
+  toggleTestView: ->
+    pane = atom.workspace.getActivePane()
+    if @testViewTab?
+      if @testViewTab.active
+        pane.destroyItem @testViewTab
+      else
+        pane.activateItem @testViewTab
+    else
+      @testViewTab = pane.addItem @testView
+      pane.activateItem @testViewTab
 
   generateConfig: ->
     @linter.generateConfig()
