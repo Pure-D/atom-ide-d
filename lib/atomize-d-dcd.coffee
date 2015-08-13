@@ -36,6 +36,8 @@ class AtomizeDDCD
 
       dcdClient.stderr.on("data", (data) ->
         atom.notifications.addError("DCD: " + data);
+        if (data.indexOf("Unable to connect socket: Connection refused") != -1)
+          self.startServer()
       )
 
       dcdClient.on("exit", (code) ->
@@ -126,8 +128,9 @@ class AtomizeDDCD
     )
 
   startServer: ->
+    parent = this
 
-    @dub.getImports undefined, (importPaths) =>
+    @dub.getImports(undefined, (importPaths) =>
       args = []
       args.push "-I#{importPath}" for importPath in importPaths
 
@@ -142,11 +145,12 @@ class AtomizeDDCD
       @dcdServer.stderr.on "data", (data) ->
         console.log("[dcdServer][!] " + data);
 
-      @dcdServer.on 'exit', (code) ->
-        console.log("[dcdServer] Stopped with code: " + code);
-
+      @dcdServer.on('exit', (code) ->
+        #console.log("[dcdServer] Stopped with code: " + code + "\nRestarting!");
+        parent.startServer()
+      )
       console.log("DCD Ready")
-
+    )
   stop: ->
     #Will stop in the future, when we have one dcd-server for each project
     #ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
