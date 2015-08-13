@@ -41,7 +41,6 @@ module.exports =
           stderr: (data) ->
             output += data
           exit: (code) ->
-            console.log output
             lines = output.split("\n");
             obj = []
             for line in lines
