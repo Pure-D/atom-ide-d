@@ -22,7 +22,7 @@ module.exports =
     lint: (textEditor) =>
       return new Promise (resolve, reject) =>
         output = ""
-        args = ["build", "--nodeps", "--combined", "--root=" + atom.project.getPaths()[0]]
+        args = ["build", "--nodeps", "--combined", "-q", "--root=" + atom.project.getPaths()[0]]
         # --root= instead of cwd for absolute file paths
 
         if global.buildName?
@@ -45,7 +45,6 @@ module.exports =
             lines = output.split("\n");
             obj = []
             for line in lines
-              console.log line
               match = dubErrorFormat.exec(line)
               if match? && match.length >= 5
                 obj.push
@@ -56,7 +55,6 @@ module.exports =
                     [parseInt(match[2]) - 1, 0],
                     [parseInt(match[2]) - 1, 1000] # Whole line
                   ]
-            console.log obj
             resolve obj
 
         proc.onWillThrowError ({error,handle}) ->
