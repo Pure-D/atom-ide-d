@@ -145,6 +145,8 @@ class AtomizeDDCD
       @dcdServer.on 'exit', (code) ->
         console.log("[dcdServer] Stopped with code: " + code);
 
+      console.log("DCD Ready")
+
   stop: ->
     #Will stop in the future, when we have one dcd-server for each project
     #ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
