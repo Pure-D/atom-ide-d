@@ -88,7 +88,7 @@ module.exports =
               range: [
                 # Atom expects ranges to be 0-based
                 [issue.line, issue.column],
-                [issue.line, issue.column + 1]
+                [issue.line, issue.column]
               ]
             resolve obj
 

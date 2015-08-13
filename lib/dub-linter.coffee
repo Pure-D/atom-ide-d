@@ -3,7 +3,7 @@ fs = require "fs"
 path = require "path"
 
 # path(lineNumber): (Deprecation|Warning|Error): <message>
-dubErrorFormat = /(.*?)\((\d+)\): (Deprecation|Warning|Error): (.*)/g;
+dubErrorFormat = /(.*?)\((\d+),(\d+)\): (Deprecation|Warning|Error): (.*)/g;
 
 module.exports =
   class DubLinter
@@ -22,20 +22,21 @@ module.exports =
     lint: (textEditor) =>
       return new Promise (resolve, reject) =>
         output = ""
-        args = ["build", "--nodeps", "--combined", "-q", "--root=" + atom.project.getPaths()[0]]
+        args = ["build", "--nodeps", "--combined", "-q"]
         # --root= instead of cwd for absolute file paths
 
         if global.buildName?
           args.push "--config=" + global.buildName
 
         env = Object.create(process.env)
-        env.DFLAGS = "-o-"
+        env.DFLAGS = "-o- -vcolumns"
 
         proc = new BufferedProcess
           command: @dubPath
           args: args
           options:
             env: env
+            cwd: atom.project.getPaths()[0]
           stdout: (data) ->
             output += data
           stderr: (data) ->
@@ -45,14 +46,14 @@ module.exports =
             obj = []
             for line in lines
               match = dubErrorFormat.exec(line)
-              if match? && match.length >= 5
+              if match? && match.length >= 6
                 obj.push
-                  type: match[3],
-                  text: match[4],
+                  type: match[4],
+                  text: match[5],
                   filePath: match[1],
                   range: [
-                    [parseInt(match[2]) - 1, 0],
-                    [parseInt(match[2]) - 1, 1000] # Whole line
+                    [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
+                    [parseInt(match[2]) - 1, parseInt(match[3]) - 1] # Whole line
                   ]
             resolve obj
 
