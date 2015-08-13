@@ -47,12 +47,15 @@ module.exports = AtomizeD =
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:generate-config': => @generateConfig()
     @subscriptions.add atom.commands.add 'atom-workspace',
+      'atomize-d:regenerate-atom-build-file': => @generateBuildFile()
+    @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:select-build-target': => new BuildSelectorView(config)
 
   generateConfig: ->
-    console.log("1")
     @linter.generateConfig()
-    console.log("2")
+
+  generateBuildFile: ->
+    @config.generateBuildFile()
 
   provideAutocomplete: ->
     @dcd

@@ -120,3 +120,34 @@ class DubConfig
 					)
 		else
 			callback(imports)
+
+	generateBuildFile: ->
+		file = path.join(atom.project.getPaths()[0], ".atom-build.json")
+		dub = atom.config.get("atomize-d.dubPath")
+		json =
+			cmd: dub
+			args: ["build"]
+			name: "Build Default"
+			sh: false
+			targets:
+				"Run Default":
+					cmd: dub
+					sh: false
+					args: ["run"]
+		configs = @getConfigs()
+		for config in configs
+			json.targets["Build #{config.name}"] =
+				cmd: dub
+				sh: false
+				args: ["build", "--config=#{config.name}"]
+			if config.targetType == "library"
+				continue
+			json.targets["Run #{config.name}"] =
+				cmd: dub
+				sh: false
+				args: ["run", "--config=#{config.name}"]
+		fs.writeFile file, JSON.stringify(json, null, "\t"), (err) ->
+			if err
+				atom.notifications.addError "Failed to generate atom-build file",
+					detail: err
+					dismissable: true
