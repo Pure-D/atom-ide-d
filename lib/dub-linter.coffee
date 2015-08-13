@@ -22,7 +22,7 @@ module.exports =
     lint: (textEditor) =>
       return new Promise (resolve, reject) =>
         output = ""
-        args = ["build", "--nodeps", "--root=" + atom.project.getPaths()[0]]
+        args = ["build", "--nodeps", "--combined", "--root=" + atom.project.getPaths()[0]]
         # --root= instead of cwd for absolute file paths
 
         if global.buildName?
