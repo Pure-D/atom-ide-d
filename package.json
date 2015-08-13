@@ -30,6 +30,7 @@
 	"dependencies":
 	{
 		"semver": "~5.0.1",
-		"async": "~1.4.0"
+		"async": "~1.4.0",
+		"atom-space-pen-views": "~2.1.0"
 	}
 }

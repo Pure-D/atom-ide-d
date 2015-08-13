@@ -2,11 +2,14 @@
 AtomizeDDCD = require "./atomize-d-dcd"
 AtomizeDLinter = require "./atomize-d-linter"
 DubConfig = require "./dub-config"
+DubLinter = require "./dub-linter"
+BuildSelectorView = require "./build-selector-view"
 
 module.exports = AtomizeD =
   subscriptions: null
   dcd: null
   linter: null
+  dubLinter: null
   config: null
 
   config:
@@ -24,23 +27,27 @@ module.exports = AtomizeD =
     dscannerPath:
       type: "string"
       default: "dscanner"
+    dubPath:
+      type: "string"
+      default: "dub"
 
   activate: (state) ->
     @config = new DubConfig
+    config = @config
 
     @dcd = new AtomizeDDCD(@config)
 
-    self = this
-
-    @config.parse(() ->
-      self.dcd.start self.config
-    )
+    @config.parse () =>
+      @dcd.start @config
 
     @linter = new AtomizeDLinter
+    @dubLinter = new DubLinter
 
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'atomize-d:generateConfig': => @generateConfig()
+      'atomize-d:generate-config': => @generateConfig()
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atomize-d:select-build-target': => new BuildSelectorView(config)
 
   generateConfig: ->
     console.log("1")
@@ -51,7 +58,7 @@ module.exports = AtomizeD =
     @dcd
 
   provideLinter: ->
-    @linter
+    [@linter, @dubLinter]
 
   deactivate: ->
     @subscriptions.dispose()

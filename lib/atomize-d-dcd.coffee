@@ -99,8 +99,6 @@ class AtomizeDDCD
     )
 
   start: ->
-    console.log("STARTING")
-
     checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
       cwd: atom.project.getPaths()[0],
       env: process.env
@@ -114,46 +112,38 @@ class AtomizeDDCD
     )
 
     atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
-      importPaths = @dub.getImports()
-      args = []
-      args.push "-I" + importPath for importPath in importPaths
+      @dub.getImports undefined, (importPaths) =>
+        args = []
+        args.push "-I" + importPath for importPath in importPaths
 
-      dcdAddImports = ChildProcess.spawn(parent.dcdClientPath, args,
-        cwd: atom.project.getPaths()[0],
-        env: process.env
-      )
-      dcdAddImports.stdout.on('data', (data) -> return)
-      dcdAddImports.stderr.on('data', (data) -> return)
-      dcdAddImports.on('exit', (code) -> return)
+        dcdAddImports = ChildProcess.spawn(parent.dcdClientPath, args,
+          cwd: atom.project.getPaths()[0],
+          env: process.env
+        )
+        dcdAddImports.stdout.on('data', (data) -> return)
+        dcdAddImports.stderr.on('data', (data) -> return)
+        dcdAddImports.on('exit', (code) -> return)
     )
 
   startServer: ->
 
-    @dub.getImports(undefined, ((importPaths) ->
+    @dub.getImports undefined, (importPaths) =>
       args = []
       args.push "-I#{importPath}" for importPath in importPaths
-
-      console.log args
 
       @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
         cwd: atom.project.getPaths()[0],
         env: process.env
       )
 
-      @dcdServer.stdout.on('data', (data) ->
+      @dcdServer.stdout.on 'data', (data) ->
         console.log("[dcdServer][ ] " + data);
-      )
 
-      @dcdServer.stderr.on("data", (data) ->
+      @dcdServer.stderr.on "data", (data) ->
         console.log("[dcdServer][!] " + data);
-      )
 
-      @dcdServer.on('exit', (code) ->
+      @dcdServer.on 'exit', (code) ->
         console.log("[dcdServer] Stopped with code: " + code);
-      )
-
-      console.log "Done"
-    ).bind(this))
 
   stop: ->
     #Will stop in the future, when we have one dcd-server for each project

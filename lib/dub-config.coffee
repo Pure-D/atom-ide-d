@@ -20,8 +20,7 @@ class DubConfig
 				@userPath = process.cwd() + @userPath
 
 	parse: (callback, cwd = atom.project.getPaths()[0]) ->
-		self = this
-		fs.readdir(cwd, (err, files) ->
+		fs.readdir(cwd, (err, files) =>
 			if(err)
 				console.error err
 				callback(err)
@@ -34,8 +33,8 @@ class DubConfig
 				else
 					callback("No project file found")
 					return
-				fs.readFile(path.join(cwd, "dub.json"), (err, data) ->
-					self.config = JSON.parse(data.toString())
+				fs.readFile(path.join(cwd, file), (err, data) =>
+					@config = JSON.parse(data.toString())
 					callback(err)
 				)
 		)
@@ -106,8 +105,8 @@ class DubConfig
 
 
 					cfg = new DubConfig
-					cfg.parse.call self, (() ->
-						cfg.getImports.call(self, undefined, ((newImports) ->
+					cfg.parse (() ->
+						cfg.getImports(undefined, ((newImports) ->
 							imports.push.apply imports, newImports
 							cb()
 							), imports, maxPath)
