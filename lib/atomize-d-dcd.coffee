@@ -55,11 +55,15 @@ class AtomizeDDCD
               rightLabel: self.getType(splits[1])?.capitalize()
           resolve(suggestions)
         else if lines[0].trim() == "calltips"
-          #Need another autocompleting thingy, that doesn't auto insert when
-          #there is only one symbol and the thingy can show the current args
-          resolve([])
+          hint =
+            rightLabel: lines[1]
+            text: "_",
+            snippet: "",
+            replacementPrefix: "",
+            className: "d-autocomplete-suggestion-type-hint"
+          resolve([hint])
         else
-          atom.notifications.addError("Invalid data:\n"+data);
+          atom.notifications.addError("Invalid data:\n" + data);
           resolve([])
       )
 

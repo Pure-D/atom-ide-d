@@ -4,6 +4,31 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
+atom-overlay.autocomplete-plus autocomplete-suggestion-list.autocomplete-suggestion-list.select-list.popover-list {
+  .d-autocomplete-suggestion-type-hint,
+  .d-autocomplete-suggestion-type-hint.selected,
+  .d-autocomplete-suggestion-error,
+  .d-autocomplete-suggestion-error.selected {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+
+    .word {
+      display: none;
+    }
+
+    .right-label {
+      float: none;
+      font-size: 12px;
+      position: relative;
+      padding: 0 10px;
+      margin: 0;
+      text-overflow: clip;
+      overflow: auto;
+    }
+  }
+}
+
 .atomize-d {
   overflow: auto;
   &.tests {
