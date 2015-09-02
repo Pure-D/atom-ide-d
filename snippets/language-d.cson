@@ -1,22 +1,22 @@
 ".source.d":
-	"if":
+	"if+condition":
 		"prefix": "if"
 		"body": "if($1) {$2}"
-	"elseif":
+	"else if":
 		"prefix": "elif"
 		"body": "else if($1) {$2}"
-	"else":
+	"else+braces":
 		"prefix": "el"
 		"body": "else {$1}"
-	"switch":
+	"switch+case":
 		"prefix": "sw"
 		"body": """
 switch($1) {$2
 	default:
 		break;
 }"""
-	"case":
-		"prefix": "case"
+	"case+value":
+		"prefix": "cs"
 		"body": """case $1:
 	${2:break;}"""
 	"Exception template":
