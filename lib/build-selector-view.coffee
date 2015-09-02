@@ -5,7 +5,6 @@ module.exports =
     constructor: (dub) ->
       super
       @addClass('overlay from-top')
-      console.log dub
       @setItems(dub.getConfigs().map (config) -> config.name)
       @panel ?= atom.workspace.addModalPanel(item: this)
       @panel.show()
