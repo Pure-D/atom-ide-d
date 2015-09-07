@@ -20,6 +20,7 @@ class DubConfig
 				@userPath = process.cwd() + @userPath
 
 	parse: (callback, cwd = atom.project.getPaths()[0]) ->
+		return if typeof cwd != "string"
 		fs.readdir(cwd, (err, files) =>
 			if(err)
 				console.error err

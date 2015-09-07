@@ -4,7 +4,7 @@
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
 	"keywords": ["d", "ide", "autocomplete"],
-	"repository": "https://github.com/atom/atomize-d",
+	"repository": "https://github.com/Vild/atomize-d",
 	"license": "MIT",
 	"engines":
 	{
