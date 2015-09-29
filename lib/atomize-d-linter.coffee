@@ -84,10 +84,12 @@ module.exports =
             info = try JSON.parse json
             return resolve [] unless info?
             return resolve [] if info.passed
-            obj = info.issues.map (issue) ->
+            # Hopefully fixes the other file error line not being removed
+            issues = (issue for issue in info.issues when issue.fileName == filePath)
+            obj = issues.map (issue) ->
               type: self.getLevel(issue.key),
               text: issue.message,
-              filePath: issue.fileName or filePath,
+              filePath: issue.fileName,
               range: [
                 # Atom expects ranges to be 0-based
                 [issue.line, issue.column],
