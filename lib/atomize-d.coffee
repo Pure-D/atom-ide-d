@@ -1,4 +1,4 @@
-{CompositeDisposable, Directory} = require "atom"
+{CompositeDisposable, Directory, File} = require "atom"
 AtomizeDDCD = require "./atomize-d-dcd"
 AtomizeDLinter = require "./atomize-d-linter"
 DubConfig = require "./dub-config"
@@ -19,6 +19,7 @@ module.exports = AtomizeD =
   testView: null
   testViewTab: null
   templateDir: null
+  dubWatchTimeout: -1
 
   config:
     dcdClientPath:
@@ -39,7 +40,17 @@ module.exports = AtomizeD =
       type: "string"
       default: "dub"
 
+  dubChange: ->
+    @config.parse () =>
+      clearTimeout(@dubWatchTimeout)
+      @dubWatchTimeout = setTimeout(=>
+        @dcd.updateImports()
+        @testView.update @config
+      , 1000)
+
   activate: (state) ->
+    @subscriptions = new CompositeDisposable
+
     @templateDir = path.join(atom.getConfigDirPath(), "d-templates");
 
     @config = new DubConfig
@@ -53,10 +64,13 @@ module.exports = AtomizeD =
       @dcd.start @config
       @testView.update @config
 
+      @subscriptions.add new Directory(@config.getPackageDirectory()).onDidChange(@dubChange.bind(this))
+      @subscriptions.add new File(@config.getDubJson()).onDidChange(@dubChange.bind(this))
+      console.log @config.getDubJson()
+
     @linter = new AtomizeDLinter
     @dubLinter = new DubLinter
 
-    @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:generate-config': => @generateConfig()
     @subscriptions.add atom.commands.add 'atom-workspace',

@@ -6,6 +6,7 @@ async = require "async"
 module.exports =
 class DubConfig
 	config: null
+	configPath: ""
 	systemPath: ""
 	userPath: ""
 
@@ -17,7 +18,7 @@ class DubConfig
 			@systemPath = "/var/lib/dub"
 			@userPath = path.join(process.env.HOME, ".dub")
 			if !path.isAbsolute(@userPath)
-				@userPath = process.cwd() + @userPath
+				@userPath = path.join(process.cwd(), @userPath)
 
 	parse: (callback, cwd = atom.project.getPaths()[0]) ->
 		return if typeof cwd != "string"
@@ -35,10 +36,17 @@ class DubConfig
 					callback("No project file found")
 					return
 				fs.readFile(path.join(cwd, file), (err, data) =>
+					@configPath = path.join(cwd, file)
 					@config = JSON.parse(data.toString())
 					callback(err)
 				)
 		)
+
+	getPackageDirectory: ->
+		path.join(@userPath, "packages")
+
+	getDubJson: ->
+		@configPath
 
 	getDependencies: ->
 		return @config?.dependencies or {}
@@ -72,6 +80,16 @@ class DubConfig
 		imports.push.apply imports, @config?.sourcePaths or ["source/"]
 		imports.push.apply imports, @getConfig(config).importPaths if config? and @getConfig(config)?.importPaths
 
+		found = []
+		for imp in imports
+			imp = path.normalize(imp)
+			if !path.isAbsolute(imp)
+				imp = path.join cwd, imp
+			if found.indexOf(imp) != -1
+				continue
+			found.push path.normalize(imp)
+		imports = found
+
 		dependencies = @getDependencies()
 
 		self = this
@@ -99,10 +117,10 @@ class DubConfig
 					max = semver.maxSatisfying(versions, found.target)
 					if !max
 						return cb() # not found
-					maxPath = path.join(self.userPath, "packages", "#{found.name}-#{max}")
+					bestPathMatch = path.join(self.userPath, "packages", "#{found.name}-#{max}")
 
 					for imp in imports
-						if imp.indexOf(maxPath) == 0
+						if imp.indexOf(bestPathMatch) == 0
 							return cb() # already imported
 
 
@@ -111,8 +129,8 @@ class DubConfig
 						cfg.getImports(undefined, ((newImports) ->
 							imports.push.apply imports, newImports
 							cb()
-							), imports, maxPath)
-						), maxPath
+						), imports, bestPathMatch)
+					), bestPathMatch
 
 					), ((err) ->
 						if(err)

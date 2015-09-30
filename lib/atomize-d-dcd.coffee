@@ -117,19 +117,22 @@ class AtomizeDDCD
       parent.startServer() if code == 1
     )
 
-    atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) ->
-      @dub.getImports undefined, (importPaths) =>
-        args = []
-        args.push "-I" + importPath for importPath in importPaths
-
-        dcdAddImports = ChildProcess.spawn(parent.dcdClientPath, args,
-          cwd: atom.project.getPaths()[0],
-          env: process.env
-        )
-        dcdAddImports.stdout.on('data', (data) -> return)
-        dcdAddImports.stderr.on('data', (data) -> return)
-        dcdAddImports.on('exit', (code) -> return)
+    atom.config.onDidChange("atomize-d.dImportPaths", ({newValue, oldValue}) =>
+      @updateImports()
     )
+
+  updateImports: ->
+    @dub.getImports undefined, (importPaths) =>
+      args = []
+      args.push "-I" + importPath for importPath in importPaths
+
+      dcdAddImports = ChildProcess.spawn(@dcdClientPath, args,
+        cwd: atom.project.getPaths()[0],
+        env: process.env
+      )
+      dcdAddImports.stdout.on('data', (data) -> return)
+      dcdAddImports.stderr.on('data', (data) -> return)
+      dcdAddImports.on('exit', (code) -> return)
 
   startServer: ->
     parent = this
