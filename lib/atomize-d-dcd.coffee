@@ -35,7 +35,7 @@ class AtomizeDDCD
       )
 
       dcdClient.stderr.on("data", (data) ->
-        atom.notifications.addError("DCD: " + data);
+        #atom.notifications.addError("DCD: " + data);
         if (data.indexOf("Unable to connect socket: Connection refused") != -1)
           self.startServer()
       )
