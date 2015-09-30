@@ -27,6 +27,12 @@ module.exports =
         button.textContent = config.name
         button.onclick = (e) => @build(e)
         @testsList.append(button)
+      button = document.createElement("button")
+      button.setAttribute("class", "icon-question untested btn btn-default")
+      button.setAttribute("config", "Default")
+      button.textContent = "Default"
+      button.onclick = (e) => @build(e)
+      @testsList.append(button)
 
     build: (event) ->
       if @process?
@@ -37,10 +43,17 @@ module.exports =
 
       @clearOutput()
       @appendOutput("Starting build of #{config}...\n\n")
-      @appendOutput("#{atom.config.get("atomize-d.dubPath")} test --config=#{config}\n\n")
+      command = "#{atom.config.get("atomize-d.dubPath")} test"
+      if config != "Default"
+        command += "--config=#{config}"
+      @appendOutput("#{command}\n\n")
+
+      args = ["test"]
+      if config != "Default"
+        args.push "--config=#{config}"
 
       try
-        @process = ChildProcess.spawn atom.config.get("atomize-d.dubPath"), ["test", "--config=#{config}"], cwd: atom.project.getPaths()[0]
+        @process = ChildProcess.spawn atom.config.get("atomize-d.dubPath"), args, cwd: atom.project.getPaths()[0]
 
       catch error
         atom.notifications.addError "Failed to run #{@executablePath}",

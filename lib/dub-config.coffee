@@ -44,7 +44,8 @@ class DubConfig
 		return @config?.dependencies or {}
 
 	getConfigs: ->
-		return @config?.configurations or []
+		configs = @config?.configurations or []
+		return configs
 
 	getConfig: (name) ->
 		for config in @config.configurations
