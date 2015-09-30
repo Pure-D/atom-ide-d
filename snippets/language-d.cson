@@ -351,10 +351,10 @@ class ${1:MyException} : ${4:Exception} {
 		"body": "T opCast(T)() {$1}"
 	"opBinary":
 		"prefix": "opbin"
-		"body": "T opBinary(string op)(T rhs) {$1}"
+		"body": "T opBinary(string op, T)(T rhs) {$1}"
 	"opBinaryRight":
 		"prefix": "opbinr"
-		"body": "T opBinaryRight(string op)(T rhs) {$1}"
+		"body": "T opBinaryRight(string op, T)(T rhs) {$1}"
 	"opEquals":
 		"prefix": "opeq"
 		"body": "bool opEquals(Object b) {$1}"
@@ -369,7 +369,7 @@ class ${1:MyException} : ${4:Exception} {
 		"body": "void opAssign($1) {$2}"
 	"opOpAssign":
 		"prefix": "opopass"
-		"body": "void opAssign(string op)($1) {$2}"
+		"body": "void opOpAssign(string op)($1) {$2}"
 	"opIndex":
 		"prefix": "opin"
 		"body": "${1:void} opIndex($2) {$3}"
