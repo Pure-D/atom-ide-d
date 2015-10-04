@@ -113,7 +113,7 @@ class DubConfig
 
 				async.each allFound, ((found, cb) ->
 					versions = []
-					versions.push entry.substr(found.name.length + 1) for entry in found.entries when entry.substr(found.name.length + 1) != "master"
+					versions.push entry.substr(found.name.length + 1).replace(/_/g, "+") for entry in found.entries when entry.substr(found.name.length + 1) != "master"
 					max = semver.maxSatisfying(versions, found.target)
 					if !max
 						return cb() # not found
