@@ -60,6 +60,43 @@ class DubConfig
 			return config if config?.name == name
 		return undefined
 
+	compareVersion: (aOrg, bOrg) ->
+		if aOrg == undefined
+			return bOrg
+		a = aOrg.split(/(?:\.|_)+/)
+		b = bOrg.split(/(?:\.|_)+/)
+		l = Math.min(a.length, b.length)
+		i = 0
+		while i < l
+			an = parseInt(a[i], 10)
+			bn = parseInt(b[i], 10)
+			d = an - bn
+			if d != 0
+				if d < 0
+					return bOrg
+				else
+					return aOrg
+			if ("" + an).length != a[i] # a will contain letters after the number
+				if ("" + bn).length == b[i] # b will NOT contain letters after the number
+					return aOrg # A > B
+
+				aExtra = a[i].substr(("" + an).length)
+				bExtra = b[i].substr(("" + bn).length)
+
+				if aExtra < bExtra
+					return bOrg
+				else
+					return aOrg
+
+			if ("" + bn).length != b[i]
+				return bOrg # A < B
+			i++
+		d = a.length - (b.length)
+		if d < 0
+			return bOrg
+		else
+			return aOrg
+
 	getImports: (config, actualCallback, imports = atom.config.get("atomize-d.dImportPaths"), cwd = atom.project.getPaths()[0]) ->
 
 		callback = (imports) ->
@@ -114,7 +151,9 @@ class DubConfig
 				async.each allFound, ((found, cb) ->
 					versions = []
 					versions.push entry.substr(found.name.length + 1) for entry in found.entries when entry.substr(found.name.length + 1) != "master"
-					max = semver.maxSatisfying(versions, found.target)
+					max = undefined
+					max = self.compareVersion(max, ver) for ver in versions
+
 					if !max
 						return cb() # not found
 					bestPathMatch = path.join(self.userPath, "packages", "#{found.name}-#{max}")
