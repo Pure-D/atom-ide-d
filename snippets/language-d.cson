@@ -1,13 +1,13 @@
 ".source.d":
-	"if+condition":
+	"if":
 		"prefix": "if"
-		"body": "if($1) {$2}"
+		"body": "if($1)"
 	"else if":
 		"prefix": "elif"
-		"body": "else if($1) {$2}"
+		"body": "else if($1)"
 	"else+braces":
 		"prefix": "el"
-		"body": "else {$1}"
+		"body": "else"
 	"switch+case":
 		"prefix": "sw"
 		"body": """
