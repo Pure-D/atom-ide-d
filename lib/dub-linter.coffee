@@ -22,14 +22,14 @@ module.exports =
     lint: (textEditor) =>
       return new Promise (resolve, reject) =>
         output = ""
-        args = ["build", "--nodeps", "--combined", "-q"]
+        args = ["build", "--nodeps", "--combined", "-q", "--build=syntaxOnly"]
         # --root= instead of cwd for absolute file paths
 
         if global.buildName?
           args.push "--config=" + global.buildName
 
         env = Object.create(process.env)
-        env.DFLAGS = "-o- -vcolumns"
+        env.DFLAGS = "-vcolumns"
 
         proc = new BufferedProcess
           command: @dubPath
