@@ -8,8 +8,11 @@ class FormatterDFMT
 			env: process.env
 		})
 		formatted = ""
+		attachedCallback = false
 		formatter.stdout.on "data", (data) ->
 			formatted += data.toString("utf8")
-		formatter.once "exit", (code) ->
-			callback formatted
+			if not attachedCallback
+				attachedCallback = true
+				formatter.once "exit", (code) ->
+					callback formatted
 		formatter.stdin.end text
