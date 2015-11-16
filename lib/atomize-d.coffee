@@ -1,5 +1,6 @@
 {CompositeDisposable, Directory, File} = require "atom"
 AtomizeDDCD = require "./atomize-d-dcd"
+FormatterDFMT = require "./formatter-dfmt"
 AtomizeDLinter = require "./atomize-d-linter"
 DubConfig = require "./dub-config"
 DubLinter = require "./dub-linter"
@@ -13,6 +14,7 @@ fs = require "fs"
 module.exports = AtomizeD =
   subscriptions: null
   dcd: null
+  dfmt: null
   linter: null
   dubLinter: null
   config: null
@@ -28,6 +30,9 @@ module.exports = AtomizeD =
     dcdServerPath:
       type: "string"
       default: "dcd-server"
+    dfmtPath:
+      type: "string"
+      default: "dfmt"
     dImportPaths:
       type: "array"
       default: ["/usr/include/dmd/druntime/import", "/usr/include/dmd/phobos"]
@@ -59,6 +64,7 @@ module.exports = AtomizeD =
     @testView = new DubTestView()
 
     @dcd = new AtomizeDDCD(@config)
+    @dfmt = new FormatterDFMT()
 
     @config.parse () =>
       @dcd.start @config
@@ -73,6 +79,8 @@ module.exports = AtomizeD =
 
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:generate-config': => @generateConfig()
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atomize-d:format-code': => @formatCode()
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:regenerate-atom-build-file': => @generateBuildFile()
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -129,6 +137,15 @@ module.exports = AtomizeD =
           atom.notifications.addSuccess "Successfully created template directory and added #{templates.length} preset templates."
       else
         atom.notifications.addSuccess "Successfully created empty template directory."
+
+  formatCode: ->
+    editor = atom.workspace.getActivePaneItem()
+    if editor?.getBuffer?()? and editor?.getGrammar?().scopeName == "source.d"
+      buf = editor.getBuffer()
+      pos = editor.getCursorBufferPosition()
+      @dfmt.format buf.getText(), (text) =>
+        buf.setText text
+        editor.setCursorBufferPosition pos
 
   generateConfig: ->
     @linter.generateConfig()
