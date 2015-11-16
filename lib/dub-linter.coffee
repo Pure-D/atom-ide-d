@@ -3,7 +3,8 @@ fs = require "fs"
 path = require "path"
 
 # path(lineNumber): (Deprecation|Warning|Error): <message>
-dubErrorFormat = /(.*?)\((\d+)(?:,(\d+))?\): (Deprecation|Warning|Error): (.*)/g;
+dubErrorFormat = /(.*?)\((\d+),(\d+)\): (Deprecation|Warning|Error): (.*)/g;
+dubErrorFormatRel = /(.*?)\((\d+),(\d+)\): (.*)/g;
 
 module.exports =
   class DubLinter
@@ -22,14 +23,13 @@ module.exports =
     lint: (textEditor) =>
       return new Promise (resolve, reject) =>
         output = ""
-        args = ["build", "--nodeps", "--combined", "-q", "--build=syntaxOnly"]
-        # --root= instead of cwd for absolute file paths
+        args = ["build", "--nodeps", "--combined", "-q"]
 
         if global.buildName?
           args.push "--config=" + global.buildName
 
         env = Object.create(process.env)
-        env.DFLAGS = "-vcolumns"
+        env.DFLAGS = "-vcolumns -o-"
 
         proc = new BufferedProcess
           command: @dubPath
@@ -46,15 +46,27 @@ module.exports =
             obj = []
             for line in lines
               match = dubErrorFormat.exec(line)
-              if match? && match.length >= 6
+              if match
                 obj.push
                   type: match[4],
                   text: match[5],
                   filePath: path.join(atom.project.getPaths()[0], match[1]),
                   range: [
                     [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
-                    [parseInt(match[2]) - 1, parseInt(match[3]) - 1] # Whole line
+                    [parseInt(match[2]) - 1, parseInt(match[3]) + 300]
                   ]
+              else
+                if line.indexOf("from here") != -1 or line.indexOf("from argument types") != -1
+                  match = dubErrorFormatRel.exec(line)
+                  if match
+                    obj.push
+                      type: "error",
+                      text: match[4],
+                      filePath: path.join(atom.project.getPaths()[0], match[1]),
+                      range: [
+                        [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
+                        [parseInt(match[2]) - 1, parseInt(match[3]) + 300]
+                      ]
             resolve obj
 
         proc.onWillThrowError ({error,handle}) ->
