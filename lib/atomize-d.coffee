@@ -72,7 +72,6 @@ module.exports = AtomizeD =
 
       @subscriptions.add new Directory(@config.getPackageDirectory()).onDidChange(@dubChange.bind(this))
       @subscriptions.add new File(@config.getDubJson()).onDidChange(@dubChange.bind(this))
-      console.log @config.getDubJson()
 
     @linter = new AtomizeDLinter
     @dubLinter = new DubLinter

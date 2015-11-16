@@ -3,7 +3,7 @@ fs = require "fs"
 path = require "path"
 
 # path(lineNumber): (Deprecation|Warning|Error): <message>
-dubErrorFormat = /(.*?)\((\d+),(\d+)\): (Deprecation|Warning|Error): (.*)/g;
+dubErrorFormat = /(.*?)\((\d+)(?:,(\d+))?\): (Deprecation|Warning|Error): (.*)/g;
 
 module.exports =
   class DubLinter

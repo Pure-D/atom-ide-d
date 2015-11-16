@@ -1,5 +1,8 @@
 {View, $, $$} = require "atom-space-pen-views"
 ChildProcess = require "child_process"
+path = require "path"
+
+errorFormat = /^(.*?)\((\d+)(?:,(\d+))?\):/;
 
 module.exports =
   class DubTestView extends View
@@ -11,7 +14,7 @@ module.exports =
           @span class: "title", "Configurations"
           @div class: "configs", outlet: "testsList" # defines @testsList as jquery element
           @button class: "btn", click: "cancel", "Cancel Test"
-        @pre class: "output-container", outlet: "output"
+        @div class: "output-container", outlet: "output"
 
     serialize: ->
 
@@ -83,8 +86,40 @@ module.exports =
     clearOutput: ->
       @output.text("")
 
+    addClickEvent: (absPath, match, el) ->
+      el.addEventListener "click", ->
+        atom.workspace.open(absPath).then ->
+          if match[3]
+            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]), parseInt(match[3])])
+          else
+            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]), 0])
+
     appendOutput: (msg) ->
-      @output.get(0).textContent += msg
+      msg = msg.toString("utf8")
+      lines = msg.split("\n")
+      for line in lines
+        match = errorFormat.exec(line)
+        if match
+          absPath = ""
+          if path.isAbsolute(match[1])
+            absPath = path.normalize(match[1])
+          else
+            absPath = path.normalize(path.join(atom.project.getPaths()[0], match[1]))
+
+          if absPath.indexOf(path.normalize(atom.project.getPaths()[0])) == 0
+            el = document.createElement("a")
+            el.setAttribute("class", "dub-test-link")
+            el.textContent = line
+            @addClickEvent(absPath, match, el)
+            @output.append(el)
+          else
+            el = document.createElement("span")
+            el.textContent = line
+            @output.append(el)
+        else
+          el = document.createElement("span")
+          el.textContent = line
+          @output.append(el)
 
     destroy: ->
 
