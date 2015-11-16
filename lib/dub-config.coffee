@@ -78,7 +78,12 @@ class DubConfig
 
 		imports.push.apply imports, @config?.importPaths or []
 		imports.push.apply imports, @config?.sourcePaths or ["source/"]
+		imports.push.apply imports, @getConfig(config).sourcePaths if config? and @getConfig(config)?.sourcePaths
 		imports.push.apply imports, @getConfig(config).importPaths if config? and @getConfig(config)?.importPaths
+
+		for sub in @config?.subPackages or []
+			imports.push.apply imports, sub.importPaths or []
+			imports.push.apply imports, sub.sourcePaths or []
 
 		found = []
 		for imp in imports
