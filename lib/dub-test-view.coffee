@@ -7,6 +7,11 @@ errorFormat = /^(.*?)\((\d+)(?:,(\d+))?\):/;
 module.exports =
   class DubTestView extends View
     process: null
+    projectRoot: null
+
+    constructor: (projectRoot) ->
+      super()
+      @projectRoot = projectRoot
 
     @content: ->
       @div class: "atomize-d tests", =>
@@ -56,7 +61,7 @@ module.exports =
         args.push "--config=#{config}"
 
       try
-        @process = ChildProcess.spawn atom.config.get("atomize-d.dubPath"), args, cwd: atom.project.getPaths()[0]
+        @process = ChildProcess.spawn atom.config.get("atomize-d.dubPath"), args, cwd: @projectRoot
 
       catch error
         atom.notifications.addError "Failed to run #{@executablePath}",
@@ -104,9 +109,9 @@ module.exports =
           if path.isAbsolute(match[1])
             absPath = path.normalize(match[1])
           else
-            absPath = path.normalize(path.join(atom.project.getPaths()[0], match[1]))
+            absPath = path.normalize(path.join(@projectRoot, match[1]))
 
-          if absPath.indexOf(path.normalize(atom.project.getPaths()[0])) == 0
+          if absPath.indexOf(path.normalize(@projectRoot)) == 0
             el = document.createElement("a")
             el.setAttribute("class", "dub-test-link")
             el.textContent = line

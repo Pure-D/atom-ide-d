@@ -9,6 +9,7 @@ class DubConfig
 	configPath: ""
 	systemPath: ""
 	userPath: ""
+	projectRoot: ""
 
 	constructor: ->
 		if process.platform == "win32"
@@ -20,8 +21,9 @@ class DubConfig
 			if !path.isAbsolute(@userPath)
 				@userPath = path.join(process.cwd(), @userPath)
 
-	parse: (callback, cwd = atom.project.getPaths()[0]) ->
-		return if typeof cwd != "string"
+	parse: (callback, cwd = null) ->
+		throw "Invalid path" if typeof cwd != "string"
+		@projectRoot = cwd
 		fs.readdir(cwd, (err, files) =>
 			if(err)
 				console.error err
@@ -60,7 +62,8 @@ class DubConfig
 			return config if config?.name == name
 		return undefined
 
-	getImports: (config, actualCallback, imports = atom.config.get("atomize-d.dImportPaths"), cwd = atom.project.getPaths()[0]) ->
+	getImports: (config, actualCallback, imports = atom.config.get("atomize-d.dImportPaths")) =>
+		cwd = @projectRoot
 
 		callback = (imports) ->
 			found = []
@@ -146,8 +149,8 @@ class DubConfig
 		else
 			callback(imports)
 
-	generateBuildFile: ->
-		file = path.join(atom.project.getPaths()[0], ".atom-build.json")
+	generateBuildFile: =>
+		file = path.join(@projectRoot, ".atom-build.json")
 		dub = atom.config.get("atomize-d.dubPath")
 		json =
 			cmd: dub

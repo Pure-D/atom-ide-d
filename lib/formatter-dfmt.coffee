@@ -2,9 +2,14 @@ ChildProcess = require "child_process"
 
 module.exports =
 class FormatterDFMT
+	projectRoot: null
+
+	constructor: (projectRoot) ->
+		@projectRoot = projectRoot
+
 	format: (text, callback) ->
 		formatter = ChildProcess.spawn(atom.config.get("atomize-d.dfmtPath"), [], {
-			cwd: atom.project.getPaths()[0],
+			cwd: @projectRoot,
 			env: process.env
 		})
 		formatted = ""

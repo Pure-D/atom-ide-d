@@ -3,12 +3,16 @@ ChildProcess = require "child_process"
 String::endsWith   ?= (s) -> s is "" or @[-s.length..] is s
 String::capitalize = -> @replace /^./, (match) -> match.toUpperCase()
 
+currentPort = 9166
+
 module.exports =
 class AtomizeDDCD
   dcdServer: null
   dcdClientPath: null
   dcdServerPath: null
   dub: null
+  projectRoot: null
+  port: 0
 
   selector: ".source.d, .source.di"
   disableForSelector: ".source.d .comment, .source.d .string"
@@ -21,8 +25,8 @@ class AtomizeDDCD
 
     new Promise (resolve) ->
       buffer = editor.getBuffer();
-      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-c", buffer.characterIndexForPosition(bufferPosition)],
-        cwd: atom.project.getPaths()[0],
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", @port, "-c", buffer.characterIndexForPosition(bufferPosition)],
+        cwd: @projectRoot,
         env: process.env
       )
       dcdClient.stdin.write(buffer.getText())
@@ -93,6 +97,7 @@ class AtomizeDDCD
     @dcdClientPath = atom.config.get("atomize-d.dcdClientPath")
     @dcdServerPath = atom.config.get("atomize-d.dcdServerPath")
     @dub = dub
+    @projectRoot = dub.projectRoot
 
     parent = this
 
@@ -105,8 +110,11 @@ class AtomizeDDCD
     )
 
   start: ->
-    checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q"],
-      cwd: atom.project.getPaths()[0],
+    @port = currentPort
+    currentPort++
+
+    checkDCD = ChildProcess.spawn(@dcdClientPath, ["-q", "-p", @port],
+      cwd: @projectRoot,
       env: process.env
     )
 
@@ -125,9 +133,11 @@ class AtomizeDDCD
     @dub.getImports undefined, (importPaths) =>
       args = []
       args.push "-I" + importPath for importPath in importPaths
+      args.push "-p"
+      args.push @port
 
       dcdAddImports = ChildProcess.spawn(@dcdClientPath, args,
-        cwd: atom.project.getPaths()[0],
+        cwd: @projectRoot,
         env: process.env
       )
       dcdAddImports.stdout.on('data', (data) -> return)
@@ -140,17 +150,19 @@ class AtomizeDDCD
     @dub.getImports(undefined, (importPaths) =>
       args = []
       args.push "-I#{importPath}" for importPath in importPaths
+      args.push "-p"
+      args.push @port
 
       @dcdServer = ChildProcess.spawn(@dcdServerPath, args,
-        cwd: atom.project.getPaths()[0],
+        cwd: @projectRoot,
         env: process.env
       )
 
       @dcdServer.stdout.on 'data', (data) ->
-        console.log("[dcdServer][ ] " + data);
+        #console.log("[dcdServer][ ] " + data);
 
       @dcdServer.stderr.on "data", (data) ->
-        console.log("[dcdServer][!] " + data);
+        #console.log("[dcdServer][!] " + data);
 
       @dcdServer.on('exit', (code) ->
         #console.log("[dcdServer] Stopped with code: " + code + "\nRestarting!");
@@ -158,6 +170,6 @@ class AtomizeDDCD
       )
       console.log("DCD Ready")
     )
-  stop: ->
-    #Will stop in the future, when we have one dcd-server for each project
-    #ChildProcess.spawn(@dcdClientPath, ["--shutdown"])
+
+  dispose: ->
+    ChildProcess.spawn(@dcdClientPath, ["--shutdown", "-p", @port])

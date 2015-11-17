@@ -12,17 +12,19 @@ module.exports =
     grammarScopes: ["source.d"]
     scope: "file"
     lintOnFly: false
+    projectRoot: null
 
     dubPath: null
 
-    constructor: ->
-
+    constructor: (projectRoot) ->
+      @projectRoot = projectRoot
       @dubPath = atom.config.get("atomize-d.dubPath")
       atom.config.onDidChange "atomize-d.dubPath", ({newValue, oldValue}) =>
         @dubPath = newValue
 
     lint: (textEditor) =>
       that = this
+      projectRoot = @projectRoot
       return new Promise (resolve, reject) =>
         output = ""
         args = ["build", "--nodeps", "--combined", "-q"]
@@ -38,7 +40,7 @@ module.exports =
           args: args
           options:
             env: env
-            cwd: atom.project.getPaths()[0]
+            cwd: projectRoot
           stdout: (data) ->
             output += data
           stderr: (data) ->
@@ -51,7 +53,7 @@ module.exports =
               if match
                 row = parseInt(match[2]) - 1
                 column = parseInt(match[3]) - 1
-                file = path.join(atom.project.getPaths()[0], match[1])
+                file = path.join(projectRoot, match[1])
                 obj.push
                   type: match[4],
                   text: match[5],
@@ -66,7 +68,7 @@ module.exports =
                   if match
                     row = parseInt(match[2]) - 1
                     column = parseInt(match[3]) - 1
-                    file = path.join(atom.project.getPaths()[0], match[1])
+                    file = path.join(projectRoot, match[1])
                     obj.push
                       type: "error",
                       text: match[4],
@@ -87,5 +89,4 @@ module.exports =
     getWordLength: (textEditor, row, column) ->
       text = textEditor.getTextInBufferRange([[row, column], [row, column + 100]])
       match = wordLengthFormat.exec(text)
-      console.log "Text: #{text}, Match: #{JSON.stringify()}"
       match?[1].length or 100

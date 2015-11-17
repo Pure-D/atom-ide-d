@@ -11,12 +11,10 @@ module.exports =
     dscannerPath: null
     dscannerConfig: null
 
-    constructor: ->
+    constructor: (projectRoot) ->
       @dscannerPath = atom.config.get("atomize-d.dscannerPath")
-      if atom.project.getPaths()[0]
-        @dscannerConfig = path.join(atom.project.getPaths()[0], "d-linter.ini")
-      else
-        @dscannerConfig = "d-linter.ini" # XXX: Needs to be reloaded on a new project
+      throw "Invalid path" if not projectRoot
+      @dscannerConfig = path.join(projectRoot, "d-linter.ini")
 
       parent = this
       atom.config.onDidChange("atomize-d.dscannerPath", ({newValue, oldValue}) ->
