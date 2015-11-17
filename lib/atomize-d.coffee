@@ -56,7 +56,7 @@ module.exports = AtomizeD =
 
     @activatedProjects = {}
     @subscriptions.add atom.project.onDidChangePaths (list) =>
-      that.projectListUpdate list
+      @projectListUpdate list
     @projectListUpdate atom.project.getPaths()
 
     @subscriptions.add atom.commands.add 'atom-workspace',
