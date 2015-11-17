@@ -4,7 +4,8 @@ path = require "path"
 
 # path(lineNumber): (Deprecation|Warning|Error): <message>
 dubErrorFormat = /(.*?)\((\d+),(\d+)\): (Deprecation|Warning|Error): (.*)/g;
-dubErrorFormatRel = /(.*?)\((\d+),(\d+)\): (.*)/g;
+dubErrorFormatCont = /(.*?)\((\d+),(\d+)\): (.*)/g;
+wordLengthFormat = /^((?:[^\s\w]+)?\w+\b)/; # (optional special characters) + word until word boundary
 
 module.exports =
   class DubLinter
@@ -21,6 +22,7 @@ module.exports =
         @dubPath = newValue
 
     lint: (textEditor) =>
+      that = this
       return new Promise (resolve, reject) =>
         output = ""
         args = ["build", "--nodeps", "--combined", "-q"]
@@ -47,25 +49,31 @@ module.exports =
             for line in lines
               match = dubErrorFormat.exec(line)
               if match
+                row = parseInt(match[2]) - 1
+                column = parseInt(match[3]) - 1
+                file = path.join(atom.project.getPaths()[0], match[1])
                 obj.push
                   type: match[4],
                   text: match[5],
-                  filePath: path.join(atom.project.getPaths()[0], match[1]),
+                  filePath: file,
                   range: [
-                    [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
-                    [parseInt(match[2]) - 1, parseInt(match[3]) + 300]
+                    [row, column],
+                    [row, column + that.getWordLength(textEditor, row, column)]
                   ]
               else
                 if line.indexOf("from here") != -1 or line.indexOf("from argument types") != -1
-                  match = dubErrorFormatRel.exec(line)
+                  match = dubErrorFormatCont.exec(line)
                   if match
+                    row = parseInt(match[2]) - 1
+                    column = parseInt(match[3]) - 1
+                    file = path.join(atom.project.getPaths()[0], match[1])
                     obj.push
                       type: "error",
                       text: match[4],
-                      filePath: path.join(atom.project.getPaths()[0], match[1]),
+                      filePath: file,
                       range: [
-                        [parseInt(match[2]) - 1, parseInt(match[3]) - 1],
-                        [parseInt(match[2]) - 1, parseInt(match[3]) + 300]
+                        [row, column],
+                        [row, column + that.getWordLength(textEditor, row, column)]
                       ]
             resolve obj
 
@@ -75,3 +83,9 @@ module.exports =
             dismissable: true
           handle()
           resolve []
+
+    getWordLength: (textEditor, row, column) ->
+      text = textEditor.getTextInBufferRange([[row, column], [row, column + 100]])
+      match = wordLengthFormat.exec(text)
+      console.log "Text: #{text}, Match: #{JSON.stringify()}"
+      match?[1].length or 100
