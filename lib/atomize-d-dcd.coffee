@@ -59,13 +59,16 @@ class AtomizeDDCD
               rightLabel: self.getType(splits[1])?.capitalize()
           resolve(suggestions)
         else if lines[0].trim() == "calltips"
-          hint =
-            rightLabel: lines[1]
-            text: "_",
-            snippet: "",
-            replacementPrefix: "",
-            className: "d-autocomplete-suggestion-type-hint"
-          resolve([hint])
+          lines.shift()
+          hint = []
+          for line in lines
+            hint.push
+              rightLabel: line,
+              text: line,
+              snippet: "",
+              replacementPrefix: "",
+              className: "d-autocomplete-suggestion-type-hint"
+          resolve(hint)
         else
           atom.notifications.addError("Invalid data:\n" + data);
           resolve([])
