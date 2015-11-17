@@ -132,6 +132,38 @@
     ]
   }
   {
+    'begin': '^(\\s*):(css)(?=\\(|$)$'
+    'beginCaptures':
+      '2':
+        'name': 'constant.language.name.css.filter.diet'
+    'end': '^(?!(\\1\\s)|\\s*$)'
+    'name': 'source.css.filter.diet'
+    'patterns': [
+      {
+        'include': '#filter_args'
+      }
+      {
+        'include': 'source.css'
+      }
+    ]
+  }
+  {
+    'begin': '^(\\s*):(javascript)(?=\\(|$)$'
+    'beginCaptures':
+      '2':
+        'name': 'constant.language.name.javascript.filter.diet'
+    'end': '^(?!(\\1\\s)|\\s*$)'
+    'name': 'source.javascript.filter.diet'
+    'patterns': [
+      {
+        'include': '#filter_args'
+      }
+      {
+        'include': 'source.js'
+      }
+    ]
+  }
+  {
     'begin': '^(\\s*):(less)(?=\\(|$)$'
     'beginCaptures':
       '2':
