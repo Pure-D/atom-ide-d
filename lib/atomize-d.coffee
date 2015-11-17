@@ -141,7 +141,7 @@ module.exports = AtomizeD =
     if editor?.getBuffer?()? and editor?.getGrammar?().scopeName == "source.d"
       buf = editor.getBuffer()
       pos = editor.getCursorBufferPosition()
-      @getCurrentProject.dfmt.format buf.getText(), (text) =>
+      @getCurrentProject().dfmt.format buf.getText(), (text) =>
         buf.setText text
         editor.setCursorBufferPosition pos
 
@@ -155,7 +155,7 @@ module.exports = AtomizeD =
     return project
 
   toggleTestView: ->
-    project = @getCurrentProject
+    project = @getCurrentProject()
     pane = atom.workspace.getActivePane()
     if project.testViewTab?
       if project.testViewTab.active
