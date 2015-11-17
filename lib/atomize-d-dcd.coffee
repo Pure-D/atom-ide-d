@@ -25,7 +25,7 @@ class AtomizeDDCD
 
     new Promise (resolve) ->
       buffer = editor.getBuffer();
-      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", @port, "-c", buffer.characterIndexForPosition(bufferPosition)],
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", self.port, "-c", buffer.characterIndexForPosition(bufferPosition)],
         cwd: @projectRoot,
         env: process.env
       )
@@ -159,13 +159,13 @@ class AtomizeDDCD
       )
 
       @dcdServer.stdout.on 'data', (data) ->
-        #console.log("[dcdServer][ ] " + data);
+        console.log("[dcdServer][ ] " + data);
 
       @dcdServer.stderr.on "data", (data) ->
-        #console.log("[dcdServer][!] " + data);
+        console.log("[dcdServer][!] " + data);
 
       @dcdServer.on('exit', (code) ->
-        #console.log("[dcdServer] Stopped with code: " + code + "\nRestarting!");
+        console.log("[dcdServer] Stopped with code: " + code + "\nRestarting!");
         parent.startServer()
       )
       console.log("DCD Ready")

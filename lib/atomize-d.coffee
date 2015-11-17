@@ -88,17 +88,20 @@ module.exports = AtomizeD =
       project.dfmt = new FormatterDFMT(projectPath)
       project.dcd = new AtomizeDDCD(project.config)
 
-      project.config.parse(() =>
-        project.dcd.start project.config
-        project.testView.update project.config
+      ((project, projectPath) =>
+        project.config.parse(() =>
+          project.dcd.start project.config
+          project.testView.update project.config
 
-        project.subscriptions.add new Directory(project.config.getPackageDirectory()).onDidChange(@dubChange.bind(project))
-        project.subscriptions.add new File(project.config.getDubJson()).onDidChange(@dubChange.bind(project))
+          project.subscriptions.add new Directory(project.config.getPackageDirectory()).onDidChange(@dubChange.bind(project))
+          project.subscriptions.add new File(project.config.getDubJson()).onDidChange(@dubChange.bind(project))
 
-        project.linter = new AtomizeDLinter(projectPath)
-        project.dubLinter = new DubLinter(projectPath)
+          project.linter = new AtomizeDLinter(projectPath)
+          project.dubLinter = new DubLinter(projectPath)
 
-      , projectPath)
+          console.log "Registered #{projectPath}"
+        , projectPath)
+      )(project, projectPath)
 
       @activatedProjects[projectPath] = project
 
