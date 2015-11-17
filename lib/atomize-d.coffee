@@ -60,7 +60,9 @@ module.exports = AtomizeD =
     @projectListUpdate atom.project.getPaths()
 
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'atomize-d:generate-config': => @generateConfig()
+      'atomize-d:generate-linter-config': => @generateLinterConfig()
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atomize-d:generate-dfmt-config': => @generateDfmtConfig()
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atomize-d:format-code': => @formatCode()
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -141,7 +143,7 @@ module.exports = AtomizeD =
     if editor?.getBuffer?()? and editor?.getGrammar?().scopeName == "source.d"
       buf = editor.getBuffer()
       pos = editor.getCursorBufferPosition()
-      @getCurrentProject().dfmt.format buf.getText(), (text) =>
+      @getCurrentProject().dfmt.format editor, buf.getText(), (text) =>
         buf.setText text
         editor.setCursorBufferPosition pos
 
@@ -166,8 +168,11 @@ module.exports = AtomizeD =
       project.testViewTab = pane.addItem project.testView
       pane.activateItem project.testViewTab
 
-  generateConfig: ->
+  generateLinterConfig: ->
     @getCurrentProject().linter.generateConfig()
+
+  generateDfmtConfig: ->
+    @getCurrentProject().dfmt.generateConfig()
 
   generateBuildFile: ->
     @getCurrentProject().config.generateBuildFile()
