@@ -4,7 +4,7 @@ FormatterDFMT = require "./formatter-dfmt"
 AtomizeDLinter = require "./atomize-d-linter"
 DubConfig = require "./dub-config"
 DubLinter = require "./dub-linter"
-DubTestView = require "./dub-test-view"
+DubBuildView = require "./dub-build-view"
 BuildSelectorView = require "./build-selector-view"
 TemplateSelectorView = require "./template-selector-view"
 MultiDCD = require "./multi-d-dcd"
@@ -50,7 +50,7 @@ module.exports = AtomizeD =
       clearTimeout(@dubWatchTimeout)
       @dubWatchTimeout = setTimeout(=>
         @dcd.updateImports()
-        @testView.update @config
+        @buildView.update @config
       , 1000)
 
   activate: (state) ->
@@ -88,7 +88,7 @@ module.exports = AtomizeD =
     @subscriptions.add atom.commands.add "atom-workspace",
       "atomize-d:select-build-target": => @selectBuildTarget()
     @subscriptions.add atom.commands.add "atom-workspace",
-      "atomize-d:toggle-test-view": => @toggleTestView()
+      "atomize-d:toggle-build-view": => @toggleBuildView()
     @subscriptions.add atom.commands.add "atom-workspace",
       "atomize-d:create-project-from-template": => @createProject()
     @subscriptions.add atom.commands.add "atom-workspace",
@@ -104,14 +104,14 @@ module.exports = AtomizeD =
       project.subscriptions = new CompositeDisposable
       project.config = new DubConfig
 
-      project.testView = new DubTestView(projectPath)
+      project.buildView = new DubBuildView(projectPath)
       project.dfmt = new FormatterDFMT(projectPath)
       project.dcd = new AtomizeDDCD(project.config)
 
       ((project, projectPath) =>
         project.config.parse(() =>
           project.dcd.start project.config
-          project.testView.update project.config
+          project.buildView.update project.config
 
           project.subscriptions.add new Directory(project.config.getPackageDirectory()).onDidChange(@dubChange.bind(project))
           project.subscriptions.add new File(project.config.getDubJson()).onDidChange(@dubChange.bind(project))
@@ -178,17 +178,17 @@ module.exports = AtomizeD =
     throw "Not a valid D project (or not identified)" if not project
     return project
 
-  toggleTestView: ->
+  toggleBuildView: ->
     project = @getCurrentProject()
     pane = atom.workspace.getActivePane()
-    if project.testViewTab?
-      if project.testViewTab.active
-        pane.destroyItem project.testViewTab
+    if project.buildViewTab?
+      if project.buildViewTab.active
+        pane.destroyItem project.buildViewTab
       else
-        pane.activateItem project.testViewTab
+        pane.activateItem project.buildViewTab
     else
-      project.testViewTab = pane.addItem project.testView
-      pane.activateItem project.testViewTab
+      project.buildViewTab = pane.addItem project.buildView
+      pane.activateItem project.buildViewTab
 
   generateLinterConfig: ->
     @getCurrentProject().linter.generateConfig()

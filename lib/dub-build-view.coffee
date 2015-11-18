@@ -5,7 +5,7 @@ path = require "path"
 errorFormat = /^(.*?)\((\d+)(?:,(\d+))?\):/;
 
 module.exports =
-  class DubTestView extends ScrollView
+  class DubBuildView extends ScrollView
     process: null
     projectRoot: null
 
@@ -17,8 +17,12 @@ module.exports =
       @div class: "atomize-d tests", =>
         @div class: "configs-container", =>
           @span class: "title", "Configurations"
-          @div class: "configs", outlet: "testsList" # defines @testsList as jquery element
-          @button class: "btn", click: "cancel", "Cancel Test"
+          @div class: "configs", outlet: "buildTargets" # defines @buildTargets as jquery element
+          @button class: "btn", click: "cancel", "Cancel Build"
+          @select class: "form-control", outlet: "buildType", =>
+            @option value: "test", "Build & Run Test"
+            @option value: "build", "Build"
+            @option value: "run", "Build & Run"
         @div class: "output-container", outlet: "output"
 
     serialize: ->
@@ -27,7 +31,7 @@ module.exports =
       super
 
     update: (dub) ->
-      @testsList.empty()
+      @buildTargets.empty()
       configs = dub.getConfigs()
       for config in configs
         button = document.createElement("button")
@@ -35,41 +39,42 @@ module.exports =
         button.setAttribute("config", config.name)
         button.textContent = config.name
         button.onclick = (e) => @build(e)
-        @testsList.append(button)
+        @buildTargets.append(button)
       button = document.createElement("button")
       button.setAttribute("class", "icon-question untested btn btn-default")
       button.setAttribute("config", "Default")
       button.textContent = "Default"
       button.onclick = (e) => @build(e)
-      @testsList.append(button)
+      @buildTargets.append(button)
 
     build: (event) ->
       if @process?
-        atom.notifications.addWarning "Already testing, press kill first!"
+        atom.notifications.addWarning "Already running, kill the process first!"
         return
 
       config = event.target.getAttribute("config")
 
       @clearOutput()
       @appendOutput("Starting build of #{config}...\n\n")
-      command = "#{atom.config.get("atomize-d.dubPath")} test"
+      command = "#{atom.config.get("atomize-d.dubPath")} #{@buildType.val()}"
       if config != "Default"
         command += "--config=#{config}"
       @appendOutput("#{command}\n\n")
 
-      args = ["test"]
+      args = [@buildType.val()]
       if config != "Default"
         args.push "--config=#{config}"
 
       try
         @process = ChildProcess.spawn atom.config.get("atomize-d.dubPath"), args, cwd: @projectRoot
-
       catch error
         atom.notifications.addError "Failed to run #{@executablePath}",
           detail: "#{error.message}"
           dismissable: true
         @process = null
         return
+
+      startTime = new Date().getTime();
 
       @process.stdout.on "data", (data) =>
         @appendOutput data
@@ -80,14 +85,15 @@ module.exports =
           event.target.setAttribute("class", "icon-check success btn btn-default")
         else
           event.target.setAttribute("class", "icon-x fail btn btn-default")
-        @appendOutput "\n\nTests " + (if code == 0 then "successfully " else "") + "exited with code #{code}" + (if signal? then " (#{signal})" else "") + "."
+        @appendOutput "\n\nCode " + (if code == 0 then "successfully " else "") + "exited with code #{code}" + (if signal? then " (#{signal})" else "") + "."
+        @appendOutput "\nExecution Time: #{(new Date().getTime() - startTime) / 1000} seconds"
         @process = null
 
     cancel: ->
       if @process?
         @process.kill()
         @process = null
-        @appendOutput("\n\nKilled test.")
+        @appendOutput("\n\nKilled build.")
 
     clearOutput: ->
       @output.text("")
@@ -96,9 +102,9 @@ module.exports =
       el.addEventListener "click", ->
         atom.workspace.open(absPath).then ->
           if match[3]
-            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]), parseInt(match[3])])
+            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]) - 1, parseInt(match[3]) - 1])
           else
-            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]), 0])
+            atom.workspace.getActiveTextEditor().setCursorBufferPosition([parseInt(match[2]) - 1, 0])
 
     appendOutput: (msg) ->
       msg = msg.toString("utf8")
@@ -126,8 +132,9 @@ module.exports =
           el = document.createElement("span")
           el.textContent = line
           @output.append(el)
+      @output.scrollTop(@output[0].scrollHeight)
 
     destroy: ->
 
     getTitle: ->
-      "atomize-d:tests"
+      "Build Project"
