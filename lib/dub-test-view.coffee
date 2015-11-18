@@ -1,11 +1,11 @@
-{View, $, $$} = require "atom-space-pen-views"
+{ScrollView, $, $$} = require "atom-space-pen-views"
 ChildProcess = require "child_process"
 path = require "path"
 
 errorFormat = /^(.*?)\((\d+)(?:,(\d+))?\):/;
 
 module.exports =
-  class DubTestView extends View
+  class DubTestView extends ScrollView
     process: null
     projectRoot: null
 
@@ -24,6 +24,7 @@ module.exports =
     serialize: ->
 
     initialize: ->
+      super
 
     update: (dub) ->
       @testsList.empty()

@@ -20,13 +20,110 @@ class AtomizeDDCD
   inclusionPriority: 1
   excludeLowerPriority: true
 
+  getDocumentation: (editor) ->
+    self = this
+
+    new Promise (resolve) ->
+      buffer = editor.getBuffer();
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", self.port, "--doc", "-c", buffer.characterIndexForPosition(editor.getSelectedBufferRange().start)],
+        cwd: self.projectRoot,
+        env: process.env
+      )
+      dcdClient.stdin.write(buffer.getText())
+      dcdClient.stdin.end()
+
+      data = ""
+
+      dcdClient.stdout.on("data", (out) ->
+        data += "" + out
+      )
+
+      dcdClient.stderr.on("data", (data) ->
+        if (data.indexOf("Unable to connect socket: Connection refused") != -1 or
+            data.indexOf("Server closed the connection") != -1)
+          atom.notifications.addWarning("DCD currently starting up. Try again in a few moments...");
+          self.startServer()
+        else
+          atom.notifications.addError("DCD: " + data);
+      )
+
+      dcdClient.on("exit", (code) ->
+        doc = data.trim()
+        return resolve [] if doc.length == 0
+        doc = doc.replace(/\\n/g, "\n")
+        resolve doc
+      )
+
+  getDeclaration: (editor) ->
+    self = this
+
+    new Promise (resolve) ->
+      buffer = editor.getBuffer();
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", self.port, "--symbolLocation", "-c", buffer.characterIndexForPosition(editor.getSelectedBufferRange().end)],
+        cwd: self.projectRoot,
+        env: process.env
+      )
+      dcdClient.stdin.write(buffer.getText())
+      dcdClient.stdin.end()
+
+      data = ""
+
+      dcdClient.stdout.on("data", (out) ->
+        data += "" + out
+      )
+
+      dcdClient.stderr.on("data", (data) ->
+        if (data.indexOf("Unable to connect socket: Connection refused") != -1 or
+            data.indexOf("Server closed the connection") != -1)
+          atom.notifications.addWarning("DCD currently starting up. Try again in a few moments...");
+          self.startServer()
+        else
+          atom.notifications.addError("DCD: " + data);
+      )
+
+      dcdClient.on("exit", (code) ->
+        resolve data.trim()
+      )
+
+
+  searchSymbol: (symbol) ->
+    self = this
+
+    new Promise (resolve) ->
+      dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", self.port, "--search", symbol],
+        cwd: self.projectRoot,
+        env: process.env
+      )
+      dcdClient.stdin.end()
+
+      data = ""
+
+      dcdClient.stdout.on("data", (out) ->
+        data += "" + out
+      )
+
+      dcdClient.stderr.on("data", (data) ->
+        if (data.indexOf("Unable to connect socket: Connection refused") != -1 or
+            data.indexOf("Server closed the connection") != -1)
+          atom.notifications.addWarning("DCD currently starting up. Try again in a few moments...");
+          self.startServer()
+        else
+          atom.notifications.addError("DCD: " + data);
+      )
+
+      dcdClient.on("exit", (code) ->
+        lines = data.trim().split("\n")
+        return if lines.length == 0
+        resolve lines
+      )
+
   getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
     self = this
 
     new Promise (resolve) ->
       buffer = editor.getBuffer();
       dcdClient = ChildProcess.spawn(self.dcdClientPath, ["-p", self.port, "-c", buffer.characterIndexForPosition(bufferPosition)],
-        cwd: @projectRoot,
+        cwd: self.projectRoot,
         env: process.env
       )
       dcdClient.stdin.write(buffer.getText())
@@ -40,8 +137,11 @@ class AtomizeDDCD
 
       dcdClient.stderr.on("data", (data) ->
         #atom.notifications.addError("DCD: " + data);
-        if (data.indexOf("Unable to connect socket: Connection refused") != -1)
+        if (data.indexOf("Unable to connect socket: Connection refused") != -1 or
+            data.indexOf("Server closed the connection") != -1)
           self.startServer()
+        else
+          atom.notifications.addError("DCD: " + data);
       )
 
       dcdClient.on("exit", (code) ->

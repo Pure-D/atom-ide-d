@@ -2,21 +2,11 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle atomize-d'
-      'command': 'atomize-d:toggle'
+      label: "atomize-d"
+      submenu: [
+        { label: "Lookup Documentation", command: "atomize-d:lookup-documentation" }
+        { label: "Goto Declaration", command: "atomize-d:goto-declaration" }
+        { label: "Search For Selected Symbol", command: "atomize-d:search-for-selected-symbol" }
+      ]
     }
   ]
-'menu': [
-  {
-    'label': 'Packages'
-    'submenu': [
-      'label': 'atomize-d'
-      'submenu': [
-        {
-          'label': 'Generate project specify linter config'
-          'command': 'atomize-d:generateConfig'
-        }
-      ]
-    ]
-  }
-]
