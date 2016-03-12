@@ -1,38 +1,25 @@
 {
 	"name": "atomize-d",
-	"main": "./lib/atomize-d",
+	"main": "./out/atomize-d",
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
-	"keywords": ["d", "vibe.d", "vibed", "ide", "autocomplete", "lint", "format"],
+	"keywords": ["d", "dcd", "dfmt", "dscanner", "workspace-d", "ide", "autocomplete", "lint", "format"],
 	"repository": "https://github.com/Vild/atomize-d",
 	"license": "MIT",
-	"engines":
-	{
+	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
-	"providedServices":
-	{
-		"autocomplete.provider":
-		{
-			"versions":
-			{
+	"providedServices": {
+		"autocomplete.provider": {
+			"versions": {
 				"2.0.0": "provideAutocomplete"
 			}
 		},
-		"linter":
-		{
-			"versions":
-			{
+		"linter": {
+			"versions": {
 				"1.0.0": "provideLinter"
 			}
 		}
 	},
-	"dependencies":
-	{
-		"semver": "~5.0.1",
-		"async": "~1.4.0",
-		"atom-space-pen-views": "~2.1.0",
-		"ncp": "~2.0.0",
-		"replace": "~0.3.0"
-	}
+	"dependencies": {}
 }
