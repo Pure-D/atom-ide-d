@@ -63,9 +63,9 @@ export class WorkspaceD extends EventEmitter {
     if (!this.shouldRestart) return
     const self = this
     this.workspaced = true
-    const path = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
-    console.log("spawning " + path + " with cwd " + this.projectRoot)
-    this.instance = ChildProcess.spawn(path, [], { cwd: this.projectRoot })
+    const workspacePath = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
+    console.log("spawning " + workspacePath + " with cwd " + this.projectRoot)
+    this.instance = ChildProcess.spawn(workspacePath, [], { cwd: this.projectRoot })
     this.totalData = Buffer.alloc(0)
     this.instance.stderr.on("data", function (chunk) {
       console.log("WorkspaceD Debug: " + chunk)
@@ -80,7 +80,7 @@ export class WorkspaceD extends EventEmitter {
       if (err && (<any>err).code == "ENOENT") {
         atom.notifications.addError(
           "'" +
-            path +
+            workspacePath +
             "' is not a valid executable. Please check your user settings and make sure workspace-d is installed!"
         )
         self.workspaced = false
