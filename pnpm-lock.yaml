@@ -7,7 +7,7 @@ devDependencies:
   decompress: 4.2.1
   decompress-tarxz: 3.0.0
   eslint: 7.18.0
-  eslint-config-atomic: 1.5.1_eslint@7.18.0
+  eslint-config-atomic: 1.6.1_eslint@7.18.0
   prettier: 2.2.1
   shx: 0.3.3
   typescript: 4.1.3
@@ -828,13 +828,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
-  /coffeescript/1.12.7:
-    dev: true
-    engines:
-      node: '>=0.8.0'
-    hasBin: true
-    resolution:
-      integrity: sha512-pLXHFxQMPklVoEekowk8b3erNynC+DVJzChxS/LCBBgR6/8AJkHivkm//zbowcfc7BTCAjryuhx6gPqPRfsFoA==
   /coffeescript/2.5.1:
     dev: true
     engines:
@@ -1270,15 +1263,15 @@ packages:
       eslint-plugin-react-hooks: ^4 || ^3 || ^2.3.0 || ^1.7.0
     resolution:
       integrity: sha512-glZNDEZ36VdlZWoxn/bUR1r/sdFKPd1mHPbqUtkctgNG4yT2DLLtJ3D+yCV+jzZCc2V1nBVkmdknOJBZ5Hc0fg==
-  /eslint-config-atomic/1.5.1_eslint@7.18.0:
+  /eslint-config-atomic/1.6.1_eslint@7.18.0:
     dependencies:
       '@babel/core': 7.12.10
       '@typescript-eslint/eslint-plugin': 4.14.1_5aaa83948f53bc6d11a4ce27d9931983
       '@typescript-eslint/parser': 4.14.1_eslint@7.18.0+typescript@4.1.3
       babel-eslint: 10.1.0_eslint@7.18.0
-      coffeescript: 1.12.7
+      coffeescript: 2.5.1
       eslint: 7.18.0
-      eslint-config-prettier: 6.15.0_eslint@7.18.0
+      eslint-config-prettier: 7.2.0_eslint@7.18.0
       eslint-plugin-coffee: 0.1.13_eslint@7.18.0
       eslint-plugin-json: 2.1.2
       eslint-plugin-only-warn: 1.0.2
@@ -1290,17 +1283,16 @@ packages:
     peerDependencies:
       eslint: '>=7'
     resolution:
-      integrity: sha512-fPoMKyLVxs9yZn/ge9meo3iZO15G8n6LI6we/Cwrmgu9Ar0m0KS/yKlXlD71fBMXfet4LOf0che+T9LqGI4FgA==
-  /eslint-config-prettier/6.15.0_eslint@7.18.0:
+      integrity: sha512-YQdn8yDDsAu+iRQUWej8mnTnu7568gEP4h2/BJT0TTkJGtKN0YlNf6PRiAtBBw2Rz7n8NCv7W3rIBGInTHrJYA==
+  /eslint-config-prettier/7.2.0_eslint@7.18.0:
     dependencies:
       eslint: 7.18.0
-      get-stdin: 6.0.0
     dev: true
     hasBin: true
     peerDependencies:
-      eslint: '>=3.14.1'
+      eslint: '>=7.0.0'
     resolution:
-      integrity: sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
+      integrity: sha512-rV4Qu0C3nfJKPOAhFujFxB7RMP+URFyQqqOZW9DMRD7ZDTFyjaIlETU3xzHELt++4ugC0+Jm084HQYkkJe+Ivg==
   /eslint-import-resolver-node/0.3.4:
     dependencies:
       debug: 2.6.9
@@ -1765,12 +1757,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-M11rgtQp5GZMZzDL7jLTNxbDfurpzuau5uqRWDPvlHjfvg3TdScAZo96GLvhMjImrmR8uAt0FS2RLoMrfWGKlg==
-  /get-stdin/6.0.0:
-    dev: true
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
   /get-stream/2.3.1:
     dependencies:
       object-assign: 4.1.1
@@ -3390,7 +3376,7 @@ specifiers:
   decompress: ^4.2.1
   decompress-tarxz: ^3.0.0
   eslint: 7.18.0
-  eslint-config-atomic: ^1.5.1
+  eslint-config-atomic: ^1.6.1
   prettier: ^2.2.1
   shx: 0.3.3
   typescript: ^4.1.3
