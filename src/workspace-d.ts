@@ -70,7 +70,7 @@ export class WorkspaceD extends EventEmitter {
     const path = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
     console.log("spawning " + path + " with cwd " + this.projectRoot)
     this.instance = ChildProcess.spawn(path, [], { cwd: this.projectRoot })
-    this.totalData = new Buffer(0)
+    this.totalData = Buffer.alloc(0)
     this.instance.stderr.on("data", function (chunk) {
       console.log("WorkspaceD Debug: " + chunk)
       if (chunk.toString().indexOf("DCD-Server stopped with code") != -1) self.ensureDCDRunning()
@@ -609,13 +609,13 @@ export class WorkspaceD extends EventEmitter {
   }
 
   public request(data): Thenable<any> {
-    const lengthBuffer = new Buffer(4)
-    const idBuffer = new Buffer(4)
+    const lengthBuffer = Buffer.alloc(4)
+    const idBuffer = Buffer.alloc(4)
     const dataStr = JSON.stringify(data)
     lengthBuffer.writeInt32BE(Buffer.byteLength(dataStr, "utf8") + 4, 0)
     const reqID = this.requestNum++
     idBuffer.writeInt32BE(reqID, 0)
-    const buf = Buffer.concat([lengthBuffer, idBuffer, new Buffer(dataStr, "utf8")])
+    const buf = Buffer.concat([lengthBuffer, idBuffer, Buffer.from(dataStr, "utf8")])
     this.instance.stdin.write(buf)
     return new Promise((resolve, reject) => {
       this.once("res-" + reqID, function (error, data) {
@@ -635,9 +635,9 @@ export class WorkspaceD extends EventEmitter {
     const len = this.totalData.readInt32BE(0)
     if (this.totalData.length >= len + 4) {
       const id = this.totalData.readInt32BE(4)
-      const buf = new Buffer(len - 4)
+      const buf = Buffer.alloc(len - 4)
       this.totalData.copy(buf, 0, 8, 4 + len)
-      const newBuf = new Buffer(this.totalData.length - 4 - len)
+      const newBuf = Buffer.alloc(this.totalData.length - 4 - len)
       this.totalData.copy(newBuf, 0, 4 + len)
       this.totalData = newBuf
       const obj = JSON.parse(buf.toString())
