@@ -2,11 +2,12 @@ import * as ChildProcess from "child_process";
 import * as path from "path";
 import * as fs from "fs";
 import { EventEmitter } from "events";
+import type { TextEditor } from "atom";
 
 const TARGET_VERSION = [2, 6, 0];
 
 interface SuggestionRequest {
-    editor: AtomCore.IEditor;
+    editor: TextEditor;
     bufferPosition: [number, number];
     scopeDescriptor: string[];
 }
@@ -247,7 +248,7 @@ export class WorkspaceD extends EventEmitter {
         });
     }*/
 
-    lint(document: AtomCore.IEditor): Thenable<LintResult[]> {
+    lint(document: TextEditor): Thenable<LintResult[]> {
         let self = this;
         console.log("lint");
         return new Promise((resolve, reject) => {
