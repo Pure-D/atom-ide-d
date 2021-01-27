@@ -51,17 +51,15 @@ interface LintResult {
 export class WorkspaceD extends EventEmitter {
   constructor(public projectRoot: string) {
     super()
-    const self = this
     this.on("error", function (err) {
       console.error(err)
-      if (this.shouldRestart) self.ensureDCDRunning()
+      if (this.shouldRestart) this.ensureDCDRunning()
     })
     this.startWorkspaceD()
   }
 
   startWorkspaceD() {
     if (!this.shouldRestart) return
-    const self = this
     this.workspaced = true
     const workspacePath = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
     console.log("spawning " + workspacePath + " with cwd " + this.projectRoot)
@@ -69,10 +67,10 @@ export class WorkspaceD extends EventEmitter {
     this.totalData = Buffer.alloc(0)
     this.instance.stderr.on("data", function (chunk) {
       console.log("WorkspaceD Debug: " + chunk)
-      if (chunk.toString().indexOf("DCD-Server stopped with code") != -1) self.ensureDCDRunning()
+      if (chunk.toString().indexOf("DCD-Server stopped with code") != -1) this.ensureDCDRunning()
     })
     this.instance.stdout.on("data", function (chunk) {
-      self.handleData.call(self, chunk)
+      this.handleData.call(this, chunk)
     })
     this.instance.on("error", function (err) {
       console.log("WorkspaceD ended with an error:")
@@ -83,70 +81,71 @@ export class WorkspaceD extends EventEmitter {
             workspacePath +
             "' is not a valid executable. Please check your user settings and make sure workspace-d is installed!"
         )
-        self.workspaced = false
+        this.workspaced = false
       }
     })
     this.instance.on("exit", function (code) {
       console.log("WorkspaceD ended with code " + code)
       atom.notifications.addError("Workspace-D crashed. Please kill dcd-server if neccessary!")
-      self.workspaced = false
+      this.workspaced = false
     })
     this.checkVersion()
   }
 
   getSuggestions(options: SuggestionRequest): PromiseLike<Suggestion[]> {
-    const self = this
     console.log("provideCompletionItems")
     return new Promise((resolve, reject) => {
-      if (!self.dcdReady) return resolve([])
+      if (!this.dcdReady) return resolve([])
       const offset = options.editor.getBuffer().characterIndexForPosition(options.editor.getSelectedBufferRange().start)
-      self
-        .request({ cmd: "dcd", subcmd: "list-completion", code: options.editor.getBuffer().getText(), pos: offset })
-        .then((completions) => {
-          if (completions.type == "identifiers") {
-            const items = []
-            if (completions.identifiers && completions.identifiers.length)
-              completions.identifiers.forEach((element) => {
-                const item: Suggestion = {
-                  text: element.identifier,
-                  type: self.types[element.type] || "unknown",
-                }
-                items.push(item)
-              })
-            console.log("resolve identifiers")
-            console.log(items)
-            resolve(items)
-          } else if (completions.type == "calltips") {
-            const items = []
-            if (completions.calltips && completions.calltips.length)
-              completions.calltips.forEach((element) => {
-                const item: Suggestion = {
-                  text: element,
-                }
-                items.push(item)
-              })
-            console.log("resolve calltips")
-            console.log(items)
-            resolve(items)
-          } else {
-            console.log("resolve null")
-            resolve([])
-          }
-        }, reject)
+      this.request({
+        cmd: "dcd",
+        subcmd: "list-completion",
+        code: options.editor.getBuffer().getText(),
+        pos: offset,
+      }).then((completions) => {
+        if (completions.type == "identifiers") {
+          const items = []
+          if (completions.identifiers && completions.identifiers.length)
+            completions.identifiers.forEach((element) => {
+              const item: Suggestion = {
+                text: element.identifier,
+                type: this.types[element.type] || "unknown",
+              }
+              items.push(item)
+            })
+          console.log("resolve identifiers")
+          console.log(items)
+          resolve(items)
+        } else if (completions.type == "calltips") {
+          const items = []
+          if (completions.calltips && completions.calltips.length)
+            completions.calltips.forEach((element) => {
+              const item: Suggestion = {
+                text: element,
+              }
+              items.push(item)
+            })
+          console.log("resolve calltips")
+          console.log(items)
+          resolve(items)
+        } else {
+          console.log("resolve null")
+          resolve([])
+        }
+      }, reject)
     })
   }
 
   /*provideWorkspaceSymbols(query: string, token: vscode.CancellationToken): PromiseLike<vscode.SymbolInformation[]> {
-        let self = this;
         console.log("provideWorkspaceSymbols");
         return new Promise((resolve, reject) => {
-            if (!self.dcdReady)
+            if (!this.dcdReady)
                 return resolve([]);
-            self.request({ cmd: "dcd", subcmd: "search-symbol", query: query }).then((symbols) => {
+            this.request({ cmd: "dcd", subcmd: "search-symbol", query: query }).then((symbols) => {
                 let found = [];
                 if (symbols && symbols.length)
                     symbols.forEach(element => {
-                        let type = self.types[element.type] || vscode.CompletionItemKind.Text;
+                        let type = this.types[element.type] || vscode.CompletionItemKind.Text;
                         let range = new vscode.Range(1, 1, 1, 1);
                         let uri = vscode.Uri.file(element.file);
                         vscode.workspace.textDocuments.forEach(doc => {
@@ -166,18 +165,17 @@ export class WorkspaceD extends EventEmitter {
     }
 
     provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): PromiseLike<vscode.SymbolInformation[]> {
-        let self = this;
         console.log("provideDocumentSymbols");
         return new Promise((resolve, reject) => {
-            if (!self.dscannerReady)
+            if (!this.dscannerReady)
                 return resolve([]);
-            self.request({ cmd: "dscanner", subcmd: "list-definitions", file: document.uri.fsPath }).then(definitions => {
+            this.request({ cmd: "dscanner", subcmd: "list-definitions", file: document.uri.fsPath }).then(definitions => {
                 let informations: vscode.SymbolInformation[] = [];
                 if (definitions && definitions.length)
                     definitions.forEach(element => {
                         let container = undefined;
                         let range = new vscode.Range(element.line - 1, 0, element.line - 1, 0);
-                        let type = self.scanTypes[element.type];
+                        let type = this.scanTypes[element.type];
                         if (element.type == "f" && element.name == "this")
                             type = vscode.SymbolKind.Constructor;
                         if (element.attributes.struct)
@@ -198,13 +196,12 @@ export class WorkspaceD extends EventEmitter {
     }
 
     provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): PromiseLike<vscode.Hover> {
-        let self = this;
         console.log("provideHover");
         return new Promise((resolve, reject) => {
-            if (!self.dcdReady)
+            if (!this.dcdReady)
                 return resolve(null);
             let offset = document.offsetAt(position);
-            self.request({ cmd: "dcd", subcmd: "get-documentation", code: document.getText(), pos: offset }).then((documentation) => {
+            this.request({ cmd: "dcd", subcmd: "get-documentation", code: document.getText(), pos: offset }).then((documentation) => {
                 if (!documentation || documentation.trim().length == 0) {
                     console.log("resolve null");
                     return resolve(null);
@@ -217,13 +214,12 @@ export class WorkspaceD extends EventEmitter {
     }
 
     provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): PromiseLike<vscode.Definition> {
-        let self = this;
         console.log("provideDefinition");
         return new Promise((resolve, reject) => {
-            if (!self.dcdReady)
+            if (!this.dcdReady)
                 return resolve(null);
             let offset = document.offsetAt(position);
-            self.request({ cmd: "dcd", subcmd: "find-declaration", code: document.getText(), pos: offset }).then((declaration) => {
+            this.request({ cmd: "dcd", subcmd: "find-declaration", code: document.getText(), pos: offset }).then((declaration) => {
                 if (!declaration) {
                     console.log("Resolve null");
                     return resolve(null);
@@ -245,38 +241,35 @@ export class WorkspaceD extends EventEmitter {
     }*/
 
   lint(document: TextEditor): PromiseLike<LintResult[]> {
-    const self = this
     console.log("lint")
     return new Promise((resolve, reject) => {
-      if (!self.dscannerReady) return resolve([])
-      const useProjectIni = fs.existsSync(path.join(self.projectRoot, "dscanner.ini"))
-      self
-        .request({
-          cmd: "dscanner",
-          subcmd: "lint",
-          file: document.getPath(),
-          ini: useProjectIni ? path.join(self.projectRoot, "dscanner.ini") : "",
-        })
-        .then((issues) => {
-          const diagnostics = []
-          if (issues && issues.length)
-            issues.forEach((element) => {
-              const range = [
-                [Math.max(0, element.line - 1), element.column - 1],
-                [Math.max(0, element.line - 1), element.column + 300],
-              ]
-              console.log(range)
-              diagnostics.push({
-                type: this.lintTypes[element.type] || element.type,
-                text: element.description,
-                range: range,
-                filePath: document.getPath(),
-              })
+      if (!this.dscannerReady) return resolve([])
+      const useProjectIni = fs.existsSync(path.join(this.projectRoot, "dscanner.ini"))
+      this.request({
+        cmd: "dscanner",
+        subcmd: "lint",
+        file: document.getPath(),
+        ini: useProjectIni ? path.join(this.projectRoot, "dscanner.ini") : "",
+      }).then((issues) => {
+        const diagnostics = []
+        if (issues && issues.length)
+          issues.forEach((element) => {
+            const range = [
+              [Math.max(0, element.line - 1), element.column - 1],
+              [Math.max(0, element.line - 1), element.column + 300],
+            ]
+            console.log(range)
+            diagnostics.push({
+              type: this.lintTypes[element.type] || element.type,
+              text: element.description,
+              range: range,
+              filePath: document.getPath(),
             })
-          console.log("Resolve")
-          console.log(diagnostics)
-          resolve(diagnostics)
-        }, reject)
+          })
+        console.log("Resolve")
+        console.log(diagnostics)
+        resolve(diagnostics)
+      }, reject)
     })
   }
 
