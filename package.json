@@ -29,6 +29,7 @@
 		"tsc.dev": "tsc -p src/tsconfig.json --watch",
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
+		"get.served": "node ./scripts/get-serve-d.js",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run build"
 	},
@@ -45,10 +46,13 @@
 		}
 	},
 	"devDependencies": {
+		"@terascope/fetch-github-release": "^0.7.4",
 		"@types/atom": "1.40.7",
 		"@types/node": "^14.14.22",
 		"build-commit": "0.1.4",
 		"cross-env": "7.0.3",
+		"decompress": "^4.2.1",
+		"decompress-tarxz": "^3.0.0",
 		"eslint": "7.18.0",
 		"eslint-config-atomic": "^1.5.1",
 		"prettier": "^2.2.1",
