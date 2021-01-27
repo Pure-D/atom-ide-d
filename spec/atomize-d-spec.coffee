@@ -1,4 +1,4 @@
-AtomizeD = require '../lib/atomize-d'
+AtomizeD = require '../dist/atomize-d'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
