@@ -9,6 +9,16 @@
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
+	"scripts": {
+		"test": "atom --test spec",
+		"clean": "shx rm -rf dist",
+		"tsc": "tsc -p src/tsconfig.json || echo done",
+		"tsc.dev": "tsc -p src/tsconfig.json --watch",
+		"build": "npm run tsc",
+		"dev": "npm run tsc.dev",
+		"build-commit": "build-commit -o dist",
+		"prepare": "npm run build"
+	},
 	"providedServices": {
 		"autocomplete.provider": {
 			"versions": {
@@ -21,5 +31,13 @@
 			}
 		}
 	},
-	"dependencies": {}
+	"dependencies": {},
+	"devDependencies": {
+		"@types/atom": "1.40.7",
+		"@types/node": "^14.14.22",
+		"typescript": "^4.1.3",
+		"shx": "0.3.3",
+		"cross-env": "7.0.3",
+		"build-commit": "0.1.4"
+	}
 }
