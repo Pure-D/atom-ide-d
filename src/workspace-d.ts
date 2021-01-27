@@ -48,10 +48,6 @@ interface LintResult {
   trace?: Array<Trace>
 }
 
-interface Thenable<T> {
-  then<TP>(successCB?: Function, errorCB?: Function): Thenable<TP>
-}
-
 export class WorkspaceD extends EventEmitter {
   constructor(public projectRoot: string) {
     super()
@@ -98,7 +94,7 @@ export class WorkspaceD extends EventEmitter {
     this.checkVersion()
   }
 
-  getSuggestions(options: SuggestionRequest): Thenable<Suggestion[]> {
+  getSuggestions(options: SuggestionRequest): PromiseLike<Suggestion[]> {
     const self = this
     console.log("provideCompletionItems")
     return new Promise((resolve, reject) => {
@@ -140,7 +136,7 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  /*provideWorkspaceSymbols(query: string, token: vscode.CancellationToken): Thenable<vscode.SymbolInformation[]> {
+  /*provideWorkspaceSymbols(query: string, token: vscode.CancellationToken): PromiseLike<vscode.SymbolInformation[]> {
         let self = this;
         console.log("provideWorkspaceSymbols");
         return new Promise((resolve, reject) => {
@@ -169,7 +165,7 @@ export class WorkspaceD extends EventEmitter {
         });
     }
 
-    provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): Thenable<vscode.SymbolInformation[]> {
+    provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): PromiseLike<vscode.SymbolInformation[]> {
         let self = this;
         console.log("provideDocumentSymbols");
         return new Promise((resolve, reject) => {
@@ -201,7 +197,7 @@ export class WorkspaceD extends EventEmitter {
         });
     }
 
-    provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Thenable<vscode.Hover> {
+    provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): PromiseLike<vscode.Hover> {
         let self = this;
         console.log("provideHover");
         return new Promise((resolve, reject) => {
@@ -220,7 +216,7 @@ export class WorkspaceD extends EventEmitter {
         });
     }
 
-    provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Thenable<vscode.Definition> {
+    provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): PromiseLike<vscode.Definition> {
         let self = this;
         console.log("provideDefinition");
         return new Promise((resolve, reject) => {
@@ -248,7 +244,7 @@ export class WorkspaceD extends EventEmitter {
         });
     }*/
 
-  lint(document: TextEditor): Thenable<LintResult[]> {
+  lint(document: TextEditor): PromiseLike<LintResult[]> {
     const self = this
     console.log("lint")
     return new Promise((resolve, reject) => {
@@ -284,7 +280,7 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  /*dubBuild(document: vscode.TextDocument): Thenable<[vscode.Uri, vscode.Diagnostic[]][]> {
+  /*dubBuild(document: vscode.TextDocument): PromiseLike<[vscode.Uri, vscode.Diagnostic[]][]> {
         console.log("dubBuild");
         return new Promise((resolve, reject) => {
             if (!this.dubReady)
@@ -324,11 +320,11 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  listConfigurations(): Thenable<string[]> {
+  listConfigurations(): PromiseLike<string[]> {
     return this.request({ cmd: "dub", subcmd: "list:configurations" })
   }
 
-  getConfiguration(): Thenable<string> {
+  getConfiguration(): PromiseLike<string> {
     return this.request({ cmd: "dub", subcmd: "get:configuration" })
   }
 
@@ -341,11 +337,11 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  listBuildTypes(): Thenable<string[]> {
+  listBuildTypes(): PromiseLike<string[]> {
     return this.request({ cmd: "dub", subcmd: "list:build-types" })
   }
 
-  getBuildType(): Thenable<string> {
+  getBuildType(): PromiseLike<string> {
     return this.request({ cmd: "dub", subcmd: "get:build-type" })
   }
 
@@ -359,7 +355,7 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  killServer(): Thenable<any> {
+  killServer(): PromiseLike<any> {
     if (!this.dcdReady)
       return new Promise((resolve, reject) => {
         reject()
@@ -367,7 +363,7 @@ export class WorkspaceD extends EventEmitter {
     return this.request({ cmd: "dcd", subcmd: "kill-server" })
   }
 
-  restartServer(): Thenable<any> {
+  restartServer(): PromiseLike<any> {
     if (!this.dcdReady)
       return new Promise((resolve, reject) => {
         reject()
@@ -375,7 +371,7 @@ export class WorkspaceD extends EventEmitter {
     return this.request({ cmd: "dcd", subcmd: "restart-server" })
   }
 
-  updateImports(): Thenable<boolean> {
+  updateImports(): PromiseLike<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.dubReady) reject()
       this.request({ cmd: "dub", subcmd: "update" }).then((success) => {
@@ -393,7 +389,7 @@ export class WorkspaceD extends EventEmitter {
     })
   }
 
-  listImports(): Thenable<string[]> {
+  listImports(): PromiseLike<string[]> {
     if (!this.dubReady)
       return new Promise((resolve, reject) => {
         resolve([])
@@ -608,7 +604,7 @@ export class WorkspaceD extends EventEmitter {
     )
   }
 
-  public request(data): Thenable<any> {
+  public request(data): PromiseLike<any> {
     const lengthBuffer = Buffer.alloc(4)
     const idBuffer = Buffer.alloc(4)
     const dataStr = JSON.stringify(data)
