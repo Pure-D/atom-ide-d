@@ -103,8 +103,8 @@ export class WorkspaceD extends EventEmitter {
         return new Promise((resolve, reject) => {
             if (!self.dcdReady)
                 return resolve([]);
-            let offset = options.editor.buffer.characterIndexForPosition(options.editor.getSelectedBufferRange().start);
-            self.request({ cmd: "dcd", subcmd: "list-completion", code: options.editor.buffer.getText(), pos: offset }).then((completions) => {
+            let offset = options.editor.getBuffer().characterIndexForPosition(options.editor.getSelectedBufferRange().start);
+            self.request({ cmd: "dcd", subcmd: "list-completion", code: options.editor.getBuffer().getText(), pos: offset }).then((completions) => {
                 if (completions.type == "identifiers") {
                     let items = [];
                     if (completions.identifiers && completions.identifiers.length)
