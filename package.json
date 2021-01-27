@@ -1,6 +1,6 @@
 {
 	"name": "atomize-d",
-	"main": "./out/atomize-d",
+	"main": "./dist/atomize-d",
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
 	"keywords": ["d", "dcd", "dfmt", "dscanner", "workspace-d", "ide", "autocomplete", "lint", "format"],
