@@ -3,13 +3,24 @@
 	"main": "./dist/atomize-d",
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
-	"keywords": ["d", "dcd", "dfmt", "dscanner", "workspace-d", "ide", "autocomplete", "lint", "format"],
+	"keywords": [
+		"d",
+		"dcd",
+		"dfmt",
+		"dscanner",
+		"workspace-d",
+		"ide",
+		"autocomplete",
+		"lint",
+		"format"
+	],
 	"repository": "https://github.com/Vild/atomize-d",
 	"license": "MIT",
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
 	"scripts": {
+		"format": "prettier --write .",
 		"test": "atom --test spec",
 		"clean": "shx rm -rf dist",
 		"tsc": "tsc -p src/tsconfig.json || echo done",
@@ -31,13 +42,13 @@
 			}
 		}
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"@types/atom": "1.40.7",
 		"@types/node": "^14.14.22",
-		"typescript": "^4.1.3",
-		"shx": "0.3.3",
+		"build-commit": "0.1.4",
 		"cross-env": "7.0.3",
-		"build-commit": "0.1.4"
+		"prettier": "^2.2.1",
+		"shx": "0.3.3",
+		"typescript": "^4.1.3"
 	}
 }
