@@ -94,11 +94,11 @@ class AtomizeD {
   }
 
   getCurrentProject() {
-    let editor = atom.workspace.getActiveTextEditor()
+    const editor = atom.workspace.getActiveTextEditor()
     if (!editor) throw "Could not identify Project root"
-    let path = atom.project.relativizePath(editor.getPath())[0]
+    const path = atom.project.relativizePath(editor.getPath())[0]
     if (!path) throw "Could not identify Project root"
-    let project = this.projects[path]
+    const project = this.projects[path]
     if (!project) throw "Not a valid D project (or not identified)"
     return project
   }

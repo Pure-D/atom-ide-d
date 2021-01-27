@@ -55,7 +55,7 @@ interface Thenable<T> {
 export class WorkspaceD extends EventEmitter {
   constructor(public projectRoot: string) {
     super()
-    let self = this
+    const self = this
     this.on("error", function (err) {
       console.error(err)
       if (this.shouldRestart) self.ensureDCDRunning()
@@ -65,9 +65,9 @@ export class WorkspaceD extends EventEmitter {
 
   startWorkspaceD() {
     if (!this.shouldRestart) return
-    let self = this
+    const self = this
     this.workspaced = true
-    let path = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
+    const path = atom.config.get("atomize-d.workspacedPath") || "workspace-d"
     console.log("spawning " + path + " with cwd " + this.projectRoot)
     this.instance = ChildProcess.spawn(path, [], { cwd: this.projectRoot })
     this.totalData = new Buffer(0)
@@ -99,19 +99,19 @@ export class WorkspaceD extends EventEmitter {
   }
 
   getSuggestions(options: SuggestionRequest): Thenable<Suggestion[]> {
-    let self = this
+    const self = this
     console.log("provideCompletionItems")
     return new Promise((resolve, reject) => {
       if (!self.dcdReady) return resolve([])
-      let offset = options.editor.getBuffer().characterIndexForPosition(options.editor.getSelectedBufferRange().start)
+      const offset = options.editor.getBuffer().characterIndexForPosition(options.editor.getSelectedBufferRange().start)
       self
         .request({ cmd: "dcd", subcmd: "list-completion", code: options.editor.getBuffer().getText(), pos: offset })
         .then((completions) => {
           if (completions.type == "identifiers") {
-            let items = []
+            const items = []
             if (completions.identifiers && completions.identifiers.length)
               completions.identifiers.forEach((element) => {
-                let item: Suggestion = {
+                const item: Suggestion = {
                   text: element.identifier,
                   type: self.types[element.type] || "unknown",
                 }
@@ -121,10 +121,10 @@ export class WorkspaceD extends EventEmitter {
             console.log(items)
             resolve(items)
           } else if (completions.type == "calltips") {
-            let items = []
+            const items = []
             if (completions.calltips && completions.calltips.length)
               completions.calltips.forEach((element) => {
-                let item: Suggestion = {
+                const item: Suggestion = {
                   text: element,
                 }
                 items.push(item)
@@ -249,11 +249,11 @@ export class WorkspaceD extends EventEmitter {
     }*/
 
   lint(document: TextEditor): Thenable<LintResult[]> {
-    let self = this
+    const self = this
     console.log("lint")
     return new Promise((resolve, reject) => {
       if (!self.dscannerReady) return resolve([])
-      let useProjectIni = fs.existsSync(path.join(self.projectRoot, "dscanner.ini"))
+      const useProjectIni = fs.existsSync(path.join(self.projectRoot, "dscanner.ini"))
       self
         .request({
           cmd: "dscanner",
@@ -262,10 +262,10 @@ export class WorkspaceD extends EventEmitter {
           ini: useProjectIni ? path.join(self.projectRoot, "dscanner.ini") : "",
         })
         .then((issues) => {
-          let diagnostics = []
+          const diagnostics = []
           if (issues && issues.length)
             issues.forEach((element) => {
-              let range = [
+              const range = [
                 [Math.max(0, element.line - 1), element.column - 1],
                 [Math.max(0, element.line - 1), element.column + 300],
               ]
@@ -316,7 +316,7 @@ export class WorkspaceD extends EventEmitter {
   dispose() {
     this.shouldRestart = false
     console.log("Disposing")
-    let to = setTimeout(this.instance.kill, 150)
+    const to = setTimeout(this.instance.kill, 150)
     this.request({ cmd: "unload", components: "*" }).then((data) => {
       console.log("Unloaded")
       this.instance.kill()
@@ -485,9 +485,9 @@ export class WorkspaceD extends EventEmitter {
   }
 
   private getPossibleSourceRoots(): string[] {
-    let confPaths = atom.config.get("atomize-d.projectImportPaths") || []
+    const confPaths = atom.config.get("atomize-d.projectImportPaths") || []
     if (confPaths && confPaths.length) {
-      let roots = []
+      const roots = []
       confPaths.forEach((p) => {
         if (path.isAbsolute(p)) roots.push(p)
         else roots.push(path.join(this.projectRoot, p))
@@ -500,8 +500,8 @@ export class WorkspaceD extends EventEmitter {
   }
 
   public setupCustomWorkspace() {
-    let paths = this.getPossibleSourceRoots()
-    let rootDir = paths[0]
+    const paths = this.getPossibleSourceRoots()
+    const rootDir = paths[0]
     let addPaths = []
     if (paths.length > 1) addPaths = paths.slice(1)
     this.request({ cmd: "load", components: ["fsworkspace"], dir: rootDir, additionalPaths: addPaths }).then(
@@ -609,13 +609,13 @@ export class WorkspaceD extends EventEmitter {
   }
 
   public request(data): Thenable<any> {
-    let lengthBuffer = new Buffer(4)
-    let idBuffer = new Buffer(4)
-    let dataStr = JSON.stringify(data)
+    const lengthBuffer = new Buffer(4)
+    const idBuffer = new Buffer(4)
+    const dataStr = JSON.stringify(data)
     lengthBuffer.writeInt32BE(Buffer.byteLength(dataStr, "utf8") + 4, 0)
-    let reqID = this.requestNum++
+    const reqID = this.requestNum++
     idBuffer.writeInt32BE(reqID, 0)
-    let buf = Buffer.concat([lengthBuffer, idBuffer, new Buffer(dataStr, "utf8")])
+    const buf = Buffer.concat([lengthBuffer, idBuffer, new Buffer(dataStr, "utf8")])
     this.instance.stdin.write(buf)
     return new Promise((resolve, reject) => {
       this.once("res-" + reqID, function (error, data) {
@@ -632,15 +632,15 @@ export class WorkspaceD extends EventEmitter {
 
   public handleChunks() {
     if (this.totalData.length < 8) return false
-    let len = this.totalData.readInt32BE(0)
+    const len = this.totalData.readInt32BE(0)
     if (this.totalData.length >= len + 4) {
-      let id = this.totalData.readInt32BE(4)
-      let buf = new Buffer(len - 4)
+      const id = this.totalData.readInt32BE(4)
+      const buf = new Buffer(len - 4)
       this.totalData.copy(buf, 0, 8, 4 + len)
-      let newBuf = new Buffer(this.totalData.length - 4 - len)
+      const newBuf = new Buffer(this.totalData.length - 4 - len)
       this.totalData.copy(newBuf, 0, 4 + len)
       this.totalData = newBuf
-      let obj = JSON.parse(buf.toString())
+      const obj = JSON.parse(buf.toString())
       if (typeof obj == "object" && obj && obj["error"]) {
         this.emit("error", obj)
         this.emit("res-" + id, obj)
@@ -651,12 +651,12 @@ export class WorkspaceD extends EventEmitter {
   }
 
   public runCheckTimeout: NodeJS.Timeout = -1
-  public workspaced: boolean = true
-  public dubReady: boolean = false
-  public dcdReady: boolean = false
-  public dlanguiReady: boolean = false
-  public dscannerReady: boolean = false
-  public shouldRestart: boolean = true
+  public workspaced = true
+  public dubReady = false
+  public dcdReady = false
+  public dlanguiReady = false
+  public dscannerReady = false
+  public shouldRestart = true
   public totalData: Buffer
   public requestNum = 0
   public instance: ChildProcess.ChildProcess
