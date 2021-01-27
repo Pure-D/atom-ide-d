@@ -1,11 +1,11 @@
 import { WorkspaceD } from "./workspace-d"
 import { CompositeDisposable } from "atom"
 
-class AtomizeD {
-  subscriptions: CompositeDisposable = null
-  projects: { [key: string]: WorkspaceD } = {}
+let subscriptions: CompositeDisposable
 
-  config = {
+const projects: { [key: string]: WorkspaceD } = {}
+
+export const config = {
     workspacedPath: {
       type: "string",
       default: "workspace-d",
@@ -72,50 +72,50 @@ class AtomizeD {
     },
   }
 
-  activate(state) {
-    this.subscriptions = new CompositeDisposable()
+export function activate(state) {
+    subscriptions = new CompositeDisposable()
 
     console.log("Started atomize-d")
-    this.subscriptions.add(
+    subscriptions.add(
       atom.project.onDidChangePaths((list) => {
-        this.projectListUpdate(list)
+        projectListUpdate(list)
       })
     )
-    this.projectListUpdate(atom.project.getPaths())
+    projectListUpdate(atom.project.getPaths())
   }
 
-  projectListUpdate(list) {
+export function projectListUpdate(list) {
     list.forEach((projectPath) => {
       if (typeof projectPath !== "string") return
-      if (this.projects[projectPath]) return
+      if (projects[projectPath]) return
       console.log("Created new workspace-d instance on " + projectPath)
-      this.projects[projectPath] = new WorkspaceD(projectPath)
+      projects[projectPath] = new WorkspaceD(projectPath)
     })
   }
 
-  getCurrentProject() {
+export function getCurrentProject() {
     const editor = atom.workspace.getActiveTextEditor()
     if (!editor) throw "Could not identify Project root"
     const path = atom.project.relativizePath(editor.getPath())[0]
     if (!path) throw "Could not identify Project root"
-    const project = this.projects[path]
+    const project = projects[path]
     if (!project) throw "Not a valid D project (or not identified)"
     return project
   }
 
-  provideAutocomplete() {
+export function provideAutocomplete() {
     return {
       selector: ".source.d, .source.di",
       disableForSelector: ".source.d .comment, .source.d .string",
       inclusionPriority: 1,
       excludeLowerPriority: true,
       getSuggestions: (options) => {
-        return this.getCurrentProject().getSuggestions(options)
+        return getCurrentProject().getSuggestions(options)
       },
     }
   }
 
-  provideLinter() {
+export function provideLinter() {
     return {
       grammarScopes: ["source.d"],
       scope: "file",
@@ -123,14 +123,11 @@ class AtomizeD {
       inclusionPriority: 1,
       excludeLowerPriority: true,
       lint: (editor) => {
-        return this.getCurrentProject().lint(editor)
+        return getCurrentProject().lint(editor)
       },
     }
   }
 
-  deactivate() {
-    this.subscriptions.dispose()
+export function deactivate() {
+    subscriptions.dispose()
   }
-}
-
-module.exports = new AtomizeD()

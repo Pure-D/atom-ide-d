@@ -12,7 +12,7 @@ interface SuggestionRequest {
   scopeDescriptor: string[]
 }
 
-interface Suggestion {
+export interface Suggestion {
   text?: string
   snippet?: string
   displayText?: string
@@ -38,7 +38,7 @@ interface Trace {
   class?: string
 }
 
-interface LintResult {
+export interface LintResult {
   type: string
   text?: string
   html?: string
