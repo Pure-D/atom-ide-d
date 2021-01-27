@@ -11,6 +11,7 @@ devDependencies:
   eslint: 7.18.0
   eslint-config-atomic: 1.6.1_eslint@7.18.0
   prettier: 2.2.1
+  shelljs: 0.8.4
   shx: 0.3.3
   typescript: 4.1.3
 lockfileVersion: 5.2
@@ -3424,5 +3425,6 @@ specifiers:
   eslint: 7.18.0
   eslint-config-atomic: ^1.6.1
   prettier: ^2.2.1
+  shelljs: ^0.8.4
   shx: 0.3.3
   typescript: ^4.1.3
