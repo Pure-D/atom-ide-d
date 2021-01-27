@@ -1,7 +1,0 @@
-{
-  "ambientDependencies": {
-    "atom": "registry:dt/atom#0.0.0+20160229060725",
-    "node": "registry:dt/node#4.0.0+20160311162451",
-    "typescript-deferred": "registry:dt/typescript-deferred#0.1.5+20160127111735"
-  }
-}
