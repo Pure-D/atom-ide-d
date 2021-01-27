@@ -650,7 +650,7 @@ export class WorkspaceD extends EventEmitter {
     return false
   }
 
-  public runCheckTimeout: NodeJS.Timeout = -1
+  public runCheckTimeout: NodeJS.Timeout
   public workspaced = true
   public dubReady = false
   public dcdReady = false
