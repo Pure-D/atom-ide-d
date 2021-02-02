@@ -29,6 +29,7 @@
 		"tsc.dev": "tsc -p src/tsconfig.json --watch",
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
+		"get.grammars": "node ./scripts/get-grammars.js",
 		"get.served": "node ./scripts/get-serve-d.js",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run build"
@@ -90,6 +91,7 @@
 		"decompress-tarxz": "^3.0.0",
 		"eslint": "7.18.0",
 		"eslint-config-atomic": "^1.6.1",
+		"gitly": "^2.0.1",
 		"prettier": "^2.2.1",
 		"shelljs": "^0.8.4",
 		"shx": "0.3.3",
