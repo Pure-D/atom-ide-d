@@ -1,4 +1,5 @@
 import { AutoLanguageClient } from "atom-languageclient"
+import { spawn } from "child_process"
 
 import { join, dirname } from "path"
 
@@ -20,8 +21,11 @@ class DLanguageClient extends AutoLanguageClient {
     return "serve-d"
   }
 
-  startServerProcess() {
-    return super.spawnChildNode([serverByOS[process.platform]])
+  startServerProcess(projectPath: string) {
+    const serveD = spawn(serverByOS[process.platform], [], {
+      cwd: projectPath,
+    })
+    return serveD
   }
 }
 
