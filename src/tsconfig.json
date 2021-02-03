@@ -27,5 +27,5 @@
     "importHelpers": false,
     "outDir": "../dist"
   },
-  "compileOnSave": false
+  "compileOnSave": true
 }
