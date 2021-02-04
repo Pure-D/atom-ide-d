@@ -13,6 +13,10 @@ class DLanguageClient extends AutoLanguageClient {
     return "serve-d"
   }
 
+  getConnectionType(): "stdio" {
+    return "stdio"
+  }
+
   async startServerProcess(projectPath: string) {
     const serveDPath = await installServeD()
 
