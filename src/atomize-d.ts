@@ -4,7 +4,7 @@ import { installServeD } from "./installation"
 
 class DLanguageClient extends AutoLanguageClient {
   getGrammarScopes() {
-    return ["source.d"]
+    return ["source.d", "D"]
   }
   getLanguageName() {
     return "D"
