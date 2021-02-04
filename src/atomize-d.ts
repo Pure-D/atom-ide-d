@@ -1,14 +1,6 @@
 import { AutoLanguageClient } from "atom-languageclient"
 import { spawn } from "child_process"
-
-import { join, dirname } from "path"
-
-const distFolder = join(dirname(__dirname), "dist")
-const serverByOS = {
-  win32: join(distFolder, "windows", "serve-d.exe"),
-  darwin: join(distFolder, "osx", "serve-d"),
-  linux: join(distFolder, "linux", "serve-d"),
-}
+import { installServeD } from "./installation"
 
 class DLanguageClient extends AutoLanguageClient {
   getGrammarScopes() {
@@ -22,7 +14,9 @@ class DLanguageClient extends AutoLanguageClient {
   }
 
   async startServerProcess(projectPath: string) {
-    const serveD = spawn(serverByOS[process.platform], [], {
+    const serveDPath = await installServeD()
+
+    const serveD = spawn(serveDPath, [], {
       cwd: projectPath,
     })
 
@@ -32,7 +26,9 @@ class DLanguageClient extends AutoLanguageClient {
 
     serveD.on("close", (code, signal) => {
       if (code !== 0 && signal == null) {
-        atom.notifications.addError("Unable to start the Serve-D language server.\nCheck the dev tools console for more information.")
+        atom.notifications.addError(
+          "Unable to start the Serve-D language server.\nCheck the dev tools console for more information."
+        )
       }
     })
 

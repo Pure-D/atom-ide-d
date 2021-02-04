@@ -1,5 +1,6 @@
 dependencies:
   atom-languageclient: 1.0.6
+  path-exists: 4.0.0
 devDependencies:
   '@terascope/fetch-github-release': 0.7.4
   '@types/atom': 1.40.7
@@ -2753,6 +2754,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=
+  /path-exists/4.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==
   /path-is-absolute/1.0.1:
     engines:
       node: '>=0.10.0'
@@ -3562,6 +3569,7 @@ specifiers:
   eslint: 7.19.0
   eslint-config-atomic: ^1.9.0
   gitly: ^2.0.2
+  path-exists: ^4.0.0
   prettier: ^2.2.1
   shelljs: ^0.8.4
   shx: 0.3.3
