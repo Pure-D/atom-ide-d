@@ -1,5 +1,4 @@
-import { promises as fsp } from "fs"
-const { copyFile } = fsp
+import { copy } from "fs-extra"
 import pathExists from "path-exists"
 import { join, dirname } from "path"
 
@@ -8,9 +7,9 @@ const distFolder = join(dirname(__dirname), "dist")
 const exeExtention = process.platform === "win32" ? ".exe" : ""
 const serveDExeFileName = `serve-d${exeExtention}`
 const bundledServerMap = {
-  win32: join(distFolder, "windows", serveDExeFileName),
-  darwin: join(distFolder, "osx", serveDExeFileName),
-  linux: join(distFolder, "linux", serveDExeFileName),
+  win32: join(distFolder, "windows"),
+  darwin: join(distFolder, "osx"),
+  linux: join(distFolder, "linux"),
 }
 
 async function getCodeDBinFolder() {
@@ -33,7 +32,8 @@ export async function installServeD() {
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
   if (!(await isServeDInstalled(serveDPath))) {
-    await copyFile(bundledServerMap[process.platform], serveDPath)
+    // copy the whole served folder
+    await copy(bundledServerMap[process.platform], codeDBinFolder)
   }
   return serveDPath
 }

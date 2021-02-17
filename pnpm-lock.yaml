@@ -1,9 +1,11 @@
 dependencies:
   atom-languageclient: 1.0.6
+  fs-extra: 9.1.0
   path-exists: 4.0.0
 devDependencies:
   '@terascope/fetch-github-release': 0.7.4
   '@types/atom': 1.40.7
+  '@types/fs-extra': 9.0.7
   '@types/node': 14.14.24
   build-commit: 0.1.4
   cross-env: 7.0.3
@@ -275,6 +277,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-ykFq2zmBGOCbpIXtoVbz4SKY5QriWPh3AjyU4G74RYbtt5yOc5OfaY75ftjg7mikMOla1CTGpX3lLbuJh8DTrQ==
+  /@types/fs-extra/9.0.7:
+    dependencies:
+      '@types/node': 14.14.28
+    dev: true
+    resolution:
+      integrity: sha512-YGq2A6Yc3bldrLUlm17VNWOnUbnEzJ9CMgOeLFtQF3HOCN5lQBO8VyjG00a5acA5NNSM30kHVGp1trZgnVgi1Q==
   /@types/http-cache-semantics/4.0.0:
     dev: true
     resolution:
@@ -301,6 +309,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-6BAlkS4seVjszhrwN0W1WabqWwuJwcYF36Z1rPPyQm80LGRKsIeUPdzI51TezXenjetFNy1gRTpuDn1NBg33LA==
+  /@types/node/14.14.28:
+    dev: true
+    resolution:
+      integrity: sha512-lg55ArB+ZiHHbBBttLpzD07akz0QPrZgUODNakeC09i62dnrywr9mFErHuaPlB6I7z+sEbK+IYmplahvplCj2g==
   /@types/responselike/1.0.0:
     dependencies:
       '@types/node': 14.14.22
@@ -582,6 +594,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
+  /at-least-node/1.0.0:
+    dev: false
+    engines:
+      node: '>= 4.0.0'
+    resolution:
+      integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
   /atom-languageclient/1.0.6:
     dependencies:
       fuzzaldrin-plus-fast: 1.2.4
@@ -1793,6 +1811,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
+  /fs-extra/9.1.0:
+    dependencies:
+      at-least-node: 1.0.0
+      graceful-fs: 4.2.6
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
   /fs-minipass/1.2.7:
     dependencies:
       minipass: 2.9.0
@@ -1966,6 +1995,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+  /graceful-fs/4.2.6:
+    dev: false
+    resolution:
+      integrity: sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
   /has-ansi/2.0.0:
     dependencies:
       ansi-regex: 2.1.1
@@ -2302,6 +2335,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==
+  /jsonfile/6.1.0:
+    dependencies:
+      universalify: 2.0.0
+    dev: false
+    optionalDependencies:
+      graceful-fs: 4.2.6
+    resolution:
+      integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
   /jsx-ast-utils/2.4.1:
     dependencies:
       array-includes: 3.1.2
@@ -3448,6 +3489,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==
+  /universalify/2.0.0:
+    dev: false
+    engines:
+      node: '>= 10.0.0'
+    resolution:
+      integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
   /uri-js/4.4.1:
     dependencies:
       punycode: 2.1.1
@@ -3560,6 +3607,7 @@ packages:
 specifiers:
   '@terascope/fetch-github-release': ^0.7.4
   '@types/atom': 1.40.7
+  '@types/fs-extra': ^9.0.7
   '@types/node': ^14.14.24
   atom-languageclient: ^1.0.6
   build-commit: 0.1.4
@@ -3568,6 +3616,7 @@ specifiers:
   decompress-tarxz: ^3.0.0
   eslint: 7.19.0
   eslint-config-atomic: ^1.9.0
+  fs-extra: ^9.1.0
   gitly: ^2.0.2
   path-exists: ^4.0.0
   prettier: ^2.2.1
