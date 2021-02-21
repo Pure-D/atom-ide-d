@@ -15,7 +15,6 @@ devDependencies:
   eslint-config-atomic: 1.10.1_eslint@7.20.0
   gitly: 2.0.2
   prettier: 2.2.1
-  shelljs: 0.8.4
   shx: 0.3.3
   typescript: 4.1.5
 lockfileVersion: 5.2
@@ -3712,6 +3711,5 @@ specifiers:
   gitly: ^2.0.2
   path-exists: ^4.0.0
   prettier: ^2.2.1
-  shelljs: ^0.8.4
   shx: 0.3.3
   typescript: ^4.1.5

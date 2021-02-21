@@ -30,7 +30,7 @@
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
 		"get.grammars": "node ./scripts/get-grammars.js",
-		"get.served": "node ./scripts/get-serve-d.js",
+		"get.serve-d": "node ./scripts/get-serve-d.js",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run build"
 	},
@@ -94,7 +94,6 @@
 		"eslint-config-atomic": "^1.10.1",
 		"gitly": "^2.0.2",
 		"prettier": "^2.2.1",
-		"shelljs": "^0.8.4",
 		"shx": "0.3.3",
 		"typescript": "^4.1.5"
 	},

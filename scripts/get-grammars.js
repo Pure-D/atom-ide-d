@@ -1,18 +1,18 @@
 const { download, extract } = require("gitly")
 const { dirname, join } = require("path")
-const { rm, mkdir, mv } = require("shelljs")
+const { remove, ensureDir, move } = require("fs-extra")
 
 ;(async function main() {
   const source = await download("Pure-D/code-d")
-  const distFolder = join(dirname(__dirname), "grammars")
-  rm("-rf", distFolder)
-  mkdir("-p", distFolder)
+  const root = dirname(__dirname)
+  const distFolder = join(root, "grammars")
+  await remove(distFolder)
+  await ensureDir(distFolder)
 
-  const extractFolder = join(distFolder, "temp")
-  mkdir("-p", extractFolder)
+  const extractFolder = join(root, "temp")
+  await ensureDir(extractFolder)
   await extract(source, extractFolder)
 
-  mv(join(extractFolder, "syntaxes") + "/*", distFolder)
-  rm("-rf", extractFolder)
-  rm("-rf", distFolder + "/*.yml")
+  await move(join(extractFolder, "syntaxes"), distFolder, { overwrite: true })
+  await remove(extractFolder)
 })()

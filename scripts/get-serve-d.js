@@ -2,14 +2,14 @@
 
 const downloadRelease = require("@terascope/fetch-github-release")
 const { join, dirname, basename, extname } = require("path")
-const { rm, mkdir } = require("shelljs")
+const { remove, ensureDir } = require("fs-extra")
 const decompress = require("decompress")
 const decompressTarxz = require("decompress-tarxz")
 
 ;(async () => {
   const distFolder = join(dirname(__dirname), "dist")
-  rm("-rf", distFolder)
-  mkdir("-p", distFolder)
+  await remove(distFolder)
+  await ensureDir(distFolder)
   const assets = await downloadRelease("Pure-D", "serve-d", distFolder, undefined, undefined, true)
   for (const asset of assets) {
     const platform = basename(asset).match(/windows|linux|osx/)[0]
@@ -21,6 +21,6 @@ const decompressTarxz = require("decompress-tarxz")
     } else {
       await decompress(asset, join(distFolder, platform))
     }
-    rm("-rf", asset)
+    remove(asset)
   }
 })()
