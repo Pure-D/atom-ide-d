@@ -25,7 +25,7 @@
 		"lint.fix": "npm run lint -- --fix",
 		"test": "atom --test spec",
 		"clean": "shx rm -rf dist",
-		"tsc": "tsc -p src/tsconfig.json || echo done",
+		"tsc": "tsc -p src/tsconfig.json",
 		"tsc.dev": "tsc -p src/tsconfig.json --watch",
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
