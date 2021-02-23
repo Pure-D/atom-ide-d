@@ -91,14 +91,14 @@
 		"decompress": "^4.2.1",
 		"decompress-tarxz": "^3.0.0",
 		"eslint": "7.20.0",
-		"eslint-config-atomic": "^1.10.1",
+		"eslint-config-atomic": "^1.10.2",
 		"gitly": "^2.0.2",
 		"prettier": "^2.2.1",
 		"shx": "0.3.3",
 		"typescript": "^4.1.5"
 	},
 	"dependencies": {
-		"atom-languageclient": "^1.1.1",
+		"atom-languageclient": "^1.2.2",
 		"fs-extra": "^9.1.0",
 		"path-exists": "^4.0.0"
 	}

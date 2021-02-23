@@ -1,5 +1,5 @@
 dependencies:
-  atom-languageclient: 1.1.1
+  atom-languageclient: 1.2.2
   fs-extra: 9.1.0
   path-exists: 4.0.0
 devDependencies:
@@ -12,7 +12,7 @@ devDependencies:
   decompress: 4.2.1
   decompress-tarxz: 3.0.0
   eslint: 7.20.0
-  eslint-config-atomic: 1.10.1_eslint@7.20.0
+  eslint-config-atomic: 1.10.2_eslint@7.20.0
   gitly: 2.0.2
   prettier: 2.2.1
   shx: 0.3.3
@@ -624,7 +624,7 @@ packages:
       atom: '>=1.0.0 <2.0.0'
     resolution:
       integrity: sha512-j7S7QS/G1Fgnl+wDU/ssfp5MxFE9YAcwpZCCmMUbLpOANEJ0+46aTOdHY2HJt5+F76/zGQCv7JwO3Ef1QEQUDA==
-  /atom-languageclient/1.1.1:
+  /atom-languageclient/1.2.2:
     dependencies:
       atom-ide-base: 2.4.0
       vscode-jsonrpc: 5.0.1
@@ -633,7 +633,7 @@ packages:
       zadeh: 2.0.2
     dev: false
     resolution:
-      integrity: sha512-A1M20KT5nq4iKFYLyN1BJkQ3b0DsXqkWXMkNiAUGmoomKv4LznUH4z2/qaQyZGIS5eSu7mvkC3kjkU6PG9vDoA==
+      integrity: sha512-zqy0y199QhaT2dn2hGMr6ROGBe/TShmkGpJfsbPXc1xvBjGSr+T3YnYuVrxwDJl6Ikl7wWlHPjgewdHfbkKA6g==
   /atom-package-deps/7.2.2:
     dev: false
     hasBin: true
@@ -1364,7 +1364,7 @@ packages:
       eslint-plugin-react-hooks: ^4 || ^3 || ^2.3.0 || ^1.7.0
     resolution:
       integrity: sha512-glZNDEZ36VdlZWoxn/bUR1r/sdFKPd1mHPbqUtkctgNG4yT2DLLtJ3D+yCV+jzZCc2V1nBVkmdknOJBZ5Hc0fg==
-  /eslint-config-atomic/1.10.1_eslint@7.20.0:
+  /eslint-config-atomic/1.10.2_eslint@7.20.0:
     dependencies:
       '@babel/core': 7.12.10
       '@typescript-eslint/eslint-plugin': 4.14.2_dea2d488ee7dfe81f5f49385851b1ba5
@@ -1387,7 +1387,7 @@ packages:
     peerDependencies:
       eslint: '>=7'
     resolution:
-      integrity: sha512-iFOucf2T0MphelNu6NEZNSWOW7x2F2gFYIPn+j0sblrQHm6y4xvu95o1Q6NFD2iVq+l80vnDgWyxIe3YRDSQhg==
+      integrity: sha512-hLut/mAB6tBzpHI93A9+ej26AGc7LKt+ZmUtJbWgohEFyXcEWnJqMuJ9F0kYCvlUbR61BFdvxKN6PGtuYtad4Q==
   /eslint-config-prettier/7.2.0_eslint@7.20.0:
     dependencies:
       eslint: 7.20.0
@@ -3700,13 +3700,13 @@ specifiers:
   '@types/atom': 1.40.7
   '@types/fs-extra': ^9.0.7
   '@types/node': ^14.14.31
-  atom-languageclient: ^1.1.1
+  atom-languageclient: ^1.2.2
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: ^4.2.1
   decompress-tarxz: ^3.0.0
   eslint: 7.20.0
-  eslint-config-atomic: ^1.10.1
+  eslint-config-atomic: ^1.10.2
   fs-extra: ^9.1.0
   gitly: ^2.0.2
   path-exists: ^4.0.0
