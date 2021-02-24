@@ -2,7 +2,7 @@
 	"name": "ide-d",
 	"main": "./dist/ide-d",
 	"version": "0.1.0",
-	"description": "Adds D language support for Atom",
+	"description": "D language and IDE support for Atom",
 	"keywords": [
 		"d",
 		"dcd",

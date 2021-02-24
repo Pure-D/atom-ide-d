@@ -1,6 +1,6 @@
 # ide-D
 
-D ide for Atom
+D language and IDE support for Atom
 
 ## Features
 
