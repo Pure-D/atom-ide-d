@@ -1,6 +1,6 @@
 {
-	"name": "atomize-d",
-	"main": "./dist/atomize-d",
+	"name": "ide-d",
+	"main": "./dist/ide-d",
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
 	"keywords": [
@@ -14,7 +14,7 @@
 		"lint",
 		"format"
 	],
-	"repository": "https://github.com/Vild/atomize-d",
+	"repository": "https://github.com/Vild/ide-d",
 	"license": "MIT",
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"

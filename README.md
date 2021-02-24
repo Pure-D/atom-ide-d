@@ -1,4 +1,4 @@
-# Atomize-D
+# ide-d
 
 Adds D language support for Atom
 
