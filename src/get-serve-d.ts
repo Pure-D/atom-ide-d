@@ -1,7 +1,9 @@
 import downloadRelease from "@terascope/fetch-github-release"
 import { join, dirname, extname } from "path"
 import { remove, ensureDir } from "fs-extra"
-import decompress from "decompress"
+import { execFile as execFileRaw } from "child_process"
+import { promisify } from "util"
+const execFile = promisify(execFileRaw)
 
 const assetMap = {
   win32: "windows",
@@ -13,7 +15,7 @@ const assetMap = {
 export async function getServeD() {
   const distFolder = join(dirname(__dirname), "dist")
   const platform = assetMap[process.platform]
-  const downloadFolder = join(distFolder, platform)
+  const outputFolder = join(distFolder, platform)
 
   await remove(distFolder)
   await ensureDir(distFolder)
@@ -24,16 +26,22 @@ export async function getServeD() {
     /* download folder */ distFolder,
     /* filter release */ undefined,
     /* filter asset */ (asset) => asset.name.indexOf(platform) >= 0,
-    true
+    process.platform !== "win32"
   )) as unknown) as string[]
 
   const asset = assets[0] // Assume there is only one possibility
-  if (extname(asset) === ".xz") {
-    await decompress(asset, downloadFolder, {
-      plugins: [await import("decompress-tarxz")],
-    })
-  } else {
-    await decompress(asset, downloadFolder)
-  }
+  decompressTar(asset, outputFolder)
+
   remove(asset)
+}
+
+/** Decompress if it is a tar file */
+async function decompressTar(filePath: string, outputFolder: string) {
+  if (/\.tar\.(g|x)z/.test(filePath)) {
+    // is tar file
+    const mod = extname(filePath) == ".xz" ? "J" : "z"
+    await execFile("tar", ["xvf" + mod, filePath], {
+      cwd: outputFolder,
+    })
+  }
 }

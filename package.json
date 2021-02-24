@@ -83,7 +83,6 @@
 	},
 	"devDependencies": {
 		"@types/atom": "1.40.7",
-		"@types/decompress": "^4.2.3",
 		"@types/fs-extra": "^9.0.7",
 		"@types/node": "^14.14.31",
 		"build-commit": "0.1.4",
@@ -98,8 +97,6 @@
 	"dependencies": {
 		"@terascope/fetch-github-release": "^0.7.4",
 		"atom-languageclient": "^1.2.2",
-		"decompress": "^4.2.1",
-		"decompress-tarxz": "^3.0.0",
 		"fs-extra": "^9.1.0",
 		"path-exists": "^4.0.0"
 	}
