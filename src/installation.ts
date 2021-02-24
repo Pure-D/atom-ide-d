@@ -32,6 +32,10 @@ export async function installServeD() {
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
   if (!(await isServeDInstalled(serveDPath))) {
+    const { getServeD } = await import("./get-serve-d")
+    // download serve-d
+    getServeD()
+
     // copy the whole served folder
     await copy(bundledServerMap[process.platform], codeDBinFolder)
   }
