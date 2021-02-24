@@ -2,7 +2,6 @@ import downloadRelease from "@terascope/fetch-github-release"
 import { join, dirname, extname } from "path"
 import { remove, ensureDir } from "fs-extra"
 import decompress from "decompress"
-import decompressTarxz from "decompress-tarxz"
 
 const assetMap = {
   win32: "windows",
@@ -18,6 +17,11 @@ export async function getServeD() {
 
   const platform = assetMap[process.platform]
 
+  const decompressPlugins = []
+  if (process.platform !== "win32") {
+    decompressPlugins.push(await import("decompress-tarxz"))
+  }
+
   const assets = ((await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
@@ -30,7 +34,7 @@ export async function getServeD() {
   const asset = assets[0] // Assume there is only one possibility
   if (extname(asset) === ".xz") {
     await decompress(asset, join(distFolder, platform), {
-      plugins: [decompressTarxz()],
+      plugins: decompressPlugins,
     })
   } else {
     await decompress(asset, join(distFolder, platform))
