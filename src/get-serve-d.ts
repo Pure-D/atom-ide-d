@@ -22,12 +22,12 @@ export async function getServeD() {
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolder,
-    /* filter asset */ undefined,
+    /* filter release */ undefined,
     /* filter asset */ (asset) => asset.name.indexOf(platform) >= 0,
     true
   )) as unknown) as string[]
 
-  const asset = assets[0]  // Assume there is only one possibility
+  const asset = assets[0] // Assume there is only one possibility
   if (extname(asset) === ".xz") {
     await decompress(asset, join(distFolder, platform), {
       plugins: [decompressTarxz()],
