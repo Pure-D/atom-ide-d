@@ -1,13 +1,53 @@
 {
 	"name": "atomize-d",
-	"main": "./out/atomize-d",
+	"main": "./dist/atomize-d",
 	"version": "0.1.0",
 	"description": "Adds D language support for Atom",
-	"keywords": ["d", "dcd", "dfmt", "dscanner", "workspace-d", "ide", "autocomplete", "lint", "format"],
+	"keywords": [
+		"d",
+		"dcd",
+		"dfmt",
+		"dscanner",
+		"workspace-d",
+		"ide",
+		"autocomplete",
+		"lint",
+		"format"
+	],
 	"repository": "https://github.com/Vild/atomize-d",
 	"license": "MIT",
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
+	},
+	"scripts": {
+		"format": "prettier --write .",
+		"lint": "eslint .",
+		"lint.fix": "npm run lint -- --fix",
+		"test": "atom --test spec",
+		"clean": "shx rm -rf dist",
+		"tsc": "tsc -p src/tsconfig.json",
+		"tsc.dev": "tsc -p src/tsconfig.json --watch",
+		"build": "npm run tsc",
+		"dev": "npm run tsc.dev",
+		"get.grammars": "node ./scripts/get-grammars.js",
+		"get.serve-d": "node ./scripts/get-serve-d.js",
+		"build-commit": "build-commit -o dist",
+		"prepare": "npm run build"
+	},
+	"enhancedScopes": [
+		"source.d"
+	],
+	"consumedServices": {
+		"linter-indie": {
+			"versions": {
+				"2.0.0": "consumeLinterV2"
+			}
+		},
+		"datatip": {
+			"versions": {
+				"0.1.0": "consumeDatatip"
+			}
+		}
 	},
 	"providedServices": {
 		"autocomplete.provider": {
@@ -15,11 +55,51 @@
 				"2.0.0": "provideAutocomplete"
 			}
 		},
-		"linter": {
+		"code-format.range": {
 			"versions": {
-				"1.0.0": "provideLinter"
+				"0.1.0": "provideCodeFormat"
+			}
+		},
+		"code-highlight": {
+			"versions": {
+				"0.1.0": "provideCodeHighlight"
+			}
+		},
+		"definitions": {
+			"versions": {
+				"0.1.0": "provideDefinitions"
+			}
+		},
+		"find-references": {
+			"versions": {
+				"0.1.0": "provideFindReferences"
+			}
+		},
+		"outline-view": {
+			"versions": {
+				"0.1.0": "provideOutlines"
 			}
 		}
 	},
-	"dependencies": {}
+	"devDependencies": {
+		"@terascope/fetch-github-release": "^0.7.4",
+		"@types/atom": "1.40.7",
+		"@types/fs-extra": "^9.0.7",
+		"@types/node": "^14.14.31",
+		"build-commit": "0.1.4",
+		"cross-env": "7.0.3",
+		"decompress": "^4.2.1",
+		"decompress-tarxz": "^3.0.0",
+		"eslint": "7.20.0",
+		"eslint-config-atomic": "^1.10.2",
+		"gitly": "^2.0.2",
+		"prettier": "^2.2.1",
+		"shx": "0.3.3",
+		"typescript": "^4.1.5"
+	},
+	"dependencies": {
+		"atom-languageclient": "^1.2.2",
+		"fs-extra": "^9.1.0",
+		"path-exists": "^4.0.0"
+	}
 }

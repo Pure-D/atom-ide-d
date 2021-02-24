@@ -141,18 +141,9 @@ class ${1:MyException} : ${4:Exception} {
 	"enum":
 		"prefix": "enum"
 		"body": "enum"
-	"class":
-		"prefix": "class"
-		"body": "class"
 	"struct":
 		"prefix": "struct"
 		"body": "struct"
-	"interface":
-		"prefix": "interface"
-		"body": "interface"
-	"template":
-		"prefix": "template"
-		"body": "template"
 	"union":
 		"prefix": "union"
 		"body": "union"
@@ -297,9 +288,6 @@ class ${1:MyException} : ${4:Exception} {
 	"with":
 		"prefix": "with"
 		"body": "with"
-	"scope":
-		"prefix": "scope"
-		"body": "scope"
 	"asm":
 		"prefix": "asm"
 		"body": "asm"

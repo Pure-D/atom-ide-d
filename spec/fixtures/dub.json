@@ -1,0 +1,7 @@
+{
+  "authors": ["Amin Yahyaabadi"],
+  "copyright": "Copyright © 2021, Amin Yahyaabadi",
+  "description": "A minimal D application.",
+  "license": "proprietary",
+  "name": "hello-world"
+}
