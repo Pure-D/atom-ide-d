@@ -12,15 +12,11 @@ const assetMap = {
 // function to download serve-d binaries from GitHub
 export async function getServeD() {
   const distFolder = join(dirname(__dirname), "dist")
+  const platform = assetMap[process.platform]
+  const downloadFolder = join(distFolder, platform)
+
   await remove(distFolder)
   await ensureDir(distFolder)
-
-  const platform = assetMap[process.platform]
-
-  const decompressPlugins = []
-  if (process.platform !== "win32") {
-    decompressPlugins.push(await import("decompress-tarxz"))
-  }
 
   const assets = ((await downloadRelease(
     /* username */ "Pure-D",
@@ -33,11 +29,11 @@ export async function getServeD() {
 
   const asset = assets[0] // Assume there is only one possibility
   if (extname(asset) === ".xz") {
-    await decompress(asset, join(distFolder, platform), {
-      plugins: decompressPlugins,
+    await decompress(asset, downloadFolder, {
+      plugins: [await import("decompress-tarxz")],
     })
   } else {
-    await decompress(asset, join(distFolder, platform))
+    await decompress(asset, downloadFolder)
   }
   remove(asset)
 }
