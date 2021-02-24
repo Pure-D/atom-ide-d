@@ -21,9 +21,9 @@
 	},
 	"scripts": {
 		"format": "prettier --write .",
-    "test.format": "prettier . --check",
-    "lint": "eslint . --fix",
-    "test.lint": "eslint .",
+		"test.format": "prettier . --check",
+		"lint": "eslint . --fix",
+		"test.lint": "eslint .",
 		"test": "atom --test spec",
 		"clean": "shx rm -rf dist",
 		"tsc": "tsc -p src/tsconfig.json",
@@ -31,7 +31,6 @@
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
 		"get.grammars": "node ./scripts/get-grammars.js",
-		"get.serve-d": "node ./scripts/get-serve-d.js",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run build"
 	},
@@ -83,14 +82,12 @@
 		}
 	},
 	"devDependencies": {
-		"@terascope/fetch-github-release": "^0.7.4",
 		"@types/atom": "1.40.7",
+		"@types/decompress": "^4.2.3",
 		"@types/fs-extra": "^9.0.7",
 		"@types/node": "^14.14.31",
 		"build-commit": "0.1.4",
 		"cross-env": "7.0.3",
-		"decompress": "^4.2.1",
-		"decompress-tarxz": "^3.0.0",
 		"eslint": "7.20.0",
 		"eslint-config-atomic": "^1.10.2",
 		"gitly": "^2.0.2",
@@ -99,7 +96,10 @@
 		"typescript": "^4.2.2"
 	},
 	"dependencies": {
+		"@terascope/fetch-github-release": "^0.7.4",
 		"atom-languageclient": "^1.2.2",
+		"decompress": "^4.2.1",
+		"decompress-tarxz": "^3.0.0",
 		"fs-extra": "^9.1.0",
 		"path-exists": "^4.0.0"
 	}
