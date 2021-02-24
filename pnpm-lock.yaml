@@ -16,7 +16,7 @@ devDependencies:
   gitly: 2.0.2
   prettier: 2.2.1
   shx: 0.3.3
-  typescript: 4.1.5
+  typescript: 4.2.2
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -3563,6 +3563,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
+  /typescript/4.2.2:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
   /unbzip2-stream/1.4.3:
     dependencies:
       buffer: 5.7.1
@@ -3712,4 +3719,4 @@ specifiers:
   path-exists: ^4.0.0
   prettier: ^2.2.1
   shx: 0.3.3
-  typescript: ^4.1.5
+  typescript: ^4.2.2
