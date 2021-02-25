@@ -7,26 +7,23 @@ import { execFile as execFileRaw } from "child_process"
 import { promisify } from "util"
 const execFile = promisify(execFileRaw)
 
-const distFolder = join(dirname(__dirname), "dist")
-
-const exeExtention = process.platform === "win32" ? ".exe" : ""
-const serveDExeFileName = `serve-d${exeExtention}`
-const bundledServerMap = {
-  win32: join(distFolder, "windows"),
-  darwin: join(distFolder, "osx"),
-  linux: join(distFolder, "linux"),
-}
-
 async function getCodeDBinFolder() {
-  if (process.platform === "linux") {
-    if (await pathExists(join(process.env["HOME"], ".local", "share")))
-      return join(process.env["HOME"], ".local", "share", "code-d", "bin")
-    else return join(process.env["HOME"], ".code-d", "bin")
+  const home = process.env["HOME"]
+  if (home && process.platform === "linux") {
+    if (await pathExists(join(home, ".local", "share"))) {
+      return join(home, ".local", "share", "code-d", "bin")
+    } else {
+      return join(home, ".code-d", "bin")
+    }
   } else if (process.platform === "win32") {
-    return join(process.env["APPDATA"], "code-d", "bin")
-  } else {
-    return join(process.env["HOME"], ".code-d", "bin")
+    const appdata = process.env["APPDATA"]
+    if (appdata) {
+      return join(appdata, "code-d", "bin")
+    }
+  } else if (home) {
+    return join(home, ".code-d", "bin")
   }
+  return ""
 }
 
 async function isServeDInstalled(serveDPath: string) {
@@ -37,11 +34,11 @@ async function isServeDInstalled(serveDPath: string) {
 async function getServeDVersion(file: string) {
   try {
     const output = (await execFile(file, ["--version"])).stderr
-    const version = output.match(/v(\d\S*)\s/)[1]
+    const version = output.match(/v(\d\S*)\s/)?.[1]
     return version
   } catch (e) {
     console.error(e)
-    return null
+    return undefined
   }
 }
 
@@ -52,19 +49,42 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
   return givenVersion && targetVersion && semverCompare(givenVersion, targetVersion) !== -1
 }
 
-async function copyServeD(codeDBinFolder: string) {
+async function copyServeD(bundledServerFolder: string, codeDBinFolder: string) {
   atom.notifications.addInfo("Installing serve-d...")
   // copy the whole served folder
-  await copy(bundledServerMap[process.platform], codeDBinFolder, { overwrite: true })
+  await copy(bundledServerFolder, codeDBinFolder, { overwrite: true })
   atom.notifications.addSuccess("Serve-d was installed")
 }
 
 export async function installServeD() {
+  const distFolder = join(dirname(__dirname), "dist")
+
+  const exeExtention = process.platform === "win32" ? ".exe" : ""
+  const serveDExeFileName = `serve-d${exeExtention}`
+
+  const bundledServerFolderMap: Record<string, string | undefined> = {
+    win32: join(distFolder, "windows"),
+    darwin: join(distFolder, "osx"),
+    linux: join(distFolder, "linux"),
+  }
+
+  const bundledServerFolder = bundledServerFolderMap[process.platform]
+
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
-  const bundledServeDPath = join(bundledServerMap[process.platform], serveDExeFileName)
-  if (!(await isServeDInstalled(serveDPath)) || !(await isServeDUpToDate(serveDPath, bundledServeDPath))) {
-    await copyServeD(codeDBinFolder)
+
+  if (bundledServerFolder) {
+    const bundledServeDPath = join(bundledServerFolder, serveDExeFileName)
+    if (!(await isServeDInstalled(serveDPath)) || !(await isServeDUpToDate(serveDPath, bundledServeDPath))) {
+      await copyServeD(bundledServerFolder, codeDBinFolder)
+    }
+  } else {
+    if (!(await isServeDInstalled(serveDPath))) {
+      atom.notifications.addError(
+        `serve-d binary is not available for ${process.platform}.
+        Please built it from the source, place it under ${codeDBinFolder}, and restart Atom.`
+      )
+    }
   }
   return serveDPath
 }

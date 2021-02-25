@@ -2,6 +2,7 @@ import downloadRelease from "@terascope/fetch-github-release"
 import { join, dirname, extname, basename } from "path"
 import { remove, ensureDir } from "fs-extra"
 import decompress from "decompress"
+// @ts-ignore
 import decompressTarxz from "decompress-tarxz"
 
 // function to download serve-d binaries from GitHub
@@ -21,7 +22,7 @@ export async function getServeD() {
   )) as unknown) as string[]
 
   for (const asset of assets) {
-    const platform = basename(asset).match(/windows|linux|osx/)[0]
+    const platform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
     const downloadFolder = join(distFolder, platform)
     if (extname(asset) === ".xz") {
       await decompress(asset, downloadFolder, {
