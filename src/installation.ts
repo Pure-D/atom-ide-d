@@ -2,6 +2,10 @@ import { copy } from "fs-extra"
 import pathExists from "path-exists"
 import { join, dirname } from "path"
 
+import { execFile as execFileRaw } from "child_process"
+import { promisify } from "util"
+const execFile = promisify(execFileRaw)
+
 const distFolder = join(dirname(__dirname), "dist")
 
 const exeExtention = process.platform === "win32" ? ".exe" : ""
@@ -33,10 +37,6 @@ export async function installServeD() {
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
   if (!(await isServeDInstalled(serveDPath))) {
     atom.notifications.addInfo("Installing serve-d...")
-
-    const { getServeD } = await import("./get-serve-d")
-    // download serve-d
-    getServeD()
 
     // copy the whole served folder
     await copy(bundledServerMap[process.platform], codeDBinFolder)
