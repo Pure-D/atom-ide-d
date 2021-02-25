@@ -44,11 +44,11 @@ async function isServeDInstalled(serveDPath: string) {
 async function getServeDVersion(file: string) {
   try {
     const output = (await execFile(file, ["--version"])).stderr
-    const version = output.match(/v(\d\S*)\s/)[1]
+    const version = output.match(/v(\d\S*)\s/)?.[1]
     return version
   } catch (e) {
     console.error(e)
-    return null
+    return undefined
   }
 }
 
