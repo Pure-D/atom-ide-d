@@ -2,6 +2,8 @@
 
 D language and IDE support for Atom
 
+[![CI](https://github.com/Pure-D/atom-ide-d/actions/workflows/CI.yml/badge.svg)](https://github.com/Pure-D/atom-ide-d/actions/workflows/CI.yml)
+
 ## Features
 
 The features are provided by `serve-d`, `dcd`, `dscanner`, etc.
