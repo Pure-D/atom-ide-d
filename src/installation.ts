@@ -49,7 +49,7 @@ async function getServeDVersion(file: string) {
 export async function isServeDUpToDate(givenFile: string, targetFile: string) {
   const givenVersion = await getServeDVersion(givenFile)
   const targetVersion = await getServeDVersion(targetFile)
-  return semverCompare(givenVersion, targetVersion) !== 0
+  return givenVersion && targetVersion && semverCompare(givenVersion, targetVersion) !== -1
 }
 
 async function copyServeD(codeDBinFolder: string) {
