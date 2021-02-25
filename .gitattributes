@@ -1,6 +1,9 @@
 * text=auto
 
 # don't diff machine generated files
-dist/ -diff
 package-lock.json -diff
 pnpm-lock.yaml -diff
+
+# Built files
+dist/ -diff
+dist/** filter=lfs diff=lfs merge=lfs -text
