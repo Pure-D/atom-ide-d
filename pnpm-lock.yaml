@@ -8,6 +8,7 @@ devDependencies:
   '@types/decompress': 4.2.3
   '@types/fs-extra': 9.0.7
   '@types/node': 14.14.31
+  '@types/semver': 7.3.4
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: 4.2.1
@@ -16,6 +17,7 @@ devDependencies:
   eslint-config-atomic: 1.10.2_eslint@7.20.0
   gitly: 2.0.2
   prettier: 2.2.1
+  semver: 7.3.4
   shx: 0.3.3
   ts-node: 9.1.1_typescript@4.2.2
   typescript: 4.2.2
@@ -326,6 +328,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==
+  /@types/semver/7.3.4:
+    dev: true
+    resolution:
+      integrity: sha512-+nVsLKlcUCeMzD2ufHEYuJ9a2ovstb6Dp52A5VsoKxDXgvE051XgHI/33I1EymwkRGQkwnA0LkhnUzituGs4EQ==
   /@types/yauzl/2.9.1:
     dependencies:
       '@types/node': 14.14.22
@@ -3774,6 +3780,7 @@ specifiers:
   '@types/decompress': ^4.2.3
   '@types/fs-extra': ^9.0.7
   '@types/node': ^14.14.31
+  '@types/semver': ^7.3.4
   atom-languageclient: ^1.2.2
   build-commit: 0.1.4
   cross-env: 7.0.3
@@ -3785,6 +3792,7 @@ specifiers:
   gitly: ^2.0.2
   path-exists: ^4.0.0
   prettier: ^2.2.1
+  semver: ^7.3.4
   shx: 0.3.3
   ts-node: ^9.1.1
   typescript: ^4.2.2

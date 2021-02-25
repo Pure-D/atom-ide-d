@@ -1,6 +1,7 @@
 import { copy } from "fs-extra"
 import pathExists from "path-exists"
 import { join, dirname } from "path"
+import semverCompare from "semver/functions/compare"
 
 import { execFile as execFileRaw } from "child_process"
 import { promisify } from "util"
@@ -43,6 +44,16 @@ async function getServeDVersion(file: string) {
     return null
   }
 }
+
+/** Check if the given serve-d is up to date against the target version */
+export async function isServeDUpToDate(givenFile: string, targetFile: string) {
+  const givenVersion = await getServeDVersion(givenFile)
+  const targetVersion = await getServeDVersion(targetFile)
+  return semverCompare(givenVersion, targetVersion) !== 0
+}
+
+}
+
 export async function installServeD() {
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
