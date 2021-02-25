@@ -21,5 +21,14 @@ Update changelog then:
 pnpm install
 pnpm get.serve-d
 pnpm build-commit
-apm publish patch # minor, major
+```
+
+Checkout to master branch (main is not supported by apm yet)
+```
+git checkout master
+```
+
+Then publish based on the change (patch, minor, major):
+```
+apm publish patch
 ```
