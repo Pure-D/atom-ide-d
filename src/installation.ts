@@ -52,18 +52,19 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
   return semverCompare(givenVersion, targetVersion) !== 0
 }
 
+async function copyServeD(codeDBinFolder: string) {
+  atom.notifications.addInfo("Installing serve-d...")
+  // copy the whole served folder
+  await copy(bundledServerMap[process.platform], codeDBinFolder, { overwrite: true })
+  atom.notifications.addSuccess("Serve-d was installed")
 }
 
 export async function installServeD() {
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
-  if (!(await isServeDInstalled(serveDPath))) {
-    atom.notifications.addInfo("Installing serve-d...")
-
-    // copy the whole served folder
-    await copy(bundledServerMap[process.platform], codeDBinFolder)
-
-    atom.notifications.addSuccess("Serve-d was installed")
+  const bundledServeDPath = join(bundledServerMap[process.platform], serveDExeFileName)
+  if (!(await isServeDInstalled(serveDPath)) || !(await isServeDUpToDate(serveDPath, bundledServeDPath))) {
+    await copyServeD(codeDBinFolder)
   }
   return serveDPath
 }
