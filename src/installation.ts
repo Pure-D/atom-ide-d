@@ -18,15 +18,22 @@ const bundledServerMap = {
 }
 
 async function getCodeDBinFolder() {
-  if (process.platform === "linux") {
-    if (await pathExists(join(process.env["HOME"], ".local", "share")))
-      return join(process.env["HOME"], ".local", "share", "code-d", "bin")
-    else return join(process.env["HOME"], ".code-d", "bin")
+  const home = process.env["HOME"]
+  if (home && process.platform === "linux") {
+    if (await pathExists(join(home, ".local", "share"))) {
+      return join(home, ".local", "share", "code-d", "bin")
+    } else {
+      return join(home, ".code-d", "bin")
+    }
   } else if (process.platform === "win32") {
-    return join(process.env["APPDATA"], "code-d", "bin")
-  } else {
-    return join(process.env["HOME"], ".code-d", "bin")
+    const appdata = process.env["APPDATA"]
+    if (appdata) {
+      return join(appdata, "code-d", "bin")
+    }
+  } else if (home) {
+    return join(home, ".code-d", "bin")
   }
+  return ""
 }
 
 async function isServeDInstalled(serveDPath: string) {
