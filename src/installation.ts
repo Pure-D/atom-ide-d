@@ -32,6 +32,17 @@ async function isServeDInstalled(serveDPath: string) {
   return pathExists(serveDPath)
 }
 
+/** get the version of serve-d */
+async function getServeDVersion(file: string) {
+  try {
+    const output = (await execFile(file, ["--version"])).stderr
+    const version = output.match(/v(\d\S*)\s/)[1]
+    return version
+  } catch (e) {
+    console.error(e)
+    return null
+  }
+}
 export async function installServeD() {
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)
