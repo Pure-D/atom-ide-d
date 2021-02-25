@@ -2,6 +2,7 @@ dependencies:
   atom-languageclient: 1.2.2
   fs-extra: 9.1.0
   path-exists: 4.0.0
+  semver: 7.3.4
 devDependencies:
   '@terascope/fetch-github-release': 0.7.4
   '@types/atom': 1.40.7
@@ -17,7 +18,6 @@ devDependencies:
   eslint-config-atomic: 1.10.2_eslint@7.20.0
   gitly: 2.0.2
   prettier: 2.2.1
-  semver: 7.3.4
   shx: 0.3.3
   ts-node: 9.1.1_typescript@4.2.2
   typescript: 4.2.2
@@ -2495,7 +2495,6 @@ packages:
   /lru-cache/6.0.0:
     dependencies:
       yallist: 4.0.0
-    dev: true
     engines:
       node: '>=10'
     resolution:
@@ -3217,7 +3216,6 @@ packages:
   /semver/7.3.4:
     dependencies:
       lru-cache: 6.0.0
-    dev: true
     engines:
       node: '>=10'
     hasBin: true
@@ -3749,7 +3747,6 @@ packages:
     resolution:
       integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
   /yallist/4.0.0:
-    dev: true
     resolution:
       integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
   /yauzl/2.10.0:
