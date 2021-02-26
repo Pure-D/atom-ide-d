@@ -22,12 +22,6 @@ pnpm install
 pnpm build-commit
 ```
 
-Checkout to master branch (main is not supported by apm yet)
-
-```
-git checkout master
-```
-
 Then publish based on the change (patch, minor, major):
 
 ```
