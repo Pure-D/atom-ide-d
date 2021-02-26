@@ -55,10 +55,10 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
 }
 
 async function copyServeD(bundledServerFolder: string, codeDBinFolder: string) {
-  atom.notifications.addInfo("Installing serve-d...")
+  atom.notifications.addInfo("Installing D servers...")
   // copy the whole served folder
   await copy(bundledServerFolder, codeDBinFolder, { overwrite: true })
-  atom.notifications.addSuccess("Serve-d was installed")
+  atom.notifications.addSuccess("D servers was installed")
 }
 
 export async function installServeD() {
@@ -67,13 +67,7 @@ export async function installServeD() {
   const exeExtention = process.platform === "win32" ? ".exe" : ""
   const serveDExeFileName = `serve-d${exeExtention}`
 
-  const bundledServerFolderMap: Record<string, string | undefined> = {
-    win32: join(distFolder, "windows"),
-    darwin: join(distFolder, "osx"),
-    linux: join(distFolder, "linux"),
-  }
-
-  const bundledServerFolder = bundledServerFolderMap[process.platform]
+  const bundledServerFolder = join(distFolder, `${process.platform}-${process.arch}`)
 
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)

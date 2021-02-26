@@ -19,7 +19,6 @@ Update changelog then:
 
 ```
 pnpm install
-pnpm get.serve-d
 pnpm build-commit
 ```
 
