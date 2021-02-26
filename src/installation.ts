@@ -55,10 +55,10 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
 }
 
 async function copyServeD(bundledServerFolder: string, codeDBinFolder: string) {
-  atom.notifications.addInfo("Installing serve-d...")
+  atom.notifications.addInfo("Installing D servers...")
   // copy the whole served folder
   await copy(bundledServerFolder, codeDBinFolder, { overwrite: true })
-  atom.notifications.addSuccess("Serve-d was installed")
+  atom.notifications.addSuccess("D servers was installed")
 }
 
 export async function installServeD() {
