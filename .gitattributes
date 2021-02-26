@@ -6,4 +6,3 @@ pnpm-lock.yaml -diff
 
 # Built files
 dist/ -diff
-dist/** filter=lfs diff=lfs merge=lfs -text
