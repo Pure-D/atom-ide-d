@@ -33,7 +33,7 @@
 		"get.grammars": "node ./scripts/get-grammars.js",
 		"get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
 		"build-commit": "build-commit -o dist",
-		"prepare": "npm run build"
+		"prepare": "npm run get.servers && npm run build"
 	},
 	"enhancedScopes": [
 		"source.d"
