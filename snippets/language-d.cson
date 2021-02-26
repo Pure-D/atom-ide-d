@@ -1,375 +1,375 @@
 ".source.d":
-	"if":
-		"prefix": "if"
-		"body": "if($1)"
-	"else if":
-		"prefix": "elif"
-		"body": "else if($1)"
-	"else+braces":
-		"prefix": "el"
-		"body": "else"
-	"switch+case":
-		"prefix": "sw"
-		"body": """
+  "if":
+    "prefix": "if"
+    "body": "if($1)"
+  "else if":
+    "prefix": "elif"
+    "body": "else if($1)"
+  "else+braces":
+    "prefix": "el"
+    "body": "else"
+  "switch+case":
+    "prefix": "sw"
+    "body": """
 switch($1) {$2
-	default:
-		break;
+  default:
+    break;
 }"""
-	"case+value":
-		"prefix": "cs"
-		"body": """case $1:
-	${2:break;}"""
-	"Exception template":
-		"prefix": "ex"
-		"body": """
+  "case+value":
+    "prefix": "cs"
+    "body": """case $1:
+  ${2:break;}"""
+  "Exception template":
+    "prefix": "ex"
+    "body": """
 class ${1:MyException} : ${4:Exception} {
-	public this(${2:string msg, string file = __FILE__, size_t line = __LINE__, Throwable next = null}) {
-		${3:super(msg, file, line, next);}
-	}
+  public this(${2:string msg, string file = __FILE__, size_t line = __LINE__, Throwable next = null}) {
+    ${3:super(msg, file, line, next);}
+  }
 }"""
-	"void main":
-		"prefix": "main"
-		"body": "${2:void} main(${3:string[] args}) {$1}"
-	"template":
-		"prefix": "tmpl"
-		"body": "template ${1:MyTemplate}($2) {$3}"
-	"mixin template":
-		"prefix": "mixt"
-		"body": "mixin template ${1:MyMixin}($2) {$3}"
-	"interface":
-		"prefix": "interface"
-		"body": "interface ${1:MyInterface}$3 {$2}"
-	"class":
-		"prefix": "cl"
-		"body": "class ${1:MyClass}$3 {$2}"
-	"property get/set":
-		"prefix": "prop"
-		"body": """
+  "void main":
+    "prefix": "main"
+    "body": "${2:void} main(${3:string[] args}) {$1}"
+  "template":
+    "prefix": "tmpl"
+    "body": "template ${1:MyTemplate}($2) {$3}"
+  "mixin template":
+    "prefix": "mixt"
+    "body": "mixin template ${1:MyMixin}($2) {$3}"
+  "interface":
+    "prefix": "interface"
+    "body": "interface ${1:MyInterface}$3 {$2}"
+  "class":
+    "prefix": "cl"
+    "body": "class ${1:MyClass}$3 {$2}"
+  "property get/set":
+    "prefix": "prop"
+    "body": """
 @property void ${1:value}(${2:auto} value) { ${3:_value} = value; }
 @property $2 $1() { return $3; }"""
-	"property get":
-		"prefix": "get"
-		"body": "@property ${3:auto} ${1:value}() { return ${2:_value}; }"
-	"property set":
-		"prefix": "set"
-		"body": "@property void ${1:value}(${2:auto} value) { ${3:_value} = value; }"
-	"ref property":
-		"prefix": "refp"
-		"body": "@property ref ${3:auto} ${1:value}() { return ${2:_value}; }"
-	"constructor":
-		"prefix": "ctor"
-		"body": "this($2) {$1}"
-	"destructor":
-		"prefix": "dtor"
-		"body": "~this($2) {$1}"
-	# D Keywords that DCD does not cover
-	"void":
-		"prefix": "void"
-		"body": "void"
-	"bool":
-		"prefix": "bool"
-		"body": "bool"
-	"byte":
-		"prefix": "byte"
-		"body": "byte"
-	"ubyte":
-		"prefix": "ubyte"
-		"body": "ubyte"
-	"short":
-		"prefix": "short"
-		"body": "short"
-	"ushort":
-		"prefix": "ushort"
-		"body": "ushort"
-	"int":
-		"prefix": "int"
-		"body": "int"
-	"uint":
-		"prefix": "uint"
-		"body": "uint"
-	"long":
-		"prefix": "long"
-		"body": "long"
-	"ulong":
-		"prefix": "ulong"
-		"body": "ulong"
-	"cent":
-		"prefix": "cent"
-		"body": "cent"
-	"ucent":
-		"prefix": "ucent"
-		"body": "ucent"
-	"float":
-		"prefix": "float"
-		"body": "float"
-	"double":
-		"prefix": "double"
-		"body": "double"
-	"real":
-		"prefix": "real"
-		"body": "real"
-	"ifloat":
-		"prefix": "ifloat"
-		"body": "ifloat"
-	"idouble":
-		"prefix": "idouble"
-		"body": "idouble"
-	"ireal":
-		"prefix": "ireal"
-		"body": "ireal"
-	"cfloat":
-		"prefix": "cfloat"
-		"body": "cfloat"
-	"cdouble":
-		"prefix": "cdouble"
-		"body": "cdouble"
-	"creal":
-		"prefix": "creal"
-		"body": "creal"
-	"char":
-		"prefix": "char"
-		"body": "char"
-	"wchar":
-		"prefix": "wchar"
-		"body": "wchar"
-	"dchar":
-		"prefix": "dchar"
-		"body": "dchar"
-	"deprecated":
-		"prefix": "deprecated"
-		"body": "deprecated"
-	"enum":
-		"prefix": "enum"
-		"body": "enum"
-	"struct":
-		"prefix": "struct"
-		"body": "struct"
-	"union":
-		"prefix": "union"
-		"body": "union"
-	"return":
-		"prefix": "return"
-		"body": "return"
-	"switch":
-		"prefix": "switch"
-		"body": "switch"
-	"case":
-		"prefix": "case"
-		"body": "case"
-	"default":
-		"prefix": "default"
-		"body": "default"
-	"continue":
-		"prefix": "continue"
-		"body": "continue"
-	"break":
-		"prefix": "break"
-		"body": "break"
-	"alias":
-		"prefix": "alias"
-		"body": "alias"
-	"cast":
-		"prefix": "cast"
-		"body": "cast"
-	"function":
-		"prefix": "function"
-		"body": "function"
-	"delegate":
-		"prefix": "delegate"
-		"body": "delegate"
-	"static":
-		"prefix": "static"
-		"body": "static"
-	"extern":
-		"prefix": "extern"
-		"body": "extern"
-	"scope":
-		"prefix": "scope"
-		"body": "scope"
-	"auto":
-		"prefix": "auto"
-		"body": "auto"
-	"override":
-		"prefix": "override"
-		"body": "override"
-	"final":
-		"prefix": "final"
-		"body": "final"
-	"abstract":
-		"prefix": "abstract"
-		"body": "abstract"
-	"synchronized":
-		"prefix": "synchronized"
-		"body": "synchronized"
-	"lazy":
-		"prefix": "lazy"
-		"body": "lazy"
-	"align":
-		"prefix": "align"
-		"body": "align"
-	"pure":
-		"prefix": "pure"
-		"body": "pure"
-	"nothrow":
-		"prefix": "nothrow"
-		"body": "nothrow"
-	"ref":
-		"prefix": "ref"
-		"body": "ref"
-	"inout":
-		"prefix": "inout"
-		"body": "inout"
-	"private":
-		"prefix": "private"
-		"body": "private"
-	"package":
-		"prefix": "package"
-		"body": "package"
-	"protected":
-		"prefix": "protected"
-		"body": "protected"
-	"public":
-		"prefix": "public"
-		"body": "public"
-	"export":
-		"prefix": "export"
-		"body": "export"
-	"const":
-		"prefix": "const"
-		"body": "const"
-	"immutable":
-		"prefix": "immutable"
-		"body": "immutable"
-	"shared":
-		"prefix": "shared"
-		"body": "shared"
-	"__gshared":
-		"prefix": "__gshared"
-		"body": "__gshared"
-	"super":
-		"prefix": "super"
-		"body": "super"
-	"version":
-		"prefix": "version"
-		"body": "version"
-	"enforce":
-		"prefix": "enforce"
-		"body": "enforce"
-	"assert":
-		"prefix": "assert"
-		"body": "assert"
-	"while":
-		"prefix": "while"
-		"body": "while"
-	"for":
-		"prefix": "for"
-		"body": "for"
-	"foreach":
-		"prefix": "foreach"
-		"body": "foreach"
-	"foreach_reverse":
-		"prefix": "foreach_reverse"
-		"body": "foreach_reverse"
-	"else":
-		"prefix": "else"
-		"body": "else"
-	"in":
-		"prefix": "in"
-		"body": "in"
-	"out":
-		"prefix": "out"
-		"body": "out"
-	"body":
-		"prefix": "body"
-		"body": "body"
-	"goto":
-		"prefix": "goto"
-		"body": "goto"
-	"with":
-		"prefix": "with"
-		"body": "with"
-	"asm":
-		"prefix": "asm"
-		"body": "asm"
-	"pragma":
-		"prefix": "pragma"
-		"body": "pragma"
-	"try":
-		"prefix": "try"
-		"body": "try"
-	"catch":
-		"prefix": "catch"
-		"body": "catch"
-	"finally":
-		"prefix": "finally"
-		"body": "finally"
-	"debug":
-		"prefix": "debug"
-		"body": "debug"
-	"typeof":
-		"prefix": "typeof"
-		"body": "typeof"
-	"typeid":
-		"prefix": "typeid"
-		"body": "typeid"
-	"throw":
-		"prefix": "throw"
-		"body": "throw"
-	"module":
-		"prefix": "module"
-		"body": "module"
-	"import":
-		"prefix": "import"
-		"body": "import"
-	"invariant":
-		"prefix": "invariant"
-		"body": "invariant"
-	"unittest":
-		"prefix": "unittest"
-		"body": "unittest"
-	# Operator overloading
-	"opUnary":
-		"prefix": "opuna"
-		"body": "${1:void} opUnary(string op)() {$2}"
-	"opIndexUnary":
-		"prefix": "opiuna"
-		"body": "${1:void} opIndexUnary(string op)($2) {$3}"
-	"opCast":
-		"prefix": "opc"
-		"body": "T opCast(T)() {$1}"
-	"opBinary":
-		"prefix": "opbin"
-		"body": "T opBinary(string op, T)(T rhs) {$1}"
-	"opBinaryRight":
-		"prefix": "opbinr"
-		"body": "T opBinaryRight(string op, T)(T rhs) {$1}"
-	"opEquals":
-		"prefix": "opeq"
-		"body": "bool opEquals(Object b) {$1}"
-	"opCmp":
-		"prefix": "opcm"
-		"body": "int opCmp(Object b) {$1}"
-	"opCall":
-		"prefix": "opcal"
-		"body": "${1:void} opCall($2) {$3}"
-	"opAssign":
-		"prefix": "opass"
-		"body": "void opAssign($1) {$2}"
-	"opOpAssign":
-		"prefix": "opopass"
-		"body": "void opOpAssign(string op)($1) {$2}"
-	"opIndex":
-		"prefix": "opin"
-		"body": "${1:void} opIndex($2) {$3}"
-	"opIndexAssign":
-		"prefix": "opinass"
-		"body": "${1:void} opIndexAssign($2) {$3}"
-	"opIndexOpAssign":
-		"prefix": "opinopass"
-		"body": "${1:void} opIndexOpAssign(string op)($2) {$3}"
-	"opDollar":
-		"prefix": "opdo"
-		"body": "${1:int} opDollar${2:(size_t pos)}() {$3}"
-	"opDispatch":
-		"prefix": "opd"
-		"body": "${1:void} opDispatch(string s)($2) {$3}"
+  "property get":
+    "prefix": "get"
+    "body": "@property ${3:auto} ${1:value}() { return ${2:_value}; }"
+  "property set":
+    "prefix": "set"
+    "body": "@property void ${1:value}(${2:auto} value) { ${3:_value} = value; }"
+  "ref property":
+    "prefix": "refp"
+    "body": "@property ref ${3:auto} ${1:value}() { return ${2:_value}; }"
+  "constructor":
+    "prefix": "ctor"
+    "body": "this($2) {$1}"
+  "destructor":
+    "prefix": "dtor"
+    "body": "~this($2) {$1}"
+  # D Keywords that DCD does not cover
+  "void":
+    "prefix": "void"
+    "body": "void"
+  "bool":
+    "prefix": "bool"
+    "body": "bool"
+  "byte":
+    "prefix": "byte"
+    "body": "byte"
+  "ubyte":
+    "prefix": "ubyte"
+    "body": "ubyte"
+  "short":
+    "prefix": "short"
+    "body": "short"
+  "ushort":
+    "prefix": "ushort"
+    "body": "ushort"
+  "int":
+    "prefix": "int"
+    "body": "int"
+  "uint":
+    "prefix": "uint"
+    "body": "uint"
+  "long":
+    "prefix": "long"
+    "body": "long"
+  "ulong":
+    "prefix": "ulong"
+    "body": "ulong"
+  "cent":
+    "prefix": "cent"
+    "body": "cent"
+  "ucent":
+    "prefix": "ucent"
+    "body": "ucent"
+  "float":
+    "prefix": "float"
+    "body": "float"
+  "double":
+    "prefix": "double"
+    "body": "double"
+  "real":
+    "prefix": "real"
+    "body": "real"
+  "ifloat":
+    "prefix": "ifloat"
+    "body": "ifloat"
+  "idouble":
+    "prefix": "idouble"
+    "body": "idouble"
+  "ireal":
+    "prefix": "ireal"
+    "body": "ireal"
+  "cfloat":
+    "prefix": "cfloat"
+    "body": "cfloat"
+  "cdouble":
+    "prefix": "cdouble"
+    "body": "cdouble"
+  "creal":
+    "prefix": "creal"
+    "body": "creal"
+  "char":
+    "prefix": "char"
+    "body": "char"
+  "wchar":
+    "prefix": "wchar"
+    "body": "wchar"
+  "dchar":
+    "prefix": "dchar"
+    "body": "dchar"
+  "deprecated":
+    "prefix": "deprecated"
+    "body": "deprecated"
+  "enum":
+    "prefix": "enum"
+    "body": "enum"
+  "struct":
+    "prefix": "struct"
+    "body": "struct"
+  "union":
+    "prefix": "union"
+    "body": "union"
+  "return":
+    "prefix": "return"
+    "body": "return"
+  "switch":
+    "prefix": "switch"
+    "body": "switch"
+  "case":
+    "prefix": "case"
+    "body": "case"
+  "default":
+    "prefix": "default"
+    "body": "default"
+  "continue":
+    "prefix": "continue"
+    "body": "continue"
+  "break":
+    "prefix": "break"
+    "body": "break"
+  "alias":
+    "prefix": "alias"
+    "body": "alias"
+  "cast":
+    "prefix": "cast"
+    "body": "cast"
+  "function":
+    "prefix": "function"
+    "body": "function"
+  "delegate":
+    "prefix": "delegate"
+    "body": "delegate"
+  "static":
+    "prefix": "static"
+    "body": "static"
+  "extern":
+    "prefix": "extern"
+    "body": "extern"
+  "scope":
+    "prefix": "scope"
+    "body": "scope"
+  "auto":
+    "prefix": "auto"
+    "body": "auto"
+  "override":
+    "prefix": "override"
+    "body": "override"
+  "final":
+    "prefix": "final"
+    "body": "final"
+  "abstract":
+    "prefix": "abstract"
+    "body": "abstract"
+  "synchronized":
+    "prefix": "synchronized"
+    "body": "synchronized"
+  "lazy":
+    "prefix": "lazy"
+    "body": "lazy"
+  "align":
+    "prefix": "align"
+    "body": "align"
+  "pure":
+    "prefix": "pure"
+    "body": "pure"
+  "nothrow":
+    "prefix": "nothrow"
+    "body": "nothrow"
+  "ref":
+    "prefix": "ref"
+    "body": "ref"
+  "inout":
+    "prefix": "inout"
+    "body": "inout"
+  "private":
+    "prefix": "private"
+    "body": "private"
+  "package":
+    "prefix": "package"
+    "body": "package"
+  "protected":
+    "prefix": "protected"
+    "body": "protected"
+  "public":
+    "prefix": "public"
+    "body": "public"
+  "export":
+    "prefix": "export"
+    "body": "export"
+  "const":
+    "prefix": "const"
+    "body": "const"
+  "immutable":
+    "prefix": "immutable"
+    "body": "immutable"
+  "shared":
+    "prefix": "shared"
+    "body": "shared"
+  "__gshared":
+    "prefix": "__gshared"
+    "body": "__gshared"
+  "super":
+    "prefix": "super"
+    "body": "super"
+  "version":
+    "prefix": "version"
+    "body": "version"
+  "enforce":
+    "prefix": "enforce"
+    "body": "enforce"
+  "assert":
+    "prefix": "assert"
+    "body": "assert"
+  "while":
+    "prefix": "while"
+    "body": "while"
+  "for":
+    "prefix": "for"
+    "body": "for"
+  "foreach":
+    "prefix": "foreach"
+    "body": "foreach"
+  "foreach_reverse":
+    "prefix": "foreach_reverse"
+    "body": "foreach_reverse"
+  "else":
+    "prefix": "else"
+    "body": "else"
+  "in":
+    "prefix": "in"
+    "body": "in"
+  "out":
+    "prefix": "out"
+    "body": "out"
+  "body":
+    "prefix": "body"
+    "body": "body"
+  "goto":
+    "prefix": "goto"
+    "body": "goto"
+  "with":
+    "prefix": "with"
+    "body": "with"
+  "asm":
+    "prefix": "asm"
+    "body": "asm"
+  "pragma":
+    "prefix": "pragma"
+    "body": "pragma"
+  "try":
+    "prefix": "try"
+    "body": "try"
+  "catch":
+    "prefix": "catch"
+    "body": "catch"
+  "finally":
+    "prefix": "finally"
+    "body": "finally"
+  "debug":
+    "prefix": "debug"
+    "body": "debug"
+  "typeof":
+    "prefix": "typeof"
+    "body": "typeof"
+  "typeid":
+    "prefix": "typeid"
+    "body": "typeid"
+  "throw":
+    "prefix": "throw"
+    "body": "throw"
+  "module":
+    "prefix": "module"
+    "body": "module"
+  "import":
+    "prefix": "import"
+    "body": "import"
+  "invariant":
+    "prefix": "invariant"
+    "body": "invariant"
+  "unittest":
+    "prefix": "unittest"
+    "body": "unittest"
+  # Operator overloading
+  "opUnary":
+    "prefix": "opuna"
+    "body": "${1:void} opUnary(string op)() {$2}"
+  "opIndexUnary":
+    "prefix": "opiuna"
+    "body": "${1:void} opIndexUnary(string op)($2) {$3}"
+  "opCast":
+    "prefix": "opc"
+    "body": "T opCast(T)() {$1}"
+  "opBinary":
+    "prefix": "opbin"
+    "body": "T opBinary(string op, T)(T rhs) {$1}"
+  "opBinaryRight":
+    "prefix": "opbinr"
+    "body": "T opBinaryRight(string op, T)(T rhs) {$1}"
+  "opEquals":
+    "prefix": "opeq"
+    "body": "bool opEquals(Object b) {$1}"
+  "opCmp":
+    "prefix": "opcm"
+    "body": "int opCmp(Object b) {$1}"
+  "opCall":
+    "prefix": "opcal"
+    "body": "${1:void} opCall($2) {$3}"
+  "opAssign":
+    "prefix": "opass"
+    "body": "void opAssign($1) {$2}"
+  "opOpAssign":
+    "prefix": "opopass"
+    "body": "void opOpAssign(string op)($1) {$2}"
+  "opIndex":
+    "prefix": "opin"
+    "body": "${1:void} opIndex($2) {$3}"
+  "opIndexAssign":
+    "prefix": "opinass"
+    "body": "${1:void} opIndexAssign($2) {$3}"
+  "opIndexOpAssign":
+    "prefix": "opinopass"
+    "body": "${1:void} opIndexOpAssign(string op)($2) {$3}"
+  "opDollar":
+    "prefix": "opdo"
+    "body": "${1:int} opDollar${2:(size_t pos)}() {$3}"
+  "opDispatch":
+    "prefix": "opd"
+    "body": "${1:void} opDispatch(string s)($2) {$3}"
