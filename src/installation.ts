@@ -67,7 +67,7 @@ export async function installServeD() {
   const exeExtention = process.platform === "win32" ? ".exe" : ""
   const serveDExeFileName = `serve-d${exeExtention}`
 
-  const bundledServerFolder = join(distFolder, process.platform)
+  const bundledServerFolder = join(distFolder, `${process.platform}-${process.arch}`)
 
   const codeDBinFolder = await getCodeDBinFolder()
   const serveDPath = join(codeDBinFolder, serveDExeFileName)

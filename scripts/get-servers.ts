@@ -11,6 +11,11 @@ const assetPlatformToNodePlatform: Record<string, string | undefined> = {
   linux: "linux",
 }
 
+const assetArchToNodeArch: Record<string, string | undefined> = {
+  x86_64: "x64",
+  x86: "ia32",
+}
+
 // function to download serve-d binaries from GitHub
 export async function getServeD(distFolderRoot: string) {
   const assets = ((await downloadRelease(
@@ -39,16 +44,22 @@ export async function getDCD(distFolderRoot: string) {
   await decompressAssets(assets, distFolderRoot)
 }
 
-function getServedPlatform(asset: string) {
+function getNodePlatform(asset: string) {
   const assetPlatform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
   const nodePlatform = assetPlatformToNodePlatform[assetPlatform] ?? assetPlatform
   return nodePlatform
 }
 
+function getNodeArch(asset: string) {
+  const assetArch = basename(asset).match(/x86_64|x86/)?.[0] ?? asset
+  const nodeArch = assetArchToNodeArch[assetArch] ?? "x64" // assume x64 by default
+  return nodeArch
+}
+
 /** Decompress assets into the dist folder matching a platform */
 async function decompressAssets(assets: string[], distFolderRoot: string) {
   for (const asset of assets) {
-    const platformFolder = join(distFolderRoot, getServedPlatform(asset))
+    const platformFolder = join(distFolderRoot, `${getNodePlatform(asset)}-${getNodeArch(asset)}`)
     if (extname(asset) === ".xz") {
       await decompress(asset, platformFolder, {
         plugins: [decompressTarxz()],
