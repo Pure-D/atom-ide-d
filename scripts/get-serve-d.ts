@@ -5,6 +5,12 @@ import decompress from "decompress"
 // @ts-ignore
 import decompressTarxz from "decompress-tarxz"
 
+const assetPlatformToNodePlatform: Record<string, string | undefined> = {
+  windows: "win32",
+  osx: "darwin",
+  linux: "linux",
+}
+
 // function to download serve-d binaries from GitHub
 export async function getServeD() {
   const distFolderRoot = join(dirname(__dirname), "dist")
@@ -24,12 +30,16 @@ export async function getServeD() {
   await decompressAssets(assets, distFolderRoot)
 }
 
+function getServedPlatform(asset: string) {
+  const assetPlatform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
+  const nodePlatform = assetPlatformToNodePlatform[assetPlatform] ?? assetPlatform
+  return nodePlatform
+}
 
 /** Decompress assets into the dist folder matching a platform */
 async function decompressAssets(assets: string[], distFolderRoot: string) {
   for (const asset of assets) {
-    const platform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
-    const platformFolder = join(distFolderRoot, platform)
+    const platformFolder = join(distFolderRoot, getServedPlatform(asset))
     if (extname(asset) === ".xz") {
       await decompress(asset, platformFolder, {
         plugins: [decompressTarxz()],
