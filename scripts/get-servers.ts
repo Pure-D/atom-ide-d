@@ -1,6 +1,6 @@
 import downloadRelease from "@terascope/fetch-github-release"
 import { join, dirname, extname, basename } from "path"
-import { remove, ensureDir } from "fs-extra"
+import { remove, ensureDir, copy } from "fs-extra"
 import decompress from "decompress"
 // @ts-ignore
 import decompressTarxz from "decompress-tarxz"
@@ -28,6 +28,12 @@ export async function getServeD(distFolderRoot: string) {
   )) as unknown) as string[]
 
   await decompressAssets(assets, distFolderRoot)
+
+  // copy missing win32-ia32 assts from win32-x64
+  await copy(join(distFolderRoot, "win32-x64"), join(distFolderRoot, "win32-ia32"), {
+    recursive: true,
+    overwrite: false,
+  })
 }
 
 // function to download dcd binaries from GitHub
