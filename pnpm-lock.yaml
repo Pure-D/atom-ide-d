@@ -10,6 +10,7 @@ devDependencies:
   '@types/fs-extra': 9.0.7
   '@types/node': 14.14.31
   '@types/semver': 7.3.4
+  atom-jasmine3-test-runner: 5.1.8
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: 4.2.1
@@ -611,6 +612,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
+  /async/1.5.2:
+    dev: true
+    resolution:
+      integrity: sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
   /at-least-node/1.0.0:
     dev: false
     engines:
@@ -642,6 +647,28 @@ packages:
       atom: '>=1.0.0 <2.0.0'
     resolution:
       integrity: sha512-j7S7QS/G1Fgnl+wDU/ssfp5MxFE9YAcwpZCCmMUbLpOANEJ0+46aTOdHY2HJt5+F76/zGQCv7JwO3Ef1QEQUDA==
+  /atom-jasmine3-test-runner/5.1.8:
+    dependencies:
+      etch: 0.14.1
+      find-parent-dir: 0.3.0
+      fs-plus: 3.1.1
+      glob: 7.1.6
+      grim: 2.0.3
+      jasmine: 3.6.4
+      jasmine-local-storage: 1.1.1_jasmine@3.6.4
+      jasmine-pass: 1.1.0_jasmine@3.6.4
+      jasmine-should-fail: 1.1.7_jasmine@3.6.4
+      jasmine-unspy: 1.1.1_jasmine@3.6.4
+      jasmine2-atom-matchers: 1.1.7_jasmine@3.6.4
+      jasmine2-focused: 1.1.1_jasmine@3.6.4
+      jasmine2-json: 1.1.1_jasmine@3.6.4
+      jasmine2-tagged: 1.1.1_jasmine@3.6.4
+      semver: 7.3.4
+      temp: 0.9.4
+      underscore-plus: 1.7.0
+    dev: true
+    resolution:
+      integrity: sha512-TOc/JgA0EmyQ6lc1RjK1Tsv1/tNvUJiH0GqK/zbKUTRER38rhsEv6WGMsF6pq9AOgX4KVjrUeuAgMFlz+FbLBQ==
   /atom-languageclient/1.2.2:
     dependencies:
       atom-ide-base: 2.4.0
@@ -1749,9 +1776,12 @@ packages:
     resolution:
       integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
   /etch/0.14.1:
-    dev: false
     resolution:
       integrity: sha512-+IwqSDBhaQFMUHJu4L/ir0dhDoW5IIihg4Z9lzsIxxne8V0PlSg0gnk2STaKWjGJQnDR4cxpA+a/dORX9kycTA==
+  /event-kit/2.5.3:
+    dev: true
+    resolution:
+      integrity: sha512-b7Qi1JNzY4BfAYfnIRanLk0DOD1gdkWHT4GISIn8Q2tAf3LpU8SP2CMwWaq40imYoKWbtN4ZhbSRxvsnikooZQ==
   /exit/0.1.2:
     dev: true
     engines:
@@ -1852,6 +1882,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
+  /find-parent-dir/0.3.0:
+    dev: true
+    resolution:
+      integrity: sha1-M8RLQpqysvBkYpnF+fcY83b/jVQ=
   /find-up/2.1.0:
     dependencies:
       locate-path: 2.0.0
@@ -1913,6 +1947,15 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==
+  /fs-plus/3.1.1:
+    dependencies:
+      async: 1.5.2
+      mkdirp: 0.5.5
+      rimraf: 2.7.1
+      underscore-plus: 1.7.0
+    dev: true
+    resolution:
+      integrity: sha512-Se2PJdOWXqos1qVTkvqqjb0CSnfBnwwD+pq+z4ksT+e97mEShod/hrNg0TRCCsXPbJzcIq+NuzQhigunMWMJUA==
   /fs.realpath/1.0.0:
     dev: true
     resolution:
@@ -2068,6 +2111,12 @@ packages:
   /graceful-fs/4.2.6:
     resolution:
       integrity: sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
+  /grim/2.0.3:
+    dependencies:
+      event-kit: 2.5.3
+    dev: true
+    resolution:
+      integrity: sha512-FM20Ump11qYLK9k9DbL8yzVpy+YBieya1JG15OeH8s+KbHq8kL4SdwRtURwIUHniSxb24EoBUpwKfFjGNVi4/Q==
   /has-ansi/2.0.0:
     dependencies:
       ansi-regex: 2.1.1
@@ -2333,6 +2382,88 @@ packages:
     dev: true
     resolution:
       integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
+  /jasmine-core/3.6.0:
+    dev: true
+    resolution:
+      integrity: sha512-8uQYa7zJN8hq9z+g8z1bqCfdC8eoDAeVnM5sfqs7KHv9/ifoJ500m018fpFc7RDaO6SWCLCXwo/wPSNcdYTgcw==
+  /jasmine-local-storage/1.1.1_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-GBqtas3l8SBo39NwjbHuzWhQhgHabq/mVVDabGvKLUXRFH8GtPy4jPKRIMDLWC+q7S+q4M6pIY4OHoVuU8hsCQ==
+  /jasmine-pass/1.1.0_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: <4
+    resolution:
+      integrity: sha512-gtsHtIj1zNS/90REIpyDH2HRSW7vFwKMau5A2hcfL/RsSwUiKAS8EdOY1Z67m8giyaUMe7I8O7SzJF2oevCX0A==
+  /jasmine-should-fail/1.1.7_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-MNtae0/NUAU0OknPcM4cTA04JEXmxMH0+hqZxBjdt4+8LvDqm+oYIQcY70OqpRwVhTTcAyG7HxiPw/4AGlxfgw==
+  /jasmine-unspy/1.1.1_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-hTuMR1ju73BkGG8OCY6ObtimVBqnyThwUuclXW81lOiT/pyBt2W5nZtNAd8N7jzUfjQDd7+m+0DPm5Ecf6T2Pw==
+  /jasmine/3.6.4:
+    dependencies:
+      glob: 7.1.6
+      jasmine-core: 3.6.0
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-hIeOou6y0BgCOKYgXYveQvlY+PTHgDPajFf+vLCYbMTQ+VjAP9+EQv0nuC9+gyCAAWISRFauB1XUb9kFuOKtcQ==
+  /jasmine2-atom-matchers/1.1.7_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+      jquery: 3.5.1
+      underscore-plus: 1.7.0
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-9xJALLB9suLGxSkN063Wf0aJGTwrTgmbjgX+dr4gqBKqh5CWkdyB4pyET8rJkX2UYAQJuw0tKCgbwccNJ0CuHA==
+  /jasmine2-focused/1.1.1_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-2NnQD+Lwqu/0RIVentOiDtdsjhP/4jJooG88rQC3A6lKHxnm2d9Q/wGbQBDZlIA7bDUrQpuHZ6d2A/lACLwfhQ==
+  /jasmine2-json/1.1.1_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-D8dFHVDsDZpqgYK4eR3SYkMXypRjK0MpnHzVkO38ByXe7R3QaZDsoRt3Kh4rqI1U4iq9hkxHuKr+gy+OzuL+8g==
+  /jasmine2-tagged/1.1.1_jasmine@3.6.4:
+    dependencies:
+      jasmine: 3.6.4
+    dev: true
+    peerDependencies:
+      jasmine: '>=2 <4'
+    resolution:
+      integrity: sha512-PK/83f9hBI6R/gGZ8zEYHt4OUtZu3xpcoUFICMBVsdbbanrhCCNC3EkWldIQgvuSHaUMhVptXAihWjNJI3uiRw==
+  /jquery/3.5.1:
+    dev: true
+    resolution:
+      integrity: sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
   /js-tokens/3.0.2:
     dev: true
     resolution:
@@ -3151,6 +3282,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+  /rimraf/2.6.3:
+    dependencies:
+      glob: 7.1.6
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   /rimraf/2.7.1:
     dependencies:
       glob: 7.1.6
@@ -3534,6 +3672,15 @@ packages:
       node: '>= 10'
     resolution:
       integrity: sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==
+  /temp/0.9.4:
+    dependencies:
+      mkdirp: 0.5.5
+      rimraf: 2.6.3
+    dev: true
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-yYrrsWnrXMcdsnu/7YMYAofM1ktpL5By7vZhf15CrXijWWrEYZks5AXBudalfSWJLlnen/QUJUB5aoB0kqZUGA==
   /text-table/0.2.0:
     dev: true
     resolution:
@@ -3641,6 +3788,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==
+  /underscore-plus/1.7.0:
+    dependencies:
+      underscore: 1.12.0
+    dev: true
+    resolution:
+      integrity: sha512-A3BEzkeicFLnr+U/Q3EyWwJAQPbA19mtZZ4h+lLq3ttm9kn8WC4R3YpuJZEXmWdLjYP47Zc8aLZm9kwdv+zzvA==
+  /underscore/1.12.0:
+    dev: true
+    resolution:
+      integrity: sha512-21rQzss/XPMjolTiIezSu3JAjgagXKROtNrYFEOWK109qY1Uv2tVjPTZ1ci2HgvQDA16gHYSthQIJfB+XId/rQ==
   /universalify/2.0.0:
     dev: false
     engines:
@@ -3778,6 +3935,7 @@ specifiers:
   '@types/fs-extra': ^9.0.7
   '@types/node': ^14.14.31
   '@types/semver': ^7.3.4
+  atom-jasmine3-test-runner: ^5.1.8
   atom-languageclient: ^1.2.2
   build-commit: 0.1.4
   cross-env: 7.0.3
