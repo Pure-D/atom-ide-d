@@ -7,29 +7,35 @@ import decompressTarxz from "decompress-tarxz"
 
 // function to download serve-d binaries from GitHub
 export async function getServeD() {
-  const distFolder = join(dirname(__dirname), "dist")
+  const distFolderRoot = join(dirname(__dirname), "dist")
 
-  await remove(distFolder)
-  await ensureDir(distFolder)
+  await remove(distFolderRoot)
+  await ensureDir(distFolderRoot)
 
   const assets = ((await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
-    /* download folder */ distFolder,
+    /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true
   )) as unknown) as string[]
 
+  await decompressAssets(assets, distFolderRoot)
+}
+
+
+/** Decompress assets into the dist folder matching a platform */
+async function decompressAssets(assets: string[], distFolderRoot: string) {
   for (const asset of assets) {
     const platform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
-    const downloadFolder = join(distFolder, platform)
+    const platformFolder = join(distFolderRoot, platform)
     if (extname(asset) === ".xz") {
-      await decompress(asset, downloadFolder, {
+      await decompress(asset, platformFolder, {
         plugins: [decompressTarxz()],
       })
     } else {
-      await decompress(asset, downloadFolder)
+      await decompress(asset, platformFolder)
     }
     remove(asset)
   }
