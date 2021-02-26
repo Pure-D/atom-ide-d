@@ -31,7 +31,7 @@
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
 		"get.grammars": "node ./scripts/get-grammars.js",
-		"get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-serve-d.ts",
+		"get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run build"
 	},
