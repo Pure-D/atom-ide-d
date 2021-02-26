@@ -1,6 +1,6 @@
-const { download, extract } = require("gitly")
-const { dirname, join } = require("path")
-const { remove, ensureDir, move } = require("fs-extra")
+import { download, extract } from "gitly"
+import { dirname, join } from "path"
+import { remove, ensureDir, move } from "fs-extra"
 
 ;(async function main() {
   const source = await download("Pure-D/code-d")

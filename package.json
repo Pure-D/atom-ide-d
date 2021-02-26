@@ -30,7 +30,7 @@
 		"tsc.dev": "tsc -p src/tsconfig.json --watch",
 		"build": "npm run tsc",
 		"dev": "npm run tsc.dev",
-		"get.grammars": "node ./scripts/get-grammars.js",
+		"get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
 		"get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run get.servers && npm run build"
