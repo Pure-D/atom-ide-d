@@ -1,7 +1,6 @@
 import { download, extract } from "gitly"
 import { dirname, join } from "path"
 import { remove, ensureDir, move } from "fs-extra"
-
 ;(async function main() {
   const source = await download("Pure-D/code-d")
   const root = dirname(__dirname)
