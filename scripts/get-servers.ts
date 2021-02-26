@@ -25,6 +25,20 @@ export async function getServeD(distFolderRoot: string) {
   await decompressAssets(assets, distFolderRoot)
 }
 
+// function to download dcd binaries from GitHub
+export async function getDCD(distFolderRoot: string) {
+  const assets = ((await downloadRelease(
+    /* username */ "dlang-community",
+    /* repo */ "DCD",
+    /* download folder */ distFolderRoot,
+    /* filter release */ undefined,
+    /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    true
+  )) as unknown) as string[]
+
+  await decompressAssets(assets, distFolderRoot)
+}
+
 function getServedPlatform(asset: string) {
   const assetPlatform = basename(asset).match(/windows|linux|osx/)?.[0] ?? asset
   const nodePlatform = assetPlatformToNodePlatform[assetPlatform] ?? assetPlatform
@@ -53,6 +67,7 @@ async function main() {
   await ensureDir(distFolderRoot)
 
   await getServeD(distFolderRoot)
+  await getDCD(distFolderRoot)
 }
 
 main().catch((e) => {
