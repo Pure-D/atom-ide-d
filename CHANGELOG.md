@@ -1,3 +1,6 @@
+## 0.2.1
+  - Fix Windows x64 serve-d binary
+
 ## 0.2.0
  - Bundle DCD
  - Support other architectures
