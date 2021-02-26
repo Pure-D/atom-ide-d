@@ -12,12 +12,7 @@ const assetPlatformToNodePlatform: Record<string, string | undefined> = {
 }
 
 // function to download serve-d binaries from GitHub
-export async function getServeD() {
-  const distFolderRoot = join(dirname(__dirname), "dist")
-
-  await remove(distFolderRoot)
-  await ensureDir(distFolderRoot)
-
+export async function getServeD(distFolderRoot: string) {
   const assets = ((await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
@@ -51,8 +46,15 @@ async function decompressAssets(assets: string[], distFolderRoot: string) {
   }
 }
 
-getServeD()
-  .then(() => console.log("Done"))
-  .catch((e) => {
-    throw e
-  })
+async function main() {
+  const distFolderRoot = join(dirname(__dirname), "dist")
+
+  await remove(distFolderRoot)
+  await ensureDir(distFolderRoot)
+
+  await getServeD(distFolderRoot)
+}
+
+main().catch((e) => {
+  throw e
+})

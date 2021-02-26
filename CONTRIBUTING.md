@@ -19,7 +19,7 @@ Update changelog then:
 
 ```
 pnpm install
-pnpm get.serve-d
+pnpm get.servers
 pnpm build-commit
 ```
 
