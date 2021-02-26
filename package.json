@@ -35,6 +35,7 @@
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run get.servers && npm run build"
 	},
+	"atomTestRunner": "./spec/runner",
 	"enhancedScopes": [
 		"source.d"
 	],
@@ -89,6 +90,7 @@
 		"@types/fs-extra": "^9.0.7",
 		"@types/node": "^14.14.31",
 		"@types/semver": "^7.3.4",
+		"atom-jasmine3-test-runner": "^5.1.8",
 		"build-commit": "0.1.4",
 		"cross-env": "7.0.3",
 		"decompress": "^4.2.1",
@@ -102,9 +104,10 @@
 		"typescript": "^4.2.2"
 	},
 	"dependencies": {
-		"semver": "^7.3.4",
 		"atom-languageclient": "^1.2.2",
 		"fs-extra": "^9.1.0",
-		"path-exists": "^4.0.0"
-	}
+		"path-exists": "^4.0.0",
+		"semver": "^7.3.4"
+	},
+	"package-deps": []
 }
