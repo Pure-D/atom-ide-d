@@ -1,3 +1,6 @@
+## 0.3.0
+  - Automatically install atom-ide-base
+
 ## 0.2.1
   - Fix Windows x64 serve-d binary
 
