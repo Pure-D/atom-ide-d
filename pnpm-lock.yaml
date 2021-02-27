@@ -1,5 +1,6 @@
 dependencies:
   atom-languageclient: 1.2.2
+  atom-package-deps: 7.2.2
   fs-extra: 9.1.0
   path-exists: 4.0.0
   semver: 7.3.4
@@ -3937,6 +3938,7 @@ specifiers:
   '@types/semver': ^7.3.4
   atom-jasmine3-test-runner: ^5.1.8
   atom-languageclient: ^1.2.2
+  atom-package-deps: ^7.2.2
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: ^4.2.1
