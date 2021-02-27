@@ -26,6 +26,15 @@ or
 apm install ide-d
 ```
 
+You also need to have **atom-ide-base** installed:
+https://atom.io/packages/atom-ide-base
+
+or
+
+```
+apm install atom-ide-base
+```
+
 ### Screenshots
 
 ![datatips](https://user-images.githubusercontent.com/16418197/108882251-ce014c80-75c9-11eb-9655-79552b910b12.png)

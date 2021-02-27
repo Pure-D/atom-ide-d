@@ -12,7 +12,16 @@ describe("tests", () => {
     await atom.packages.activatePackage("ide-d")
   })
 
+  it("Installation", async function () {
+    expect(atom.packages.isPackageLoaded("ide-d")).toBeTruthy()
+    const allDeps = atom.packages.getAvailablePackageNames()
+    expect(allDeps.includes("atom-ide-base")).toBeTruthy()
+  })
+
   it("Activation", async function () {
     expect(atom.packages.isPackageLoaded("ide-d")).toBeTruthy()
+
+    await atom.packages.activatePackage("atom-ide-base")
+    expect(atom.packages.isPackageLoaded("atom-ide-base")).toBeTruthy()
   })
 })
