@@ -1,7 +1,7 @@
 {
 	"name": "ide-d",
 	"main": "./dist/ide-d",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"description": "D language and IDE support for Atom",
 	"keywords": [
 		"d",
@@ -113,5 +113,7 @@
 		"path-exists": "^4.0.0",
 		"semver": "^7.3.4"
 	},
-	"package-deps": ["atom-ide-base"]
+	"package-deps": [
+		"atom-ide-base"
+	]
 }
