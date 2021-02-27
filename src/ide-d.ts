@@ -1,5 +1,4 @@
 import { AutoLanguageClient } from "atom-languageclient"
-import { installServeD } from "./installation"
 
 class DLanguageClient extends AutoLanguageClient {
   activate() {
@@ -28,6 +27,9 @@ class DLanguageClient extends AutoLanguageClient {
   }
 
   async startServerProcess(projectPath: string) {
+    // import only when a D file is opened.
+    const { installServeD } = await import("./installation")
+
     const serveDPath = await installServeD()
 
     const serveD = super.spawn(serveDPath, [], {
