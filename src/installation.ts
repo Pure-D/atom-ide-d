@@ -50,7 +50,7 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
     return semverCompare(givenVersion, targetVersion) !== -1
   } else {
     // assume given version is old
-    return -1
+    return false
   }
 }
 
