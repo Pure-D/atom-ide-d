@@ -9,6 +9,7 @@ class DLanguageClient extends AutoLanguageClient {
       require("atom-package-deps").install("ide-d", true)
       // enable if disabled
       atom.packages.enablePackage("atom-ide-base")
+      atom.notifications.addSuccess("ide-d: atom-ide-base was installed and enabled...")
     }
   }
 
