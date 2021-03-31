@@ -1,9 +1,9 @@
 dependencies:
   atom-languageclient: 1.6.0
-  atom-package-deps: 7.2.2
+  atom-package-deps: 7.2.3
   fs-extra: 9.1.0
   path-exists: 4.0.0
-  semver: 7.3.4
+  semver: 7.3.5
 devDependencies:
   '@terascope/fetch-github-release': 0.7.6
   '@types/atom': 1.40.10
@@ -686,6 +686,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-xV4l1Ll987zluBjMiYGtDbZbdM5PF/hOECgaI2mv2+dNzbuugd2M+A2liw1JUenuGrngGw/wcpPqXpAVMGFeDw==
+  /atom-package-deps/7.2.3:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-Z1FHJS2c2xBN3wQVniG7jXDyE4mUjZlHA0tfIkCND9U/fHaZyBJPno4/jD8PtYUnhlymaHRbCsgxCU3QuKjqfQ==
   /axe-core/3.5.5:
     dev: true
     engines:
@@ -3364,11 +3369,21 @@ packages:
   /semver/7.3.4:
     dependencies:
       lru-cache: 6.0.0
+    dev: true
     engines:
       node: '>=10'
     hasBin: true
     resolution:
       integrity: sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==
+  /semver/7.3.5:
+    dependencies:
+      lru-cache: 6.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    hasBin: true
+    resolution:
+      integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
   /set-blocking/2.0.0:
     dev: true
     resolution:
@@ -3946,7 +3961,7 @@ specifiers:
   '@types/semver': ^7.3.4
   atom-jasmine3-test-runner: ^5.2.2
   atom-languageclient: ^1.6.0
-  atom-package-deps: ^7.2.2
+  atom-package-deps: ^7.2.3
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: ^4.2.1
@@ -3957,7 +3972,7 @@ specifiers:
   gitly: ^2.0.2
   path-exists: ^4.0.0
   prettier: ^2.2.1
-  semver: ^7.3.4
+  semver: ^7.3.5
   shx: 0.3.3
   ts-node: ^9.1.1
   typescript: ^4.2.3
