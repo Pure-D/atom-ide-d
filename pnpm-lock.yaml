@@ -1,5 +1,5 @@
 dependencies:
-  atom-languageclient: 1.5.0
+  atom-languageclient: 1.6.0
   atom-package-deps: 7.2.2
   fs-extra: 9.1.0
   path-exists: 4.0.0
@@ -671,7 +671,7 @@ packages:
       '@types/jasmine': 3.6.7
     resolution:
       integrity: sha512-wcWeasDDlqtUzQpaWJ6R9SaCNSUXd8Q9N30Aze0PcX/yXVjhcGJSRhXdilHOvEF0XhOajJ8apl3Eur5tsTGGPA==
-  /atom-languageclient/1.5.0:
+  /atom-languageclient/1.6.0:
     dependencies:
       atom-ide-base: 2.4.0
       vscode-jsonrpc: 6.0.0
@@ -680,7 +680,7 @@ packages:
       zadeh: 2.0.2
     dev: false
     resolution:
-      integrity: sha512-h7iy9tMtjfUvjmocSsIfsvxyZIecaPbVJo9bdpjsaHYbBD/95T6zH08RIZPNPbdH87chQx8T5YwbgwGpnWwbYg==
+      integrity: sha512-3MtiSWb2opeV0FnGgtN4BcR2bqiUd8h0Ttl7HhBDILylUqspKB30s4f0HAvLYCxxW4eI2krcvmvjn8ezwdNtCQ==
   /atom-package-deps/7.2.2:
     dev: false
     hasBin: true
@@ -3945,7 +3945,7 @@ specifiers:
   '@types/node': ^14.14.35
   '@types/semver': ^7.3.4
   atom-jasmine3-test-runner: ^5.2.2
-  atom-languageclient: ^1.5.0
+  atom-languageclient: ^1.6.0
   atom-package-deps: ^7.2.2
   build-commit: 0.1.4
   cross-env: 7.0.3
