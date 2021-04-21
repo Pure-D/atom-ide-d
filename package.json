@@ -88,24 +88,23 @@
 		}
 	},
 	"devDependencies": {
-		"@terascope/fetch-github-release": "^0.7.6",
+		"@terascope/fetch-github-release": "^0.7.7",
 		"@types/atom": "1.40.10",
 		"@types/decompress": "^4.2.3",
-		"@types/fs-extra": "^9.0.9",
-		"@types/node": "^14.14.37",
+		"@types/fs-extra": "^9.0.11",
+		"@types/node": "^14.14.41",
 		"@types/semver": "^7.3.4",
 		"atom-jasmine3-test-runner": "^5.2.2",
 		"build-commit": "0.1.4",
 		"cross-env": "7.0.3",
 		"decompress": "^4.2.1",
 		"decompress-tarxz": "^3.0.0",
-		"eslint": "7.23.0",
-		"eslint-config-atomic": "^1.12.4",
+		"eslint-config-atomic": "^1.14.2",
 		"gitly": "^2.0.3",
 		"prettier-config-atomic": "^2.0.2",
 		"shx": "0.3.3",
 		"ts-node": "^9.1.1",
-		"typescript": "^4.2.3"
+		"typescript": "^4.2.4"
 	},
 	"dependencies": {
 		"atom-languageclient": "^1.8.1",
