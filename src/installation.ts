@@ -30,7 +30,7 @@ async function isServeDInstalled(serveDPath: string) {
   return pathExists(serveDPath)
 }
 
-/** get the version of serve-d */
+/** Get the version of serve-d */
 async function getServeDVersion(file: string) {
   try {
     const output = (await execFile(file, ["--version"])).stderr

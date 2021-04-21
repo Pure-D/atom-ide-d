@@ -35,6 +35,7 @@
 		"build-commit": "build-commit -o dist",
 		"prepare": "npm run get.servers && npm run build"
 	},
+	"prettier": "prettier-config-atomic",
 	"atomTestRunner": "./spec/runner",
 	"activationHooks": [
 		"core:loaded-shell-environment"
@@ -101,7 +102,7 @@
 		"eslint": "7.23.0",
 		"eslint-config-atomic": "^1.12.4",
 		"gitly": "^2.0.3",
-		"prettier": "^2.2.1",
+		"prettier-config-atomic": "^2.0.2",
 		"shx": "0.3.3",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.3"
