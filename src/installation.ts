@@ -26,7 +26,7 @@ async function getCodeDBinFolder() {
   return ""
 }
 
-async function isServeDInstalled(serveDPath: string) {
+function isServeDInstalled(serveDPath: string) {
   return pathExists(serveDPath)
 }
 
