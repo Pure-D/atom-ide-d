@@ -33,7 +33,7 @@ class DLanguageClient extends AutoLanguageClient {
 
     const serveDPath = await installServeD()
 
-    const serveD = super.spawn(serveDPath, [], {
+    const serveD = super.spawn(serveDPath, ["--require", "workspaces"], {
       cwd: projectPath,
     })
 
