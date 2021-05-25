@@ -43,8 +43,7 @@ async function getServeDVersion(file: string) {
 
 /** Check if the given serve-d is up to date against the target version */
 export async function isServeDUpToDate(givenFile: string, targetFile: string) {
-  const givenVersion = await getServeDVersion(givenFile)
-  const targetVersion = await getServeDVersion(targetFile)
+  const [givenVersion, targetVersion] = await Promise.all([getServeDVersion(givenFile), getServeDVersion(targetFile)])
   if (
     typeof givenVersion === "string" &&
     typeof targetVersion === "string" &&
