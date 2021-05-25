@@ -8,7 +8,7 @@ describe("Benchmark", () => {
 
     // For benchmark, activate the deps manually before loading the actual package:
     const deps = []
-    deps.forEach(async (p) => await atom.packages.activatePackage(p))
+    await Promise.all(deps.map((p) => atom.packages.activatePackage(p)))
 
     // Activate the package
     measure("Activation Time", async function activationBenchmark() {
