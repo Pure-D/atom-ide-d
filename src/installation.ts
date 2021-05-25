@@ -8,19 +8,19 @@ import { promisify } from "util"
 const execFile = promisify(execFileRaw)
 
 async function getCodeDBinFolder() {
-  const home = process.env["HOME"]
-  if (home && process.platform === "linux") {
+  const home = process.env.HOME
+  if (typeof home === "string" && home !== "" && process.platform === "linux") {
     if (await pathExists(join(home, ".local", "share"))) {
       return join(home, ".local", "share", "code-d", "bin")
     } else {
       return join(home, ".code-d", "bin")
     }
   } else if (process.platform === "win32") {
-    const appdata = process.env["APPDATA"]
-    if (appdata) {
+    const appdata = process.env.APPDATA
+    if (typeof appdata === "string" && appdata !== "") {
       return join(appdata, "code-d", "bin")
     }
-  } else if (home) {
+  } else if (typeof home === "string" && home !== "") {
     return join(home, ".code-d", "bin")
   }
   return ""
@@ -46,7 +46,12 @@ async function getServeDVersion(file: string) {
 export async function isServeDUpToDate(givenFile: string, targetFile: string) {
   const givenVersion = await getServeDVersion(givenFile)
   const targetVersion = await getServeDVersion(targetFile)
-  if (givenVersion && targetVersion) {
+  if (
+    typeof givenVersion === "string" &&
+    typeof targetVersion === "string" &&
+    givenVersion !== "" &&
+    targetVersion !== ""
+  ) {
     return semverCompare(givenVersion, targetVersion) !== -1
   } else {
     // assume given version is old
