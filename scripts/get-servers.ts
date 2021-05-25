@@ -18,14 +18,14 @@ const assetArchToNodeArch: Record<string, string | undefined> = {
 
 // function to download serve-d binaries from GitHub
 export async function getServeD(distFolderRoot: string) {
-  const assets = (await downloadRelease(
+  const assets = await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true
-  )) as unknown as string[]
+  )
 
   await decompressAssets(assets, distFolderRoot)
 
@@ -38,14 +38,14 @@ export async function getServeD(distFolderRoot: string) {
 
 // function to download dcd binaries from GitHub
 export async function getDCD(distFolderRoot: string) {
-  const assets = (await downloadRelease(
+  const assets = await downloadRelease(
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true
-  )) as unknown as string[]
+  )
 
   await decompressAssets(assets, distFolderRoot)
 }
