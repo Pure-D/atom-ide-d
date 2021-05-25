@@ -73,7 +73,7 @@ async function decompressAssets(assets: string[], distFolderRoot: string) {
     } else {
       await decompress(asset, platformFolder)
     }
-    remove(asset)
+    await remove(asset)
   }
 }
 
