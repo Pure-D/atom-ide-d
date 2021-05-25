@@ -86,8 +86,7 @@ async function main() {
   await remove(distFolderRoot)
   await ensureDir(distFolderRoot)
 
-  await getServeD(distFolderRoot)
-  await getDCD(distFolderRoot)
+  await Promise.all([getServeD(distFolderRoot), getDCD(distFolderRoot)])
 }
 
 main().catch((e) => {
