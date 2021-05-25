@@ -14,6 +14,7 @@ const assetPlatformToNodePlatform: Record<string, string | undefined> = {
 const assetArchToNodeArch: Record<string, string | undefined> = {
   x86_64: "x64",
   x86: "ia32",
+  i686: "ia32",
 }
 
 // function to download serve-d binaries from GitHub
@@ -57,7 +58,7 @@ function getNodePlatform(asset: string) {
 }
 
 function getNodeArch(asset: string) {
-  const assetArch = basename(asset).match(/x86_64|x86/)?.[0] ?? asset
+  const assetArch = basename(asset).match(/x86_64|x86|i686/)?.[0] ?? asset
   const nodeArch = assetArchToNodeArch[assetArch] ?? "x64" // assume x64 by default
   return nodeArch
 }
