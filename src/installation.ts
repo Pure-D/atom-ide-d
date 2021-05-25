@@ -1,5 +1,4 @@
-import { copy } from "fs-extra"
-import pathExists from "path-exists"
+import { copy, pathExists } from "fs-extra"
 import { join, dirname } from "path"
 import semverCompare from "semver/functions/compare"
 

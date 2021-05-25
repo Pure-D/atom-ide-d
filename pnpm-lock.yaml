@@ -17,7 +17,6 @@ specifiers:
   eslint-config-atomic: ^1.15.2
   fs-extra: ^10.0.0
   gitly: ^2.1.0
-  path-exists: ^4.0.0
   prettier-config-atomic: ^2.0.5
   semver: ^7.3.5
   shx: 0.3.3
@@ -28,7 +27,6 @@ dependencies:
   atom-languageclient: 1.10.0
   atom-package-deps: 7.2.3
   fs-extra: 10.0.0
-  path-exists: 4.0.0
   semver: 7.3.5
 
 devDependencies:
@@ -3123,11 +3121,6 @@ packages:
     resolution: {integrity: sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=}
     engines: {node: '>=4'}
     dev: true
-
-  /path-exists/4.0.0:
-    resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
-    engines: {node: '>=8'}
-    dev: false
 
   /path-is-absolute/1.0.1:
     resolution: {integrity: sha1-F0uSaHNVNP+8es5r9TpanhtcX18=}
