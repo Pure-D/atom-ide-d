@@ -64,17 +64,20 @@ function getNodeArch(asset: string) {
 
 /** Decompress assets into the dist folder matching a platform */
 async function decompressAssets(assets: string[], distFolderRoot: string) {
-  for (const asset of assets) {
-    const platformFolder = join(distFolderRoot, `${getNodePlatform(asset)}-${getNodeArch(asset)}`)
-    if (extname(asset) === ".xz") {
-      await decompress(asset, platformFolder, {
-        plugins: [decompressTarxz()],
-      })
-    } else {
-      await decompress(asset, platformFolder)
-    }
-    await remove(asset)
+  await Promise.all(assets.map((asset) => decompressAsset(asset, distFolderRoot)))
+}
+
+/** Decompress one asset into the dist folder matching a platform */
+async function decompressAsset(asset: string, distFolderRoot: string) {
+  const platformFolder = join(distFolderRoot, `${getNodePlatform(asset)}-${getNodeArch(asset)}`)
+  if (extname(asset) === ".xz") {
+    await decompress(asset, platformFolder, {
+      plugins: [decompressTarxz()],
+    })
+  } else {
+    await decompress(asset, platformFolder)
   }
+  await remove(asset)
 }
 
 async function main() {
