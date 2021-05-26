@@ -19,14 +19,18 @@ const assetArchToNodeArch: Record<string, string | undefined> = {
 
 // function to download serve-d binaries from GitHub
 export async function getServeD(distFolderRoot: string) {
+  console.log("Downloading serve-d...")
+
   const assets = await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    true,
     true
   )
+  console.log(assets)
 
   await decompressAssets(assets, distFolderRoot)
 
@@ -39,14 +43,17 @@ export async function getServeD(distFolderRoot: string) {
 
 // function to download dcd binaries from GitHub
 export async function getDCD(distFolderRoot: string) {
+  console.log("Downloading DCD...")
   const assets = await downloadRelease(
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
     /* filter release */ (release) => release.tag_name.includes("0.13.1"), // Tagged to 0.13.1 due to https://github.com/dlang-community/DCD/issues/635
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    true,
     true
   )
+  console.log(assets)
 
   await decompressAssets(assets, distFolderRoot)
 }
