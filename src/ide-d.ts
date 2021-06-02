@@ -13,6 +13,7 @@ class DLanguageClient extends AutoLanguageClient {
     }
   }
 
+  /* eslint-disable class-methods-use-this */
   getGrammarScopes() {
     return ["source.d", "D"]
   }
@@ -26,6 +27,7 @@ class DLanguageClient extends AutoLanguageClient {
   getConnectionType(): "stdio" {
     return "stdio"
   }
+  /* eslint-enable class-methods-use-this */
 
   async startServerProcess(projectPath: string) {
     // import only when a D file is opened.
@@ -33,7 +35,7 @@ class DLanguageClient extends AutoLanguageClient {
 
     const serveDPath = await installServeD()
 
-    const serveD = super.spawn(serveDPath, [], {
+    const serveD = super.spawn(serveDPath, ["--require", "workspaces"], {
       cwd: projectPath,
     })
 

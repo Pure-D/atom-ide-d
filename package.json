@@ -1,119 +1,118 @@
 {
-	"name": "ide-d",
-	"main": "./dist/ide-d",
-	"version": "0.3.0",
-	"description": "D language and IDE support for Atom",
-	"keywords": [
-		"d",
-		"dcd",
-		"dfmt",
-		"dscanner",
-		"workspace-d",
-		"ide",
-		"autocomplete",
-		"lint",
-		"format"
-	],
-	"repository": "https://github.com/Pure-D/atom-ide-d",
-	"license": "MIT",
-	"engines": {
-		"atom": ">=1.0.0 <2.0.0"
-	},
-	"scripts": {
-		"format": "prettier --write .",
-		"test.format": "prettier . --check",
-		"lint": "eslint . --fix",
-		"test.lint": "eslint .",
-		"test": "atom --test spec",
-		"clean": "shx rm -rf dist",
-		"tsc": "tsc -p src/tsconfig.json",
-		"tsc.dev": "tsc -p src/tsconfig.json --watch",
-		"build": "npm run tsc",
-		"dev": "npm run tsc.dev",
-		"get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
-		"get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
-		"build-commit": "build-commit -o dist",
-		"prepare": "npm run get.servers && npm run build"
-	},
-	"atomTestRunner": "./spec/runner",
-	"activationHooks": [
-		"core:loaded-shell-environment"
-	],
-	"enhancedScopes": [
-		"source.d"
-	],
-	"consumedServices": {
-		"linter-indie": {
-			"versions": {
-				"2.0.0": "consumeLinterV2"
-			}
-		},
-		"datatip": {
-			"versions": {
-				"0.1.0": "consumeDatatip"
-			}
-		}
-	},
-	"providedServices": {
-		"autocomplete.provider": {
-			"versions": {
-				"2.0.0": "provideAutocomplete"
-			}
-		},
-		"code-format.range": {
-			"versions": {
-				"0.1.0": "provideCodeFormat"
-			}
-		},
-		"code-highlight": {
-			"versions": {
-				"0.1.0": "provideCodeHighlight"
-			}
-		},
-		"definitions": {
-			"versions": {
-				"0.1.0": "provideDefinitions"
-			}
-		},
-		"find-references": {
-			"versions": {
-				"0.1.0": "provideFindReferences"
-			}
-		},
-		"outline-view": {
-			"versions": {
-				"0.1.0": "provideOutlines"
-			}
-		}
-	},
-	"devDependencies": {
-		"@terascope/fetch-github-release": "^0.7.4",
-		"@types/atom": "1.40.7",
-		"@types/decompress": "^4.2.3",
-		"@types/fs-extra": "^9.0.7",
-		"@types/node": "^14.14.31",
-		"@types/semver": "^7.3.4",
-		"atom-jasmine3-test-runner": "^5.1.8",
-		"build-commit": "0.1.4",
-		"cross-env": "7.0.3",
-		"decompress": "^4.2.1",
-		"decompress-tarxz": "^3.0.0",
-		"eslint": "7.20.0",
-		"eslint-config-atomic": "^1.10.2",
-		"gitly": "^2.0.2",
-		"prettier": "^2.2.1",
-		"shx": "0.3.3",
-		"ts-node": "^9.1.1",
-		"typescript": "^4.2.2"
-	},
-	"dependencies": {
-		"atom-languageclient": "^1.2.2",
-		"atom-package-deps": "^7.2.2",
-		"fs-extra": "^9.1.0",
-		"path-exists": "^4.0.0",
-		"semver": "^7.3.4"
-	},
-	"package-deps": [
-		"atom-ide-base"
-	]
+  "name": "ide-d",
+  "main": "./dist/ide-d",
+  "version": "0.3.0",
+  "description": "D language and IDE support for Atom",
+  "keywords": [
+    "d",
+    "dcd",
+    "dfmt",
+    "dscanner",
+    "workspace-d",
+    "ide",
+    "autocomplete",
+    "lint",
+    "format"
+  ],
+  "repository": "https://github.com/Pure-D/atom-ide-d",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "test.format": "prettier . --check",
+    "lint": "eslint . --fix",
+    "test.lint": "eslint .",
+    "test": "atom --test spec",
+    "clean": "shx rm -rf dist",
+    "tsc": "tsc -p src/tsconfig.json",
+    "tsc.dev": "tsc -p src/tsconfig.json --watch",
+    "build": "npm run tsc",
+    "dev": "npm run tsc.dev",
+    "get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
+    "get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
+    "build-commit": "build-commit -o dist",
+    "prepare": "npm run get.servers && npm run build"
+  },
+  "prettier": "prettier-config-atomic",
+  "atomTestRunner": "./spec/runner",
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
+  "enhancedScopes": [
+    "source.d"
+  ],
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeLinterV2"
+      }
+    },
+    "datatip": {
+      "versions": {
+        "0.1.0": "consumeDatatip"
+      }
+    }
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provideAutocomplete"
+      }
+    },
+    "code-format.range": {
+      "versions": {
+        "0.1.0": "provideCodeFormat"
+      }
+    },
+    "code-highlight": {
+      "versions": {
+        "0.1.0": "provideCodeHighlight"
+      }
+    },
+    "definitions": {
+      "versions": {
+        "0.1.0": "provideDefinitions"
+      }
+    },
+    "find-references": {
+      "versions": {
+        "0.1.0": "provideFindReferences"
+      }
+    },
+    "outline-view": {
+      "versions": {
+        "0.1.0": "provideOutlines"
+      }
+    }
+  },
+  "devDependencies": {
+    "@terascope/fetch-github-release": "^0.7.7",
+    "@types/atom": "1.40.10",
+    "@types/decompress": "^4.2.3",
+    "@types/fs-extra": "^9.0.11",
+    "@types/node": "^15.6.0",
+    "@types/semver": "^7.3.6",
+    "atom-jasmine3-test-runner": "^5.2.6",
+    "build-commit": "0.1.4",
+    "cross-env": "7.0.3",
+    "decompress": "^4.2.1",
+    "decompress-tarxz": "^3.0.0",
+    "eslint-config-atomic": "^1.15.2",
+    "gitly": "^2.1.0",
+    "prettier-config-atomic": "^2.0.5",
+    "shx": "0.3.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "atom-languageclient": "^1.10.0",
+    "atom-package-deps": "^7.2.3",
+    "fs-extra": "^10.0.0",
+    "semver": "^7.3.5"
+  },
+  "package-deps": [
+    "atom-ide-base"
+  ]
 }

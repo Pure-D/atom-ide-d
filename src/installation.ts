@@ -1,5 +1,4 @@
-import { copy } from "fs-extra"
-import pathExists from "path-exists"
+import { copy, pathExists } from "fs-extra"
 import { join, dirname } from "path"
 import semverCompare from "semver/functions/compare"
 
@@ -8,29 +7,29 @@ import { promisify } from "util"
 const execFile = promisify(execFileRaw)
 
 async function getCodeDBinFolder() {
-  const home = process.env["HOME"]
-  if (home && process.platform === "linux") {
+  const home = process.env.HOME
+  if (typeof home === "string" && home !== "" && process.platform === "linux") {
     if (await pathExists(join(home, ".local", "share"))) {
       return join(home, ".local", "share", "code-d", "bin")
     } else {
       return join(home, ".code-d", "bin")
     }
   } else if (process.platform === "win32") {
-    const appdata = process.env["APPDATA"]
-    if (appdata) {
+    const appdata = process.env.APPDATA
+    if (typeof appdata === "string" && appdata !== "") {
       return join(appdata, "code-d", "bin")
     }
-  } else if (home) {
+  } else if (typeof home === "string" && home !== "") {
     return join(home, ".code-d", "bin")
   }
   return ""
 }
 
-async function isServeDInstalled(serveDPath: string) {
+function isServeDInstalled(serveDPath: string) {
   return pathExists(serveDPath)
 }
 
-/** get the version of serve-d */
+/** Get the version of serve-d */
 async function getServeDVersion(file: string) {
   try {
     const output = (await execFile(file, ["--version"])).stderr
@@ -44,9 +43,13 @@ async function getServeDVersion(file: string) {
 
 /** Check if the given serve-d is up to date against the target version */
 export async function isServeDUpToDate(givenFile: string, targetFile: string) {
-  const givenVersion = await getServeDVersion(givenFile)
-  const targetVersion = await getServeDVersion(targetFile)
-  if (givenVersion && targetVersion) {
+  const [givenVersion, targetVersion] = await Promise.all([getServeDVersion(givenFile), getServeDVersion(targetFile)])
+  if (
+    typeof givenVersion === "string" &&
+    typeof targetVersion === "string" &&
+    givenVersion !== "" &&
+    targetVersion !== ""
+  ) {
     return semverCompare(givenVersion, targetVersion) !== -1
   } else {
     // assume given version is old

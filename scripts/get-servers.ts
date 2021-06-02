@@ -14,18 +14,23 @@ const assetPlatformToNodePlatform: Record<string, string | undefined> = {
 const assetArchToNodeArch: Record<string, string | undefined> = {
   x86_64: "x64",
   x86: "ia32",
+  i686: "ia32",
 }
 
 // function to download serve-d binaries from GitHub
 export async function getServeD(distFolderRoot: string) {
-  const assets = ((await downloadRelease(
+  console.log("Downloading serve-d...")
+
+  const assets = await downloadRelease(
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    true,
     true
-  )) as unknown) as string[]
+  )
+  console.log(assets)
 
   await decompressAssets(assets, distFolderRoot)
 
@@ -38,14 +43,17 @@ export async function getServeD(distFolderRoot: string) {
 
 // function to download dcd binaries from GitHub
 export async function getDCD(distFolderRoot: string) {
-  const assets = ((await downloadRelease(
+  console.log("Downloading DCD...")
+  const assets = await downloadRelease(
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
     /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    true,
     true
-  )) as unknown) as string[]
+  )
+  console.log(assets)
 
   await decompressAssets(assets, distFolderRoot)
 }
@@ -57,24 +65,27 @@ function getNodePlatform(asset: string) {
 }
 
 function getNodeArch(asset: string) {
-  const assetArch = basename(asset).match(/x86_64|x86/)?.[0] ?? asset
+  const assetArch = basename(asset).match(/x86_64|x86|i686/)?.[0] ?? asset
   const nodeArch = assetArchToNodeArch[assetArch] ?? "x64" // assume x64 by default
   return nodeArch
 }
 
 /** Decompress assets into the dist folder matching a platform */
 async function decompressAssets(assets: string[], distFolderRoot: string) {
-  for (const asset of assets) {
-    const platformFolder = join(distFolderRoot, `${getNodePlatform(asset)}-${getNodeArch(asset)}`)
-    if (extname(asset) === ".xz") {
-      await decompress(asset, platformFolder, {
-        plugins: [decompressTarxz()],
-      })
-    } else {
-      await decompress(asset, platformFolder)
-    }
-    remove(asset)
+  await Promise.all(assets.map((asset) => decompressAsset(asset, distFolderRoot)))
+}
+
+/** Decompress one asset into the dist folder matching a platform */
+async function decompressAsset(asset: string, distFolderRoot: string) {
+  const platformFolder = join(distFolderRoot, `${getNodePlatform(asset)}-${getNodeArch(asset)}`)
+  if (extname(asset) === ".xz") {
+    await decompress(asset, platformFolder, {
+      plugins: [decompressTarxz()],
+    })
+  } else {
+    await decompress(asset, platformFolder)
   }
+  await remove(asset)
 }
 
 async function main() {
@@ -83,8 +94,7 @@ async function main() {
   await remove(distFolderRoot)
   await ensureDir(distFolderRoot)
 
-  await getServeD(distFolderRoot)
-  await getDCD(distFolderRoot)
+  await Promise.all([getServeD(distFolderRoot), getDCD(distFolderRoot)])
 }
 
 main().catch((e) => {
