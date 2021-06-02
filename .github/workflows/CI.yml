@@ -3,6 +3,10 @@ on:
   - pull_request
   - push
 
+# Due to rate-limits in `npm run get.servers`
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   Test:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -15,7 +19,7 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
-        atom_channel: [stable, beta]
+        atom_channel: [stable]
     steps:
       - uses: actions/checkout@v2
       - uses: UziTech/action-setup-atom@v1
@@ -70,6 +74,7 @@ jobs:
 
       - name: Build and Commit
         run: |
+          npm run clean
           npm run get.servers
           npm run build-commit
 
