@@ -48,7 +48,7 @@ export async function getDCD(distFolderRoot: string) {
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
-    /* filter release */ (release) => release.tag_name.includes("0.13.1"), // Tagged to 0.13.1 due to https://github.com/dlang-community/DCD/issues/635
+    /* filter release */ undefined,
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true,
     true
