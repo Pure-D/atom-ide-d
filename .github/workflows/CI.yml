@@ -87,8 +87,11 @@ jobs:
         with:
           extends: |
             @semantic-release/apm-config
-          branches: |
-            [ main ]
+          semantic_version: 16
+          branches: |    
+            [
+              'master'
+            ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATOM_ACCESS_TOKEN: ${{ secrets.ATOM_ACCESS_TOKEN  }}
