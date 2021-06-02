@@ -53,9 +53,31 @@ jobs:
       - name: Lint ✨
         run: npm run test.lint
 
-  Skip:
-    if: contains(github.event.head_commit.message, '[skip ci]')
+  Release:
+    needs: [Test, Lint]
+    if: github.ref == 'refs/heads/master' &&
+      github.event.repository.fork == false
     runs-on: ubuntu-latest
     steps:
-      - name: Skip CI 🚫
-        run: echo skip ci
+      - uses: actions/checkout@v2
+      - uses: atom-community/action-setup-atom@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12.x"
+
+      - name: NPM install
+        run: npm install
+
+      - name: Build and Commit
+        run: |
+          npm run get.servers
+          npm run build-commit
+
+      - name: Release 🎉
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extends: |
+            @semantic-release/apm-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATOM_ACCESS_TOKEN: ${{ secrets.ATOM_ACCESS_TOKEN  }}
