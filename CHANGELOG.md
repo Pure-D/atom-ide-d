@@ -1,3 +1,18 @@
+# [0.5.0](https://github.com/Pure-D/atom-ide-d/compare/v0.4.0...v0.5.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* build the package with Parcel - require Atom 1.52 and above ([1ca7344](https://github.com/Pure-D/atom-ide-d/commit/1ca73444d1de58c576d8e4f2429b204a275b4789))
+* lazy-load fs-extra and semver ([d722a35](https://github.com/Pure-D/atom-ide-d/commit/d722a354c10c2779f492cbb6d57ac2d9e869c264))
+* lazy-load package-deps ([60746f7](https://github.com/Pure-D/atom-ide-d/commit/60746f78e9f55b33f1e7c37f07a47c8957c2abab))
+* update atom-languageclient ([02a16b9](https://github.com/Pure-D/atom-ide-d/commit/02a16b9be2948fa0dece323c270eb451e157f4da))
+
+
+### Features
+
+* update the bundled serve-d and dcd ([2b312a8](https://github.com/Pure-D/atom-ide-d/commit/2b312a86835b032d60dfe628a1dc84651ab89cb8))
+
 # [0.4.0](https://github.com/Pure-D/atom-ide-d/compare/v0.3.0...v0.4.0) (2021-06-02)
 
 
