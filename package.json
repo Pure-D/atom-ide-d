@@ -1,6 +1,6 @@
 {
   "name": "ide-d",
-  "main": "./dist/ide-d",
+  "main": "./dist/ide-d.js",
   "version": "0.4.0",
   "description": "D language and IDE support for Atom",
   "keywords": [
@@ -17,7 +17,8 @@
   "repository": "https://github.com/Pure-D/atom-ide-d",
   "license": "MIT",
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.52.0 <2.0.0",
+    "electron": "^6.1.12"
   },
   "scripts": {
     "format": "prettier --write .",
@@ -26,14 +27,25 @@
     "test.lint": "eslint .",
     "test": "atom --test spec",
     "clean": "shx rm -rf dist",
-    "tsc": "tsc -p src/tsconfig.json",
     "tsc.dev": "tsc -p src/tsconfig.json --watch",
-    "build": "npm run tsc",
-    "dev": "npm run tsc.dev",
+    "dev": "cross-env NODE_ENV=developement parcel watch ./src/ide-d.ts",
+    "build": "cross-env NODE_ENV=production parcel build ./src/ide-d.ts --detailed-report",
     "get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
     "get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
     "build-commit": "build-commit -o dist",
     "prepare": "npm run get.servers && npm run build"
+  },
+  "targets": {
+    "main": {
+      "context": "electron-renderer",
+      "includeNodeModules": {
+        "atom": false,
+        "electron": false,
+        "atom-languageclient": false,
+        "fs-extra": false
+      },
+      "isLibrary": true
+    }
   },
   "prettier": "prettier-config-atomic",
   "atomTestRunner": "./spec/runner",
@@ -101,13 +113,15 @@
     "decompress-tarxz": "^3.0.0",
     "eslint-config-atomic": "^1.16.2",
     "gitly": "^2.1.2",
+    "parcel": "^2.0.0-beta.3.1",
     "prettier-config-atomic": "^2.0.5",
     "shx": "0.3.3",
+    "terser-config-atomic": "^0.1.1",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "atom-languageclient": "^1.14.1",
+    "atom-languageclient": "1.14.1",
     "atom-package-deps": "^7.2.3",
     "fs-extra": "^10.0.0",
     "semver": "^7.3.5"
