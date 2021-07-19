@@ -41,8 +41,7 @@
       "includeNodeModules": {
         "atom": false,
         "electron": false,
-        "atom-languageclient": false,
-        "fs-extra": false
+        "atom-languageclient": false
       },
       "isLibrary": true
     }
