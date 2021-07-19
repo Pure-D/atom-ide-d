@@ -5,6 +5,8 @@ import decompress from "decompress"
 // @ts-ignore
 import decompressTarxz from "decompress-tarxz"
 
+import { bundledDependencies } from "../package.json"
+
 const assetPlatformToNodePlatform: Record<string, string | undefined> = {
   windows: "win32",
   osx: "darwin",
@@ -25,7 +27,7 @@ export async function getServeD(distFolderRoot: string) {
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolderRoot,
-    /* filter release */ undefined,
+    /* filter release */ (asset) => asset.tag_name.includes(bundledDependencies["serve-d"]),
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true,
     true
@@ -48,8 +50,8 @@ export async function getDCD(distFolderRoot: string) {
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
-    /* filter release */ undefined,
-    /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
+    /* filter release */ (asset) => asset.tag_name.includes(bundledDependencies.dcd),
+    /* filter asset */ undefined, // (asset) => asset.name.includes(process.platform),
     true,
     true
   )

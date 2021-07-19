@@ -1,12 +1,12 @@
 import { AutoLanguageClient } from "atom-languageclient"
 
 class DLanguageClient extends AutoLanguageClient {
-  activate() {
+  async activate() {
     super.activate()
     if (!atom.packages.isPackageLoaded("atom-ide-base")) {
       // install if not installed
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      require("atom-package-deps").install("ide-d", true)
+      await (await import("atom-package-deps")).install("ide-d", true)
       // enable if disabled
       atom.packages.enablePackage("atom-ide-base")
       atom.notifications.addSuccess("ide-d: atom-ide-base was installed and enabled...")
