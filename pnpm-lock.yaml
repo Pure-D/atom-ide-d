@@ -8,7 +8,7 @@ specifiers:
   '@types/node': ^16.3.3
   '@types/semver': ^7.3.7
   atom-jasmine3-test-runner: ^5.2.7
-  atom-languageclient: ^1.14.1
+  atom-languageclient: 1.14.1
   atom-package-deps: ^7.2.3
   build-commit: 0.1.4
   cross-env: 7.0.3
@@ -17,7 +17,7 @@ specifiers:
   eslint-config-atomic: ^1.16.2
   fs-extra: ^10.0.0
   gitly: ^2.1.2
-  parcel: ^2.0.0-beta.3.1
+  parcel: 2.0.0-beta.3.1
   prettier-config-atomic: ^2.0.5
   semver: ^7.3.5
   shx: 0.3.3
@@ -1162,17 +1162,10 @@ packages:
     resolution: {integrity: sha512-FTgBI767POY/lKNDNbIzgAX6miIDBs6NTCbdlDb8TrWovHsSvaVIZDlTqym29C6UqhzwcJx4CYr+AlrMywA0cA==}
     dev: true
 
-  /@types/atom/1.40.10:
-    resolution: {integrity: sha512-aNFUhCuR6nmTTMoYKfWWMifZ3IcNETLWC75hCdg3i1/OvirfR/5qm1wfiISBb4s/TPM2YVEtxytCdWhKJuEhzw==}
-    dependencies:
-      '@types/node': 14.14.35
-    dev: false
-
   /@types/atom/1.40.11:
     resolution: {integrity: sha512-TsPltugw2wKtR5p6ICv73t9kxdx59fTfdcD8Xe/0EEjF5vHBz99Z7Kj/rPRpyM/4ZcY1GrkQh8hgOw/OJRCs0g==}
     dependencies:
       '@types/node': 16.3.3
-    dev: true
 
   /@types/cacheable-request/6.0.1:
     resolution: {integrity: sha512-ykFq2zmBGOCbpIXtoVbz4SKY5QriWPh3AjyU4G74RYbtt5yOc5OfaY75ftjg7mikMOla1CTGpX3lLbuJh8DTrQ==}
@@ -1205,7 +1198,7 @@ packages:
     resolution: {integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==}
     dependencies:
       '@types/minimatch': 3.0.4
-      '@types/node': 15.6.0
+      '@types/node': 16.3.3
     dev: false
 
   /@types/http-cache-semantics/4.0.0:
@@ -1247,10 +1240,6 @@ packages:
     resolution: {integrity: sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA==}
     dev: false
 
-  /@types/node/14.14.35:
-    resolution: {integrity: sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag==}
-    dev: false
-
   /@types/node/14.14.41:
     resolution: {integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==}
     dev: true
@@ -1259,13 +1248,8 @@ packages:
     resolution: {integrity: sha512-dvMUE/m2LbXPwlvVuzCyslTEtQ2ZwuuFClDrOQ6mp2CenCg971719PTILZ4I6bTP27xfFFc+o7x2TkLuun/MPw==}
     dev: false
 
-  /@types/node/15.6.0:
-    resolution: {integrity: sha512-gCYSfQpy+LYhOFTKAeE8BkyGqaxmlFxe+n4DKM6DR0wzw/HISUE/hAmkC/KT8Sw5PCJblqg062b3z9gucv3k0A==}
-    dev: false
-
   /@types/node/16.3.3:
     resolution: {integrity: sha512-8h7k1YgQKxKXWckzFCMfsIwn0Y61UK6tlD6y2lOb3hTOIMlK3t9/QwHOhc81TwU+RMf0As5fj7NPjroERCnejQ==}
-    dev: true
 
   /@types/prop-types/15.7.3:
     resolution: {integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==}
@@ -1299,7 +1283,7 @@ packages:
     resolution: {integrity: sha512-CAoSlbco40aKZ0CkelBF2g3JeN6aioRaTVnqSX5pWsn/WApm6IDxI4e4tD9D0dY/meCkyyleP1IQDVN13F4maA==}
     dependencies:
       '@types/glob': 7.1.3
-      '@types/node': 15.6.0
+      '@types/node': 16.3.3
     dev: false
 
   /@types/scheduler/0.16.1:
@@ -1707,7 +1691,7 @@ packages:
     resolution: {integrity: sha512-sAlYapfh0WbsRKnO0xlzggWY0X/j3XwoAAVrq9h+TpHc81O/TihRWsC2TPXhMoIWVKq40XASgqIXkN8kxDkoWA==}
     engines: {atom: '>=0.174.0 <2.0.0', pnpm: '>=5.12'}
     dependencies:
-      '@types/atom': 1.40.10
+      '@types/atom': 1.40.11
       '@types/dompurify': 2.2.2
       '@types/node': 15.14.2
       '@types/react': 17.0.14

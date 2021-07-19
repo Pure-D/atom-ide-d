@@ -28,12 +28,18 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: "12.x"
+          node-version: 12
 
-      - name: Install dependencies
+      - uses: pnpm/action-setup@master
+        with:
+          version: latest
+
+      - name: Test production installation
+        run: apm install --production
+
+      - name: Build
         run: |
-          apm install --production
-          npm install --only=dev
+          pnpm install
           ./node_modules/.bin/atom-package-deps .
 
       - name: Run tests 👩🏾‍💻
@@ -71,16 +77,18 @@ jobs:
       - uses: atom-community/action-setup-atom@v1
       - uses: actions/setup-node@v2
         with:
-          node-version: "12.x"
+          node-version: 12
 
-      - name: NPM install
-        run: npm install
+      - uses: pnpm/action-setup@master
+        with:
+          version: latest
 
       - name: Build and Commit
         run: |
-          npm run clean
-          npm run get.servers
-          npm run build-commit
+          pnpm install
+          pnpm run clean
+          pnpm run get.servers
+          pnpm run build-commit
 
       - name: Release 🎉
         uses: cycjimmy/semantic-release-action@v2
