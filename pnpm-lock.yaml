@@ -8,7 +8,7 @@ specifiers:
   '@types/node': ^15.6.0
   '@types/semver': ^7.3.6
   atom-jasmine3-test-runner: ^5.2.6
-  atom-languageclient: ^1.10.0
+  atom-languageclient: ^1.14.1
   atom-package-deps: ^7.2.3
   build-commit: 0.1.4
   cross-env: 7.0.3
@@ -24,7 +24,7 @@ specifiers:
   typescript: ^4.2.4
 
 dependencies:
-  atom-languageclient: 1.10.0
+  atom-languageclient: 1.14.1
   atom-package-deps: 7.2.3
   fs-extra: 10.0.0
   semver: 7.3.5
@@ -413,6 +413,11 @@ packages:
 
   /@types/node/14.14.41:
     resolution: {integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==}
+    dev: true
+
+  /@types/node/15.14.2:
+    resolution: {integrity: sha512-dvMUE/m2LbXPwlvVuzCyslTEtQ2ZwuuFClDrOQ6mp2CenCg971719PTILZ4I6bTP27xfFFc+o7x2TkLuun/MPw==}
+    dev: false
 
   /@types/node/15.6.0:
     resolution: {integrity: sha512-gCYSfQpy+LYhOFTKAeE8BkyGqaxmlFxe+n4DKM6DR0wzw/HISUE/hAmkC/KT8Sw5PCJblqg062b3z9gucv3k0A==}
@@ -421,14 +426,14 @@ packages:
     resolution: {integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==}
     dev: false
 
-  /@types/react-dom/17.0.5:
-    resolution: {integrity: sha512-ikqukEhH4H9gr4iJCmQVNzTB307kROe3XFfHAOTxOXPOw7lAoEXnM5KWTkzeANGL5Ce6ABfiMl/zJBYNi7ObmQ==}
+  /@types/react-dom/17.0.9:
+    resolution: {integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==}
     dependencies:
-      '@types/react': 17.0.6
+      '@types/react': 17.0.14
     dev: false
 
-  /@types/react/17.0.6:
-    resolution: {integrity: sha512-u/TtPoF/hrvb63LdukET6ncaplYsvCvmkceasx8oG84/ZCsoLxz9Z/raPBP4lTAiWW1Jb889Y9svHmv8R26dWw==}
+  /@types/react/17.0.14:
+    resolution: {integrity: sha512-0WwKHUbWuQWOce61UexYuWTGuGY/8JvtUe/dtQ6lR4sZ3UiylHotJeWpf3ArP9+DSGUoLY3wbU59VyMrJps5VQ==}
     dependencies:
       '@types/prop-types': 15.7.3
       '@types/scheduler': 0.16.1
@@ -441,8 +446,8 @@ packages:
       '@types/node': 14.14.41
     dev: true
 
-  /@types/rimraf/3.0.0:
-    resolution: {integrity: sha512-7WhJ0MdpFgYQPXlF4Dx+DhgvlPCfz/x5mHaeDQAKhcenvQP1KCpLQ18JklAqeGMYSAT2PxLpzd0g2/HE7fj7hQ==}
+  /@types/rimraf/3.0.1:
+    resolution: {integrity: sha512-CAoSlbco40aKZ0CkelBF2g3JeN6aioRaTVnqSX5pWsn/WApm6IDxI4e4tD9D0dY/meCkyyleP1IQDVN13F4maA==}
     dependencies:
       '@types/glob': 7.1.3
       '@types/node': 15.6.0
@@ -737,20 +742,19 @@ packages:
     resolution: {integrity: sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=}
     dev: true
 
-  /atom-ide-base/2.6.0:
-    resolution: {integrity: sha512-ZdRehC6FxVYhKJekja4tIT8EAqPQUlNnTtYi5825K/+mP6M6exzLKXzi30okoOopXW68k8X2COIZXTU1/r+Osg==}
+  /atom-ide-base/3.3.0:
+    resolution: {integrity: sha512-sAlYapfh0WbsRKnO0xlzggWY0X/j3XwoAAVrq9h+TpHc81O/TihRWsC2TPXhMoIWVKq40XASgqIXkN8kxDkoWA==}
     engines: {atom: '>=0.174.0 <2.0.0', pnpm: '>=5.12'}
     dependencies:
       '@types/atom': 1.40.10
       '@types/dompurify': 2.2.2
-      '@types/node': 14.14.41
-      '@types/react': 17.0.6
-      '@types/react-dom': 17.0.5
+      '@types/node': 15.14.2
+      '@types/react': 17.0.14
+      '@types/react-dom': 17.0.9
       atom-ide-markdown-service: 2.1.0
       atom-package-deps: 7.2.3
       classnames: 2.3.1
-      dompurify: 2.2.8
-      etch: 0.14.1
+      dompurify: 2.3.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       rxjs: 6.6.7
@@ -760,7 +764,7 @@ packages:
     resolution: {integrity: sha512-tbOMGVwOHgAwY8scx2maimConxQLKaFYEsaUs8sqOd9FVMGiulxg3XG0IGrhpdxd8nM3QqZLmFFX4fUExqe3UA==}
     engines: {atom: '>=1.0.0 <2.0.0'}
     dependencies:
-      dompurify: 2.2.8
+      dompurify: 2.3.0
       marked: 1.2.9
     dev: false
 
@@ -788,16 +792,16 @@ packages:
       '@types/jasmine': 3.7.4
     dev: true
 
-  /atom-languageclient/1.10.0:
-    resolution: {integrity: sha512-+LqtHOkEIXFDwQofyHhJ9VPF7IY4zMhvSl26qRUxhDn/02BGjzTmBSIULwScWK+97iKaYwSUKTbJCQP4+rmmBw==}
+  /atom-languageclient/1.14.1:
+    resolution: {integrity: sha512-eWjY3BzAlyzzkvJGOuBOyCB9TS9IVwrioN+xYJpEz371UfuwRd7e2P9BKKN+LEiJMKG0p5hndHIEf57+nBPaIw==}
     dependencies:
-      '@types/rimraf': 3.0.0
-      atom-ide-base: 2.6.0
+      '@types/rimraf': 3.0.1
+      atom-ide-base: 3.3.0
       rimraf: 3.0.2
       vscode-jsonrpc: 6.0.0
       vscode-languageserver-protocol: 3.16.0
       vscode-languageserver-types: 3.16.0
-      zadeh: 3.0.0-beta.2
+      zadeh: 3.0.0-beta.4
     dev: false
 
   /atom-package-deps/7.2.3:
@@ -903,12 +907,6 @@ packages:
   /binary-search-bounds/2.0.5:
     resolution: {integrity: sha512-H0ea4Fd3lS1+sTEB2TgcLoK21lLhwEJzlQv3IN47pJS976Gx4zoWe0ak3q+uYh60ppQxg9F16Ri4tS1sfD4+jA==}
     dev: true
-
-  /bindings/1.5.0:
-    resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
-    dependencies:
-      file-uri-to-path: 1.0.0
-    dev: false
 
   /bl/1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
@@ -1392,8 +1390,8 @@ packages:
       domelementtype: 2.2.0
     dev: true
 
-  /dompurify/2.2.8:
-    resolution: {integrity: sha512-9H0UL59EkDLgY3dUFjLV6IEUaHm5qp3mxSqWw7Yyx4Zhk2Jn2cmLe+CNPP3xy13zl8Bqg+0NehQzkdMoVhGRww==}
+  /dompurify/2.3.0:
+    resolution: {integrity: sha512-VV5C6Kr53YVHGOBKO/F86OYX6/iLTw2yVSI721gKetxpHCK/V5TaLEf9ODjRgl1KLSWRMY6cUhAbv/c+IUnwQw==}
     dev: false
 
   /domutils/1.5.1:
@@ -1857,6 +1855,7 @@ packages:
 
   /etch/0.14.1:
     resolution: {integrity: sha512-+IwqSDBhaQFMUHJu4L/ir0dhDoW5IIihg4Z9lzsIxxne8V0PlSg0gnk2STaKWjGJQnDR4cxpA+a/dORX9kycTA==}
+    dev: true
 
   /event-kit/2.5.3:
     resolution: {integrity: sha512-b7Qi1JNzY4BfAYfnIRanLk0DOD1gdkWHT4GISIn8Q2tAf3LpU8SP2CMwWaq40imYoKWbtN4ZhbSRxvsnikooZQ==}
@@ -1943,10 +1942,6 @@ packages:
     resolution: {integrity: sha512-YPcTBDV+2Tm0VqjybVd32MHdlEGAtuxS3VAYsumFokDSMG+ROT5wawGlnHDoz7bfMcMDt9hxuXvXwoKUx2fkOg==}
     engines: {node: '>=4'}
     dev: true
-
-  /file-uri-to-path/1.0.0:
-    resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
-    dev: false
 
   /fill-range/7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -2114,6 +2109,7 @@ packages:
       minimatch: 3.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
+    dev: true
 
   /glob/7.1.7:
     resolution: {integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==}
@@ -2124,7 +2120,6 @@ packages:
       minimatch: 3.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
-    dev: true
 
   /globals/11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -2901,8 +2896,8 @@ packages:
       sax: 1.2.4
     dev: true
 
-  /node-addon-api/3.1.0:
-    resolution: {integrity: sha512-flmrDNB06LIl5lywUz7YlNGZH/5p0M7W28k8hzd9Lshtdh1wshD2Y+U4h9LD6KObOy1f+fEVdgprPrEymjM5uw==}
+  /node-addon-api/4.0.0:
+    resolution: {integrity: sha512-ALmRVBFzfwldBfk3SbKfl6+PVMXiCPKZBEfsJqB/EjXAMAI+MfFrEHR+GMRBuI162DihZ1QjEZ8ieYKuRCJ8Hg==}
     dev: false
 
   /node-gyp-build/4.2.3:
@@ -3435,7 +3430,7 @@ packages:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     hasBin: true
     dependencies:
-      glob: 7.1.6
+      glob: 7.1.7
 
   /run-parallel/1.1.10:
     resolution: {integrity: sha512-zb/1OuZ6flOlH6tQyMPUrE3x3Ulxjlo9WIVXR4yVYi4H9UXQaeIsPbLn2R3O3vQCnDKkAl2qHiuocKKX4Tz/Sw==}
@@ -4028,11 +4023,11 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /zadeh/3.0.0-beta.2:
-    resolution: {integrity: sha512-HHLvrzoeegMkuXaXrQUlQJVRTM2nl23g/obw0ENfMu+xQL+VJA3SQl7cQ73btyUNAQZsrWf9FMegbVLLHOhORg==}
+  /zadeh/3.0.0-beta.4:
+    resolution: {integrity: sha512-tl65LekkDnEj2FPX7Bgx8uz0rXOP+UBTgGN7nva7uwX+9lOe4ECuQCeBr40ajHUwW+oJ50vusbnxjdkI/mmiqw==}
+    engines: {atom: '>=1.52.0 <2.0.0', electron: '>=6.0.0', node: '>=12.0.0'}
     requiresBuild: true
     dependencies:
-      bindings: 1.5.0
-      node-addon-api: 3.1.0
+      node-addon-api: 4.0.0
       node-gyp-build: 4.2.3
     dev: false
