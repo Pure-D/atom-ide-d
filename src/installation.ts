@@ -41,7 +41,7 @@ async function getServeDVersion(file: string) {
 }
 
 /** Check if the given serve-d is up to date against the target version */
-export async function isServeDUpToDate(givenFile: string, targetFile: string) {
+async function isServeDUpToDate(givenFile: string, targetFile: string) {
   const semverCompare = (await import("semver/functions/compare")).default
   const [givenVersion, targetVersion] = await Promise.all([getServeDVersion(givenFile), getServeDVersion(targetFile)])
   if (
@@ -59,10 +59,10 @@ export async function isServeDUpToDate(givenFile: string, targetFile: string) {
 
 async function copyServeD(bundledServerFolder: string, codeDBinFolder: string) {
   const { copy } = await import("fs-extra")
-  atom.notifications.addInfo("Installing D servers...")
+  atom.notifications.addInfo("Installing/Updating D servers...")
   // copy the whole served folder
   await copy(bundledServerFolder, codeDBinFolder, { overwrite: true })
-  atom.notifications.addSuccess("D servers was installed")
+  atom.notifications.addSuccess("D servers was installed/updated")
 }
 
 export async function installServeD() {
