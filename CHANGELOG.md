@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/Pure-D/atom-ide-d/compare/v0.5.0...v0.5.1) (2021-07-19)
+
+
+### Bug Fixes
+
+* reduce the size of the bundle ([83fbf5e](https://github.com/Pure-D/atom-ide-d/commit/83fbf5e5b113c44bcb059b0a81c997d9bc3633ad))
+
 # [0.5.0](https://github.com/Pure-D/atom-ide-d/compare/v0.4.0...v0.5.0) (2021-07-19)
 
 

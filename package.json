@@ -1,7 +1,7 @@
 {
   "name": "ide-d",
   "main": "./dist/ide-d.js",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "D language and IDE support for Atom",
   "keywords": [
     "d",
