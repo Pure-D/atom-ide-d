@@ -42,7 +42,8 @@ async function getServeDVersion(file: string) {
 
 /** Check if the given serve-d is up to date against the target version */
 async function isServeDUpToDate(givenFile: string, targetFile: string) {
-  const semverCompare = (await import("semver/functions/compare")).default
+  // @ts-ignore
+  const semverCompare = (await import("semver/functions/compare")) as typeof import("semver/functions/compare")
   const [givenVersion, targetVersion] = await Promise.all([getServeDVersion(givenFile), getServeDVersion(targetFile)])
   if (
     typeof givenVersion === "string" &&
