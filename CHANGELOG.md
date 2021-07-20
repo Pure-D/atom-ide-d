@@ -1,3 +1,11 @@
+## [0.5.2](https://github.com/Pure-D/atom-ide-d/compare/v0.5.1...v0.5.2) (2021-07-20)
+
+
+### Bug Fixes
+
+* fix fs-extra error by not bundling it ([82992ed](https://github.com/Pure-D/atom-ide-d/commit/82992ed1199a1197a2ed248ccfe13bba844254a4))
+* fix semver dynamic import ([2feb6ee](https://github.com/Pure-D/atom-ide-d/commit/2feb6ee353631d34b24fec26c002b41bcd8480f1))
+
 ## [0.5.1](https://github.com/Pure-D/atom-ide-d/compare/v0.5.0...v0.5.1) (2021-07-19)
 
 
