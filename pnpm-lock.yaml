@@ -5,8 +5,8 @@ specifiers:
   '@types/atom': 1.40.11
   '@types/decompress': ^4.2.4
   '@types/fs-extra': ^9.0.12
-  '@types/node': ^16.3.3
-  '@types/semver': ^7.3.7
+  '@types/node': ^16.4.13
+  '@types/semver': ^7.3.8
   atom-jasmine3-test-runner: ^5.2.7
   atom-languageclient: 1.14.1
   atom-package-deps: ^7.2.3
@@ -16,7 +16,7 @@ specifiers:
   decompress-tarxz: ^3.0.0
   eslint-config-atomic: ^1.16.2
   fs-extra: ^10.0.0
-  gitly: ^2.1.2
+  gitly: ^2.1.3
   parcel: 2.0.0-rc.0
   prettier-config-atomic: ^2.0.5
   semver: ^7.3.5
@@ -36,20 +36,20 @@ devDependencies:
   '@types/atom': 1.40.11
   '@types/decompress': 4.2.4
   '@types/fs-extra': 9.0.12
-  '@types/node': 16.3.3
-  '@types/semver': 7.3.7
+  '@types/node': 16.4.13
+  '@types/semver': 7.3.8
   atom-jasmine3-test-runner: 5.2.7
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: 4.2.1
   decompress-tarxz: 3.0.0
   eslint-config-atomic: 1.16.2
-  gitly: 2.1.2
+  gitly: 2.1.3
   parcel: 2.0.0-rc.0
   prettier-config-atomic: 2.0.5
   shx: 0.3.3
   terser-config-atomic: 0.1.1
-  ts-node: 10.1.0_11f741051fc5aebfd1e77a6b4af6c1cd
+  ts-node: 10.1.0_dea0625f6d31b223e93dc3dc354b8b43
   typescript: 4.3.5
 
 packages:
@@ -1304,7 +1304,7 @@ packages:
     resolution: {integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==}
     dependencies:
       '@types/minimatch': 3.0.4
-      '@types/node': 16.3.3
+      '@types/node': 16.4.13
     dev: false
 
   /@types/http-cache-semantics/4.0.0:
@@ -1357,6 +1357,9 @@ packages:
   /@types/node/16.3.3:
     resolution: {integrity: sha512-8h7k1YgQKxKXWckzFCMfsIwn0Y61UK6tlD6y2lOb3hTOIMlK3t9/QwHOhc81TwU+RMf0As5fj7NPjroERCnejQ==}
 
+  /@types/node/16.4.13:
+    resolution: {integrity: sha512-bLL69sKtd25w7p1nvg9pigE4gtKVpGTPojBFLMkGHXuUgap2sLqQt2qUnqmVCDfzGUL0DRNZP+1prIZJbMeAXg==}
+
   /@types/prop-types/15.7.3:
     resolution: {integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==}
     dev: false
@@ -1385,15 +1388,15 @@ packages:
     resolution: {integrity: sha512-CAoSlbco40aKZ0CkelBF2g3JeN6aioRaTVnqSX5pWsn/WApm6IDxI4e4tD9D0dY/meCkyyleP1IQDVN13F4maA==}
     dependencies:
       '@types/glob': 7.1.3
-      '@types/node': 16.3.3
+      '@types/node': 16.4.13
     dev: false
 
   /@types/scheduler/0.16.1:
     resolution: {integrity: sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==}
     dev: false
 
-  /@types/semver/7.3.7:
-    resolution: {integrity: sha512-4g1jrL98mdOIwSOUh6LTlB0Cs9I0dQPwINUhBg7C6pN4HLr8GS8xsksJxilW6S6dQHVi2K/o+lQuQcg7LroCnw==}
+  /@types/semver/7.3.8:
+    resolution: {integrity: sha512-D/2EJvAlCEtYFEYmmlGwbGXuK886HzyCc3nZX/tkFTQdEU8jZDAgiv08P162yB17y4ZXZoq7yFAnW4GDBb9Now==}
     dev: true
 
   /@types/trusted-types/2.0.0:
@@ -1882,7 +1885,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.13.2
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: true
@@ -3875,16 +3878,6 @@ packages:
     resolution: {integrity: sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==}
     dev: true
 
-  /follow-redirects/1.13.2:
-    resolution: {integrity: sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: true
-
   /follow-redirects/1.14.1:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
     engines: {node: '>=4.0'}
@@ -4052,11 +4045,11 @@ packages:
       assert-plus: 1.0.0
     dev: true
 
-  /gitly/2.1.2:
-    resolution: {integrity: sha512-oxkupLWUYgUPDCb73VeF1TNn34zImoojoOyVon6k9wuBKhUUgiT/6OpcH6UJkYE0EYy+gUkcnz8007AhdH1B4w==}
+  /gitly/2.1.3:
+    resolution: {integrity: sha512-cq/aBiNkEsVVyg38LqRaUuKhUXCK1UH/Z/VQUK3iZRFPxczON9tX4qWn/gxfNVfw3pt9Xrw8of/aJIEzDuAn1A==}
     dependencies:
       axios: 0.21.1
-      tar: 6.1.0
+      tar: 6.1.6
     transitivePeerDependencies:
       - debug
     dev: true
@@ -7606,8 +7599,8 @@ packages:
       yallist: 3.1.1
     dev: true
 
-  /tar/6.1.0:
-    resolution: {integrity: sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==}
+  /tar/6.1.6:
+    resolution: {integrity: sha512-oaWyu5dQbHaYcyZCTfyPpC+VmI62/OM2RTUYavTk1MDr1cwW5Boi3baeYQKiZbY2uSQJGr+iMOzb/JFxLrft+g==}
     engines: {node: '>= 10'}
     dependencies:
       chownr: 2.0.0
@@ -7724,7 +7717,7 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /ts-node/10.1.0_11f741051fc5aebfd1e77a6b4af6c1cd:
+  /ts-node/10.1.0_dea0625f6d31b223e93dc3dc354b8b43:
     resolution: {integrity: sha512-6szn3+J9WyG2hE+5W8e0ruZrzyk1uFLYye6IGMBadnOzDh8aP7t8CbFpsfCiEx2+wMixAhjFt7lOZC4+l+WbEA==}
     engines: {node: '>=12.0.0'}
     hasBin: true
@@ -7743,7 +7736,7 @@ packages:
       '@tsconfig/node12': 1.0.7
       '@tsconfig/node14': 1.0.0
       '@tsconfig/node16': 1.0.1
-      '@types/node': 16.3.3
+      '@types/node': 16.4.13
       arg: 4.1.3
       create-require: 1.1.1
       diff: 4.0.2
