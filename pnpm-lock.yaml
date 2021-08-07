@@ -8,8 +8,8 @@ specifiers:
   '@types/node': ^16.4.13
   '@types/semver': ^7.3.8
   atom-jasmine3-test-runner: ^5.2.7
-  atom-languageclient: 1.14.1
-  atom-package-deps: ^7.2.3
+  atom-languageclient: 1.16.1
+  atom-package-deps: ^8.0.0
   build-commit: 0.1.4
   cross-env: 7.0.3
   decompress: ^4.2.1
@@ -26,8 +26,8 @@ specifiers:
   typescript: ^4.3.5
 
 dependencies:
-  atom-languageclient: 1.14.1
-  atom-package-deps: 7.2.3
+  atom-languageclient: 1.16.1
+  atom-package-deps: 8.0.0
   fs-extra: 10.0.0
   semver: 7.3.5
 
@@ -1842,8 +1842,8 @@ packages:
       '@types/jasmine': 3.8.1
     dev: true
 
-  /atom-languageclient/1.14.1:
-    resolution: {integrity: sha512-eWjY3BzAlyzzkvJGOuBOyCB9TS9IVwrioN+xYJpEz371UfuwRd7e2P9BKKN+LEiJMKG0p5hndHIEf57+nBPaIw==}
+  /atom-languageclient/1.16.1:
+    resolution: {integrity: sha512-Wo9OCdebDn9O8qhjvoOD12aE7r6sh1l2p6kuX+VxUzQRr3IEOpqywENGuszxq9kSrl+jpR4XNH6iDR05A2jAXg==}
     dependencies:
       '@types/rimraf': 3.0.1
       atom-ide-base: 3.3.0
@@ -1856,6 +1856,11 @@ packages:
 
   /atom-package-deps/7.2.3:
     resolution: {integrity: sha512-Z1FHJS2c2xBN3wQVniG7jXDyE4mUjZlHA0tfIkCND9U/fHaZyBJPno4/jD8PtYUnhlymaHRbCsgxCU3QuKjqfQ==}
+    hasBin: true
+    dev: false
+
+  /atom-package-deps/8.0.0:
+    resolution: {integrity: sha512-TSY6WX4+QbMK9r6iCY99hNW+9vW7SF0zGHfnMLgiinMj5VR5MNQIhU+2pVXqIbGWnl32uqBAKB+iBztUV0ssyg==}
     hasBin: true
     dev: false
 

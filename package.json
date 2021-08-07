@@ -42,6 +42,7 @@
         "atom": false,
         "electron": false,
         "atom-languageclient": false,
+        "atom-package-deps": false,
         "fs-extra": false
       },
       "isLibrary": true,
@@ -122,8 +123,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "atom-languageclient": "1.14.1",
-    "atom-package-deps": "^7.2.3",
+    "atom-languageclient": "1.16.1",
+    "atom-package-deps": "^8.0.0",
     "fs-extra": "^10.0.0",
     "semver": "^7.3.5"
   },
