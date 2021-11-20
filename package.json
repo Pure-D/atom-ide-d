@@ -131,8 +131,8 @@
   "package-deps": [
     "atom-ide-base"
   ],
-  "bundledDependencies": {
     "serve-d": "0.7.0-beta.7",
+  "binaryDependencies": {
     "dcd": "0.13.6"
   }
 }
