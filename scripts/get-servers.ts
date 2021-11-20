@@ -1,4 +1,4 @@
-import downloadRelease from "@terascope/fetch-github-release"
+import { downloadRelease } from "@terascope/fetch-github-release"
 import { join, dirname, extname, basename } from "path"
 import { remove, ensureDir, copy } from "fs-extra"
 import decompress from "decompress"
