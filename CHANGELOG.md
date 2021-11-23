@@ -1,3 +1,12 @@
+## [0.5.3](https://github.com/Pure-D/atom-ide-d/compare/v0.5.2...v0.5.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* update atom-languageclient and package-deps ([4ecf06f](https://github.com/Pure-D/atom-ide-d/commit/4ecf06f0ade74e48b9590bd790214fd5bad3bbfd))
+* update devDependencies ([0278931](https://github.com/Pure-D/atom-ide-d/commit/02789318c1f1a60716698fb8b087f329519d8ff4))
+* update serve-d to 0.7.0 ([2034b15](https://github.com/Pure-D/atom-ide-d/commit/2034b156f331a20438f7dd9ec9b9c0338aff26c7))
+
 ## [0.5.2](https://github.com/Pure-D/atom-ide-d/compare/v0.5.1...v0.5.2) (2021-07-20)
 
 

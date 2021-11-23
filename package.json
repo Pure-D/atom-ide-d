@@ -1,6 +1,6 @@
 {
   "name": "ide-d",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "D language and IDE support for Atom",
   "repository": "https://github.com/Pure-D/atom-ide-d",
   "license": "MIT",
