@@ -1,8 +1,57 @@
 {
   "name": "ide-d",
-  "main": "./dist/ide-d.js",
   "version": "0.5.2",
   "description": "D language and IDE support for Atom",
+  "repository": "https://github.com/Pure-D/atom-ide-d",
+  "license": "MIT",
+  "main": "./dist/ide-d.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production parcel build ./src/ide-d.ts --detailed-report",
+    "build-commit": "build-commit -o dist",
+    "clean": "shx rm -rf dist",
+    "dev": "cross-env NODE_ENV=developement parcel watch ./src/ide-d.ts",
+    "format": "prettier --write .",
+    "get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
+    "get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
+    "lint": "eslint . --fix",
+    "prepare": "npm run get.servers && npm run build",
+    "test": "atom --test spec",
+    "test.format": "prettier . --check",
+    "test.lint": "eslint .",
+    "tsc.dev": "tsc -p src/tsconfig.json --watch"
+  },
+  "prettier": "prettier-config-atomic",
+  "dependencies": {
+    "atom-languageclient": "1.16.1",
+    "atom-package-deps": "^8.0.0",
+    "fs-extra": "^10.0.0",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "@terascope/fetch-github-release": "^0.8.7",
+    "@types/atom": "1.40.11",
+    "@types/decompress": "^4.2.4",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^16.11.9",
+    "@types/semver": "^7.3.9",
+    "atom-jasmine3-test-runner": "^5.2.9",
+    "build-commit": "0.1.4",
+    "cross-env": "7.0.3",
+    "decompress": "^4.2.1",
+    "decompress-tarxz": "^3.0.0",
+    "eslint-config-atomic": "^1.16.5",
+    "gitly": "^2.1.5",
+    "parcel": "2.0.1",
+    "prettier-config-atomic": "^3.0.1",
+    "shx": "0.3.3",
+    "terser-config-atomic": "^0.1.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "engines": {
+    "atom": ">=1.52.0 <2.0.0",
+    "electron": "^6.1.12"
+  },
   "keywords": [
     "d",
     "dcd",
@@ -14,49 +63,14 @@
     "lint",
     "format"
   ],
-  "repository": "https://github.com/Pure-D/atom-ide-d",
-  "license": "MIT",
-  "engines": {
-    "atom": ">=1.52.0 <2.0.0",
-    "electron": "^6.1.12"
-  },
-  "scripts": {
-    "format": "prettier --write .",
-    "test.format": "prettier . --check",
-    "lint": "eslint . --fix",
-    "test.lint": "eslint .",
-    "test": "atom --test spec",
-    "clean": "shx rm -rf dist",
-    "tsc.dev": "tsc -p src/tsconfig.json --watch",
-    "dev": "cross-env NODE_ENV=developement parcel watch ./src/ide-d.ts",
-    "build": "cross-env NODE_ENV=production parcel build ./src/ide-d.ts --detailed-report",
-    "get.grammars": "ts-node -P ./scripts/tsconfig.json ./scripts/get-grammars.ts",
-    "get.servers": "ts-node -P ./scripts/tsconfig.json ./scripts/get-servers.ts",
-    "build-commit": "build-commit -o dist",
-    "prepare": "npm run get.servers && npm run build"
-  },
-  "targets": {
-    "main": {
-      "context": "electron-renderer",
-      "includeNodeModules": {
-        "atom": false,
-        "electron": false,
-        "atom-languageclient": false,
-        "atom-package-deps": false,
-        "fs-extra": false
-      },
-      "isLibrary": true,
-      "optimize": true
-    }
-  },
-  "prettier": "prettier-config-atomic",
-  "atomTestRunner": "./spec/runner",
   "activationHooks": [
     "core:loaded-shell-environment"
   ],
-  "enhancedScopes": [
-    "source.d"
-  ],
+  "atomTestRunner": "./spec/runner",
+  "binaryDependencies": {
+    "serve-d": "0.7.0",
+    "dcd": "0.13.6"
+  },
   "consumedServices": {
     "linter-indie": {
       "versions": {
@@ -67,6 +81,17 @@
       "versions": {
         "0.1.0": "consumeDatatip"
       }
+    }
+  },
+  "enhancedScopes": [
+    "source.d"
+  ],
+  "package-deps": [
+    "atom-ide-base"
+  ],
+  "pnpm": {
+    "overrides": {
+      "lzma-native": "8.0.1"
     }
   },
   "providedServices": {
@@ -101,43 +126,18 @@
       }
     }
   },
-  "devDependencies": {
-    "@terascope/fetch-github-release": "^0.8.7",
-    "@types/atom": "1.40.11",
-    "@types/decompress": "^4.2.4",
-    "@types/fs-extra": "^9.0.13",
-    "@types/node": "^16.11.9",
-    "@types/semver": "^7.3.9",
-    "atom-jasmine3-test-runner": "^5.2.9",
-    "build-commit": "0.1.4",
-    "cross-env": "7.0.3",
-    "decompress": "^4.2.1",
-    "decompress-tarxz": "^3.0.0",
-    "eslint-config-atomic": "^1.16.5",
-    "gitly": "^2.1.5",
-    "parcel": "2.0.1",
-    "prettier-config-atomic": "^3.0.1",
-    "shx": "0.3.3",
-    "terser-config-atomic": "^0.1.1",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
-  },
-  "dependencies": {
-    "atom-languageclient": "1.16.1",
-    "atom-package-deps": "^8.0.0",
-    "fs-extra": "^10.0.0",
-    "semver": "^7.3.5"
-  },
-  "package-deps": [
-    "atom-ide-base"
-  ],
-  "pnpm": {
-    "overrides": {
-      "lzma-native": "8.0.1"
+  "targets": {
+    "main": {
+      "context": "electron-renderer",
+      "includeNodeModules": {
+        "atom": false,
+        "electron": false,
+        "atom-languageclient": false,
+        "atom-package-deps": false,
+        "fs-extra": false
+      },
+      "isLibrary": true,
+      "optimize": true
     }
-  },
-  "binaryDependencies": {
-    "serve-d": "0.7.0",
-    "dcd": "0.13.6"
   }
 }
