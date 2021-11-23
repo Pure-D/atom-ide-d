@@ -1,11 +1,11 @@
-import downloadRelease from "@terascope/fetch-github-release"
+import { downloadRelease } from "@terascope/fetch-github-release"
 import { join, dirname, extname, basename } from "path"
 import { remove, ensureDir, copy } from "fs-extra"
 import decompress from "decompress"
 // @ts-ignore
 import decompressTarxz from "decompress-tarxz"
 
-import { bundledDependencies } from "../package.json"
+import { binaryDependencies } from "../package.json"
 
 const assetPlatformToNodePlatform: Record<string, string | undefined> = {
   windows: "win32",
@@ -27,7 +27,7 @@ export async function getServeD(distFolderRoot: string) {
     /* username */ "Pure-D",
     /* repo */ "serve-d",
     /* download folder */ distFolderRoot,
-    /* filter release */ (asset) => asset.tag_name.includes(bundledDependencies["serve-d"]),
+    /* filter release */ (asset) => asset.tag_name.includes(binaryDependencies["serve-d"]),
     /* filter asset */ undefined, // (asset) => asset.name.indexOf(platform) >= 0,
     true,
     true
@@ -50,7 +50,7 @@ export async function getDCD(distFolderRoot: string) {
     /* username */ "dlang-community",
     /* repo */ "DCD",
     /* download folder */ distFolderRoot,
-    /* filter release */ (asset) => asset.tag_name.includes(bundledDependencies.dcd),
+    /* filter release */ (asset) => asset.tag_name.includes(binaryDependencies.dcd),
     /* filter asset */ undefined, // (asset) => asset.name.includes(process.platform),
     true,
     true
